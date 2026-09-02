@@ -2,15 +2,6 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%93%9A</text></svg>">
 
 <style>
-  html, body {
-    margin: 0;
-    min-height: 100vh;
-    background-color: #0A3D24;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 3rem 1rem;
-  }
   * { box-sizing: border-box; }
   :root {
     --paper: #F7F4EC;
@@ -22,96 +13,94 @@
     --sage: #4F7A52;
     --amber: #B9822E;
   }
-  #crs-root {
-    font-family: 'Noto Sans KR', -apple-system, sans-serif;
-    color: var(--ink);
-    background: var(--paper);
-    padding: 1.5rem;
-    border-radius: 14px;
-    max-width: 720px;
-    margin: 0 auto;
-    border: 1px solid var(--hairline);
-    box-shadow: 0 1px 2px rgba(30,42,53,0.06), 0 10px 30px rgba(30,42,53,0.07);
-  }
-  @keyframes crs-fadein {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .crs-page { animation: crs-fadein 0.35s cubic-bezier(.2,.8,.3,1); }
-  #crs-root h1, #crs-root h2, #crs-root h3 {
-    font-family: 'Noto Serif KR', serif;
-    font-weight: 500;
+  html, body {
     margin: 0;
+    min-height: 100vh;
+    background-color: #0A3D24;
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    color: var(--paper);
   }
+  h1, h2, h3 { font-family: 'Noto Serif KR', serif; font-weight: 500; margin: 0; }
   .crs-mono { font-family: 'JetBrains Mono', monospace; }
-  .crs-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-bottom: 2px solid var(--ink);
-    padding-bottom: 0.75rem;
-    margin-bottom: 1.25rem;
+
+  #crs-navbar { position: sticky; top: 0; z-index: 50; background: var(--ink); box-shadow: 0 2px 10px rgba(0,0,0,0.25); }
+  .crs-navbar-inner { max-width: 1100px; margin: 0 auto; padding: 14px 20px; display: flex; justify-content: space-between; align-items: baseline; }
+  .crs-navbar-title { font-family: 'Noto Serif KR', serif; font-size: 19px; color: var(--paper); }
+  .crs-navbar-tag { color: rgba(247,244,236,0.55); font-size: 11px; letter-spacing: 0.02em; }
+
+  #crs-wrapper { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  @keyframes crs-fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .crs-page { animation: crs-fadein 0.35s cubic-bezier(.2,.8,.3,1); }
+
+  .crs-hero-search {
+    background: var(--paper-raised); border: 1px solid var(--hairline); border-left: 4px solid var(--stamp);
+    border-radius: 10px; padding: 22px 24px; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 12px 26px rgba(0,0,0,0.18);
+    color: var(--ink);
   }
-  .crs-header h1 { font-size: 21px; }
-  .crs-header .crs-mono { font-size: 11px; color: var(--ink-soft); letter-spacing: 0.02em; }
-  .crs-searchbar { display: flex; gap: 8px; margin-bottom: 0.75rem; }
+  .crs-hero-search-label { font-family: 'Noto Serif KR', serif; font-size: 17px; margin-bottom: 12px; }
   .crs-searchbar input {
-    flex: 1; padding: 10px 12px; border: 1px solid var(--hairline);
-    background: var(--paper-raised); border-radius: 6px; font-size: 14px; color: var(--ink);
+    width: 100%; padding: 12px 14px; border: 1px solid var(--hairline);
+    background: #fff; border-radius: 7px; font-size: 15px; color: var(--ink);
     transition: border-color .15s ease, box-shadow .15s ease;
   }
   .crs-searchbar input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(30,42,53,0.08); }
-  .crs-sortbar { display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap; }
-  .crs-sortbar select {
-    padding: 6px 8px; border: 1px solid var(--hairline); border-radius: 6px;
-    font-size: 12px; font-family: inherit; color: var(--ink); background: #fff; cursor: pointer;
-  }
+
   .crs-tagfilter { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
   .crs-tagfilter-btn {
-    padding: 4px 11px; border: 1px solid var(--hairline); background: #fff; border-radius: 14px;
+    padding: 4px 11px; border: 1px solid var(--hairline); background: var(--paper-raised); border-radius: 14px;
     font-size: 11px; cursor: pointer; color: var(--ink-soft);
     transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
   }
   .crs-tagfilter-btn:hover { border-color: var(--sage); color: var(--sage); }
   .crs-tagfilter-btn.crs-active { background: var(--sage); border-color: var(--sage); color: #fff; }
+
   .crs-btn {
     padding: 10px 14px; border: 1px solid var(--ink); background: var(--ink);
     color: var(--paper); border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit;
     transition: transform .1s ease, box-shadow .15s ease, background .15s ease;
   }
-  .crs-btn:hover { background: var(--ink-soft); box-shadow: 0 4px 10px rgba(30,42,53,0.18); transform: translateY(-1px); }
+  .crs-btn:hover { background: #33465A; box-shadow: 0 4px 10px rgba(0,0,0,0.25); transform: translateY(-1px); }
   .crs-btn:active { transform: translateY(0) scale(0.98); box-shadow: none; }
   .crs-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-  .crs-btn-ghost { background: transparent; color: var(--ink); box-shadow: none; }
-  .crs-btn-ghost:hover { background: var(--paper-raised); transform: none; box-shadow: none; }
-  .crs-toprow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-  .crs-toprow .crs-mono { font-size: 12px; color: var(--ink-soft); }
+  .crs-btn-ghost { background: transparent; color: var(--paper); border-color: rgba(247,244,236,0.5); box-shadow: none; }
+  .crs-btn-ghost:hover { background: rgba(247,244,236,0.08); transform: none; box-shadow: none; }
+
+  .crs-toprow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; color: var(--paper); }
+  .crs-toprow .crs-mono { font-size: 12px; color: rgba(247,244,236,0.75); }
+
+  .crs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
 
   .crs-card {
-    background: var(--paper-raised); border: 1px solid var(--hairline); border-left: 3px solid var(--ink);
-    border-radius: 4px; padding: 12px 14px; margin-bottom: 10px; cursor: pointer;
-    display: flex; justify-content: space-between; align-items: center; gap: 12px;
-    transition: transform .15s ease, box-shadow .15s ease, border-left-color .15s ease;
+    background: var(--paper-raised); border: 1px solid var(--hairline); border-top: 3px solid var(--ink);
+    border-radius: 8px; padding: 16px; cursor: pointer; color: var(--ink);
+    display: flex; flex-direction: column; gap: 9px;
+    transition: transform .15s ease, box-shadow .15s ease, border-top-color .15s ease;
   }
-  .crs-card:hover {
-    border-left-color: var(--stamp);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(30,42,53,0.1);
+  .crs-card:hover { border-top-color: var(--stamp); transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.18); }
+  .crs-card:active { transform: translateY(-1px); }
+  .crs-card-name { font-size: 16px; font-weight: 600; font-family: 'Noto Serif KR', serif; line-height: 1.3; }
+  .crs-prof-pill {
+    display: inline-block; background: #EFEAD8; color: var(--ink-soft); font-size: 11px;
+    padding: 3px 9px; border-radius: 10px; width: fit-content;
   }
-  .crs-card:active { transform: translateY(0); }
-  .crs-card-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
-  .crs-card-meta { font-size: 12px; color: var(--ink-soft); }
-  .crs-badge {
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
-    border: 1.5px solid var(--stamp); color: var(--stamp); padding: 3px 8px;
-    border-radius: 4px; white-space: nowrap; transform: rotate(-2deg); flex-shrink: 0;
-  }
+  .crs-card-stats { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .crs-star-rating { color: var(--amber); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; letter-spacing: 1px; }
+  .crs-card-count, .crs-card-meta-inline { color: var(--ink-soft); font-size: 12px; }
+  .crs-card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
   .crs-empty {
-    text-align: center; padding: 2.5rem 1rem; color: var(--ink-soft); font-size: 14px;
-    border: 1px dashed var(--hairline); border-radius: 6px;
+    text-align: center; padding: 2.5rem 1rem; color: rgba(247,244,236,0.75); font-size: 14px;
+    border: 1px dashed rgba(247,244,236,0.3); border-radius: 6px;
   }
   .crs-empty-icon { font-size: 28px; display: block; margin-bottom: 8px; }
 
+  .crs-detail-card {
+    background: var(--paper); border: 1px solid var(--hairline); border-radius: 14px; padding: 1.5rem;
+    max-width: 700px; margin: 0 auto; color: var(--ink);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 12px 30px rgba(0,0,0,0.2);
+  }
   .crs-detail-head { margin-bottom: 1rem; }
   .crs-detail-head .crs-back { font-size: 12px; color: var(--ink-soft); cursor: pointer; margin-bottom: 8px; display: inline-block; }
   .crs-detail-head .crs-back:hover { color: var(--ink); }
@@ -121,12 +110,14 @@
   .crs-hero { display: flex; gap: 1.5rem; align-items: flex-start; margin: 1rem 0 1.25rem; flex-wrap: wrap; }
   .crs-hero-score { font-family: 'Noto Serif KR', serif; font-size: 56px; font-weight: 700; line-height: 1; }
   .crs-hero-score span { font-size: 20px; color: var(--ink-soft); font-weight: 400; }
-  .crs-hero-sub { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+  .crs-hero-stars { color: var(--amber); font-size: 15px; letter-spacing: 2px; margin-top: 6px; }
+  .crs-hero-sub { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
   .crs-hero-stats { display: flex; gap: 1.5rem; }
-  .crs-hero-stat-value { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; }
+  .crs-hero-stat-value { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; }
+  .crs-hero-stat-stars { font-size: 12px; color: var(--amber); letter-spacing: 1px; margin-top: 2px; }
   .crs-hero-stat-label { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
 
-  .crs-dist { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; margin-bottom: 1rem; box-shadow: 0 1px 2px rgba(30,42,53,0.04); }
+  .crs-dist { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; margin-bottom: 1rem; }
   .crs-dist-title { font-size: 12px; color: var(--ink-soft); margin-bottom: 10px; }
   .crs-dist-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
   .crs-dist-label { width: 34px; font-size: 12px; text-align: right; color: var(--ink-soft); flex-shrink: 0; }
@@ -147,42 +138,40 @@
   .crs-review-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
   .crs-review-date { font-size: 11px; color: var(--ink-soft); }
 
-  .crs-form { border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; background: var(--paper-raised); margin-top: 0.75rem; animation: crs-fadein 0.25s ease; box-shadow: 0 1px 2px rgba(30,42,53,0.04); }
+  .crs-form { border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; background: #fff; margin-top: 0.75rem; animation: crs-fadein 0.25s ease; color: var(--ink); }
   .crs-form label { display: block; font-size: 12px; color: var(--ink-soft); margin: 12px 0 6px; }
   .crs-form label:first-child { margin-top: 0; }
-  .crs-form input[type="text"], .crs-form input[type="email"], .crs-form input[type="password"], .crs-form select, .crs-form textarea {
+  .crs-form input[type="text"], .crs-form select, .crs-form textarea {
     width: 100%; padding: 8px 10px; border: 1px solid var(--hairline); border-radius: 5px;
     font-size: 14px; font-family: inherit; color: var(--ink); background: #fff;
     transition: border-color .15s ease, box-shadow .15s ease;
   }
-  .crs-form input[type="text"]:focus, .crs-form input[type="email"]:focus, .crs-form input[type="password"]:focus,
-  .crs-form select:focus, .crs-form textarea:focus {
+  .crs-form input[type="text"]:focus, .crs-form select:focus, .crs-form textarea:focus {
     outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(30,42,53,0.08);
   }
   .crs-form textarea { resize: vertical; }
   .crs-form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
   .crs-error { color: var(--stamp); font-size: 12px; margin-top: 4px; animation: crs-fadein 0.2s ease; }
   .crs-hint { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+
   .crs-loading {
-    text-align: center; padding: 2.5rem; color: var(--ink-soft); font-size: 13px;
+    text-align: center; padding: 2.5rem; color: rgba(247,244,236,0.8); font-size: 13px;
     display: flex; flex-direction: column; align-items: center; gap: 10px;
   }
   .crs-loading::before {
     content: ''; width: 22px; height: 22px; border-radius: 50%;
-    border: 2.5px solid var(--hairline); border-top-color: var(--ink);
+    border: 2.5px solid rgba(247,244,236,0.3); border-top-color: var(--paper);
     animation: crs-spin 0.7s linear infinite;
   }
   @keyframes crs-spin { to { transform: rotate(360deg); } }
 
   .crs-skel {
-    background: linear-gradient(90deg, var(--hairline) 25%, #ECE7D8 37%, var(--hairline) 63%);
-    background-size: 400% 100%;
-    animation: crs-shimmer 1.4s ease infinite;
-    border-radius: 6px;
+    background: linear-gradient(90deg, rgba(247,244,236,0.15) 25%, rgba(247,244,236,0.3) 37%, rgba(247,244,236,0.15) 63%);
+    background-size: 400% 100%; animation: crs-shimmer 1.4s ease infinite; border-radius: 6px;
   }
   @keyframes crs-shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
-  .crs-skel-card { height: 52px; margin-bottom: 10px; border-radius: 4px; }
-  .crs-skel-line { height: 12px; margin-bottom: 8px; }
+  .crs-skel-card { height: 90px; border-radius: 8px; }
+  .crs-skel-line { height: 12px; }
 
   .crs-scale { display: flex; align-items: center; gap: 6px; }
   .crs-scale-btn {
@@ -194,6 +183,15 @@
   .crs-scale-btn:hover { border-color: var(--ink); transform: translateY(-1px); }
   .crs-scale-btn.crs-active { background: var(--ink); border-color: var(--ink); color: var(--paper); transform: scale(1.08); }
   .crs-scale-endpoints { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+
+  .crs-workload-picker { display: flex; gap: 6px; }
+  .crs-workload-btn {
+    flex: 1; padding: 9px 10px; border: 1px solid var(--hairline); background: #fff; border-radius: 7px;
+    font-size: 13px; cursor: pointer; color: var(--ink-soft); font-family: inherit;
+    transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+  }
+  .crs-workload-btn:hover { border-color: var(--ink); }
+  .crs-workload-btn.crs-active { background: var(--ink); border-color: var(--ink); color: var(--paper); transform: translateY(-1px); }
 
   .crs-tagpick { display: flex; flex-wrap: wrap; gap: 6px; }
   .crs-tagpick-btn {
@@ -212,36 +210,38 @@
   .crs-toast {
     position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 12px);
     background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 24px;
-    font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); opacity: 0;
+    font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); opacity: 0;
     transition: opacity .25s ease, transform .25s ease; z-index: 9999; pointer-events: none;
     font-family: 'Noto Sans KR', sans-serif;
   }
   .crs-toast-show { opacity: 1; transform: translate(-50%, 0); }
 
   @media (max-width: 480px) {
-    #crs-root { padding: 1.1rem; border-radius: 10px; }
-    .crs-header h1 { font-size: 18px; }
-    .crs-hero { gap: 1rem; }
+    .crs-navbar-title { font-size: 16px; }
+    .crs-hero-search { padding: 16px; }
+    .crs-detail-card { padding: 1.1rem; border-radius: 10px; }
     .crs-hero-score { font-size: 42px; }
-    .crs-hero-stats { gap: 1rem; }
     .crs-scale-btn { width: 32px; height: 32px; font-size: 13px; }
-    .crs-toprow { flex-wrap: wrap; gap: 8px; }
   }
 </style>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
 
-<div id="crs-root">
-  <div class="crs-header">
-    <h1 id="crs-title">우리 학교 강의</h1>
-    <span class="crs-mono">STUDENT REVIEWS</span>
+<div id="crs-navbar">
+  <div class="crs-navbar-inner">
+    <span class="crs-navbar-title">우리 학교 강의</span>
+    <span class="crs-mono crs-navbar-tag">STUDENT REVIEWS</span>
   </div>
+</div>
+<div id="crs-wrapper">
   <div id="crs-view">
     <div class="crs-page">
-      <div class="crs-skel crs-skel-line" style="width:100%;height:38px;margin-bottom:16px;"></div>
-      <div class="crs-skel crs-skel-card"></div>
-      <div class="crs-skel crs-skel-card"></div>
-      <div class="crs-skel crs-skel-card"></div>
+      <div class="crs-skel crs-skel-line" style="width:100%;height:96px;margin-bottom:20px;"></div>
+      <div class="crs-grid">
+        <div class="crs-skel crs-skel-card"></div>
+        <div class="crs-skel crs-skel-card"></div>
+        <div class="crs-skel crs-skel-card"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -282,7 +282,6 @@
   const TAG_OPTIONS = ['꿀강', '빡센 강의', '팀플 많음', '과제 많음', '출석 필수', '강의력 좋음', '성적 후함', '학점 짜다', '시험 위주', '필기 많음', '재수강 비추'];
   let courses = [];
   let searchTerm = '';
-  let sortMode = 'new';
   let activeTag = null;
 
   function esc(s) {
@@ -321,6 +320,14 @@
   async function addReviewDoc(courseId, data) {
     await db.collection('courses').doc(courseId).collection('reviews').add(data);
   }
+  async function updateCourseDoc(courseId, data) {
+    await db.collection('courses').doc(courseId).update(data);
+  }
+  function findMatchingCourse(name, professor) {
+    const n = name.trim().replace(/\s+/g, '');
+    const p = professor.trim().replace(/\s+/g, '');
+    return courses.find(c => c.name.trim().replace(/\s+/g, '') === n && c.professor.trim().replace(/\s+/g, '') === p);
+  }
 
   // ---------- utils ----------
   function avg(arr, key) {
@@ -330,20 +337,26 @@
   }
   function workloadLabel(v) { return v === '1' ? '적음' : v === '2' ? '보통' : '많음'; }
   function workloadTagClass(v) { return v === '1' ? 'crs-tag-sage' : v === '2' ? 'crs-tag-amber' : 'crs-tag-stamp'; }
+  function starStr(n) {
+    if (n == null) return '—';
+    const full = Math.max(0, Math.min(5, Math.round(n)));
+    return '★'.repeat(full) + '☆'.repeat(5 - full);
+  }
 
   function skeletonListInner() {
     return '<div class="crs-page">' +
-      '<div class="crs-skel crs-skel-line" style="width:100%;height:38px;margin-bottom:16px;"></div>' +
-      '<div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div>' +
+      '<div class="crs-skel crs-skel-line" style="width:100%;height:96px;margin-bottom:20px;"></div>' +
+      '<div class="crs-grid"><div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div></div>' +
       '</div>';
   }
   function skeletonDetailInner() {
-    return '<div class="crs-page">' +
-      '<div class="crs-skel crs-skel-line" style="width:40%;height:12px;margin-bottom:14px;"></div>' +
+    return '<div class="crs-page"><div class="crs-detail-card">' +
+      '<div class="crs-skel crs-skel-line" style="width:40%;margin-bottom:14px;"></div>' +
       '<div class="crs-skel crs-skel-line" style="width:60%;height:24px;margin-bottom:20px;"></div>' +
       '<div class="crs-skel" style="width:120px;height:56px;margin-bottom:20px;"></div>' +
-      '<div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div>' +
-      '</div>';
+      '<div class="crs-skel crs-skel-card" style="height:50px;margin-bottom:10px;"></div>' +
+      '<div class="crs-skel crs-skel-card" style="height:50px;"></div>' +
+      '</div></div>';
   }
 
   // ---------- routing ----------
@@ -362,14 +375,8 @@
     const allTags = Array.from(new Set(courses.flatMap(c => c.tags || [])));
 
     let html = '<div class="crs-page">';
-    html += '<div class="crs-searchbar"><input type="text" id="crs-search" placeholder="강의명, 교수명으로 검색" value="' + esc(searchTerm) + '"></div>';
-    html += '<div class="crs-sortbar"><span class="crs-mono" style="font-size:11px;color:var(--ink-soft);">정렬</span>' +
-      '<select id="crs-sort">' +
-      '<option value="new"' + (sortMode === 'new' ? ' selected' : '') + '>최신순</option>' +
-      '<option value="ratingDesc"' + (sortMode === 'ratingDesc' ? ' selected' : '') + '>평점 높은순</option>' +
-      '<option value="ratingAsc"' + (sortMode === 'ratingAsc' ? ' selected' : '') + '>평점 낮은순</option>' +
-      '<option value="diffAsc"' + (sortMode === 'diffAsc' ? ' selected' : '') + '>난이도 쉬운순</option>' +
-      '</select></div>';
+    html += '<div class="crs-hero-search"><div class="crs-hero-search-label">어떤 강의를 찾고 있나요?</div>' +
+      '<div class="crs-searchbar"><input type="text" id="crs-search" placeholder="강의명 또는 교수명 검색" value="' + esc(searchTerm) + '"></div></div>';
     if (allTags.length) {
       html += '<div class="crs-tagfilter" id="crs-tagfilter">';
       html += '<button type="button" class="crs-tagfilter-btn' + (activeTag === null ? ' crs-active' : '') + '" data-tag="">전체</button>';
@@ -385,10 +392,6 @@
 
     document.getElementById('crs-search').addEventListener('input', (e) => {
       searchTerm = e.target.value;
-      renderCourseCards();
-    });
-    document.getElementById('crs-sort').addEventListener('change', (e) => {
-      sortMode = e.target.value;
       renderCourseCards();
     });
     const tagfilter = document.getElementById('crs-tagfilter');
@@ -412,29 +415,29 @@
     const t = searchTerm.trim();
     let filtered = courses.filter(c => !t || (c.name + c.professor).includes(t));
     if (activeTag) filtered = filtered.filter(c => (c.tags || []).includes(activeTag));
-
-    filtered = filtered.slice().sort((a, b) => {
-      if (sortMode === 'ratingDesc') return (b.rating || 0) - (a.rating || 0);
-      if (sortMode === 'ratingAsc') return (a.rating || 0) - (b.rating || 0);
-      if (sortMode === 'diffAsc') return (a.difficulty || 0) - (b.difficulty || 0);
-      return (b.createdAt || 0) - (a.createdAt || 0);
-    });
+    filtered = filtered.slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
     if (!filtered.length) {
       wrap.innerHTML = '<div class="crs-empty"><span class="crs-empty-icon">' + (courses.length ? '🔍' : '📭') + '</span>' +
         (courses.length ? '조건에 맞는 강의가 없어요.' : '아직 등록된 강의가 없어요. 첫 강의를 추가해보세요.') + '</div>';
       return;
     }
-    wrap.innerHTML = filtered.map(c => {
-      const badge = c.rating != null ? c.rating + '.0' : '-';
-      const metaBits = [esc(c.professor) + ' 교수'];
-      if (c.difficulty != null) metaBits.push('난이도 ' + esc(c.difficulty));
-      if (c.workload != null) metaBits.push('과제 ' + workloadLabel(c.workload));
+    wrap.innerHTML = '<div class="crs-grid">' + filtered.map(c => {
+      const ratingStr = c.rating != null ? '★ ' + c.rating.toFixed(1) : '—';
+      const countStr = '후기 ' + (c.reviewCount || 1) + '개';
+      const metaInline = (c.difficulty != null ? '난이도 ' + c.difficulty : '') +
+        (c.workload != null ? ' · 과제 ' + workloadLabel(c.workload) : '');
+      const chips = (c.tags || []).slice(0, 3).map(tg => '<span class="crs-tag crs-tag-sage">' + esc(tg) + '</span>').join('');
       return '<div class="crs-card" data-id="' + esc(c.id) + '">' +
-        '<div><div class="crs-card-name">' + esc(c.name) + '</div>' +
-        '<div class="crs-card-meta">' + metaBits.join(' · ') + '</div></div>' +
-        '<div class="crs-badge">' + badge + '</div></div>';
-    }).join('');
+        '<div class="crs-card-name">' + esc(c.name) + '</div>' +
+        '<span class="crs-prof-pill">' + esc(c.professor) + ' 교수</span>' +
+        '<div class="crs-card-stats"><span class="crs-star-rating">' + ratingStr + '</span>' +
+        '<span class="crs-card-count">' + countStr + '</span></div>' +
+        (metaInline ? '<div class="crs-card-meta-inline">' + metaInline + '</div>' : '') +
+        (chips ? '<div class="crs-card-tags">' + chips + '</div>' : '') +
+        '</div>';
+    }).join('') + '</div>';
+
     wrap.querySelectorAll('.crs-card').forEach(el => {
       el.addEventListener('click', () => {
         location.hash = '#/course/' + encodeURIComponent(el.getAttribute('data-id'));
@@ -476,20 +479,43 @@
       submitBtn.textContent = '등록 중…';
       try {
         const newReview = fields.getData();
-        const courseId = await addCourseDoc({
-          name, professor: prof, createdAt: Date.now(),
-          rating: newReview.rating, difficulty: newReview.difficulty,
-          workload: newReview.workload, tags: newReview.tags
-        });
-        await addReviewDoc(courseId, newReview);
-        courses.unshift({
-          id: courseId, name, professor: prof, createdAt: Date.now(),
-          rating: newReview.rating, difficulty: newReview.difficulty,
-          workload: newReview.workload, tags: newReview.tags
-        });
-        wrap.innerHTML = '';
-        showToast('강의와 후기가 등록됐어요');
-        location.hash = '#/course/' + encodeURIComponent(courseId);
+        const existing = findMatchingCourse(name, prof);
+
+        if (existing) {
+          await addReviewDoc(existing.id, newReview);
+          const updatedReviews = await loadReviews(existing.id);
+          const wc = { '1': 0, '2': 0, '3': 0 };
+          updatedReviews.forEach(r => { wc[r.workload] = (wc[r.workload] || 0) + 1; });
+          const commonWorkload = Object.keys(wc).reduce((a, b) => wc[a] >= wc[b] ? a : b, '2');
+          const mergedTags = Array.from(new Set(updatedReviews.flatMap(r => r.tags || [])));
+          const patch = {
+            rating: avg(updatedReviews, 'rating'),
+            difficulty: avg(updatedReviews, 'difficulty'),
+            workload: commonWorkload,
+            tags: mergedTags,
+            reviewCount: updatedReviews.length
+          };
+          await updateCourseDoc(existing.id, patch);
+          Object.assign(existing, patch);
+          wrap.innerHTML = '';
+          showToast('같은 강의를 찾아서 후기를 추가했어요');
+          location.hash = '#/course/' + encodeURIComponent(existing.id);
+        } else {
+          const courseId = await addCourseDoc({
+            name, professor: prof, createdAt: Date.now(),
+            rating: newReview.rating, difficulty: newReview.difficulty,
+            workload: newReview.workload, tags: newReview.tags, reviewCount: 1
+          });
+          await addReviewDoc(courseId, newReview);
+          courses.unshift({
+            id: courseId, name, professor: prof, createdAt: Date.now(),
+            rating: newReview.rating, difficulty: newReview.difficulty,
+            workload: newReview.workload, tags: newReview.tags, reviewCount: 1
+          });
+          wrap.innerHTML = '';
+          showToast('강의와 후기가 등록됐어요');
+          location.hash = '#/course/' + encodeURIComponent(courseId);
+        }
       } catch (e) {
         console.error('등록 실패', e);
         errEl.textContent = '등록 중 오류가 발생했어요. 다시 시도해주세요.';
@@ -523,7 +549,7 @@
     reviews.forEach(r => { const k = String(r.rating); if (dist[k] !== undefined) dist[k]++; });
     const maxCount = Math.max(1, ...Object.values(dist));
 
-    let html = '<div class="crs-page">';
+    let html = '<div class="crs-page"><div class="crs-detail-card">';
     html += '<div class="crs-detail-head">';
     html += '<span class="crs-back" id="crs-back-btn">← 목록으로</span>';
     html += '<h2>' + esc(course.name) + '</h2>';
@@ -532,10 +558,13 @@
 
     html += '<div class="crs-hero">';
     html += '<div><div class="crs-hero-score">' + (rRating != null ? rRating : '-') + '<span> / 5</span></div>';
+    html += '<div class="crs-hero-stars">' + starStr(rRating) + '</div>';
     html += '<div class="crs-hero-sub">후기 ' + reviews.length + '개 기준 총평</div></div>';
     html += '<div class="crs-hero-stats">';
-    html += '<div><div class="crs-hero-stat-value">' + (rDiff != null ? rDiff : '-') + '</div><div class="crs-hero-stat-label">난이도</div></div>';
-    html += '<div><div class="crs-hero-stat-value">' + (commonWorkload ? workloadLabel(commonWorkload) : '-') + '</div><div class="crs-hero-stat-label">과제량</div></div>';
+    html += '<div><div class="crs-hero-stat-value">' + (rDiff != null ? rDiff : '-') + '</div>' +
+      '<div class="crs-hero-stat-stars">' + starStr(rDiff) + '</div><div class="crs-hero-stat-label">난이도</div></div>';
+    html += '<div><div class="crs-hero-stat-value">' + (commonWorkload ? workloadLabel(commonWorkload) : '-') + '</div>' +
+      '<div class="crs-hero-stat-stars">&nbsp;</div><div class="crs-hero-stat-label">과제량</div></div>';
     html += '</div></div>';
 
     html += '<div class="crs-dist"><div class="crs-dist-title">평점 분포</div>';
@@ -570,7 +599,7 @@
       }).join('');
     }
     html += '</div>';
-    html += '</div>';
+    html += '</div></div>';
 
     root.innerHTML = html;
     document.getElementById('crs-back-btn').addEventListener('click', () => { location.hash = ''; });
@@ -608,11 +637,30 @@
     return () => current;
   }
 
+  function workloadButtons() {
+    return '<div class="crs-workload-picker" id="crs-workload-picker">' +
+      ['1', '2', '3'].map(v => '<button type="button" class="crs-workload-btn" data-val="' + v + '" id="crs-workload-' + v + '">' + workloadLabel(v) + '</button>').join('') +
+      '</div>';
+  }
+  function wireWorkload(defaultVal) {
+    let current = defaultVal;
+    const btns = ['1', '2', '3'].map(v => document.getElementById('crs-workload-' + v));
+    btns.forEach((b, idx) => {
+      b.addEventListener('click', () => {
+        current = String(idx + 1);
+        btns.forEach(x => x.classList.remove('crs-active'));
+        b.classList.add('crs-active');
+      });
+    });
+    btns[Number(defaultVal) - 1].classList.add('crs-active');
+    return () => current;
+  }
+
   function reviewFieldsHtml() {
     let tagHtml = TAG_OPTIONS.map(t => '<button type="button" class="crs-tagpick-btn" data-tag="' + esc(t) + '">' + esc(t) + '</button>').join('');
     return '<label>총평 *</label>' + scaleButtons('crs-rating', '1 - 별로예요', '5 - 최고예요') +
       '<label>난이도 *</label>' + scaleButtons('crs-diff', '1 - 쉬워요', '5 - 어려워요') +
-      '<label>과제량</label><select id="crs-r-workload"><option value="1">적음</option><option value="2" selected>보통</option><option value="3">많음</option></select>' +
+      '<label>과제량 *</label>' + workloadButtons() +
       '<label>시험/평가 방식</label><select id="crs-r-exam"><option>중간+기말</option><option>팀플 위주</option><option>출석+과제</option><option>퀴즈 위주</option><option>기타</option></select>' +
       '<label>태그 선택 (최대 3개)</label><div class="crs-tagpick" id="crs-tagpick">' + tagHtml + '</div>' +
       '<label>한줄 후기</label>' +
@@ -628,6 +676,7 @@
   function wireReviewFields(wrap) {
     const getRating = wireScale('crs-rating', 3);
     const getDiff = wireScale('crs-diff', 3);
+    const getWorkload = wireWorkload('2');
 
     const selectedTags = [];
     const tagBtns = wrap.querySelectorAll('.crs-tagpick-btn');
@@ -668,7 +717,7 @@
           id: 'r-' + Date.now(),
           rating: getRating(),
           difficulty: getDiff(),
-          workload: document.getElementById('crs-r-workload').value,
+          workload: getWorkload(),
           examType: document.getElementById('crs-r-exam').value,
           tags: selectedTags,
           comment: commentIn.value.trim(),
