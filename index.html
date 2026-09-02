@@ -54,13 +54,26 @@
   }
   .crs-header h1 { font-size: 21px; }
   .crs-header .crs-mono { font-size: 11px; color: var(--ink-soft); letter-spacing: 0.02em; }
-  .crs-searchbar { display: flex; gap: 8px; margin-bottom: 1.25rem; }
+  .crs-searchbar { display: flex; gap: 8px; margin-bottom: 0.75rem; }
   .crs-searchbar input {
     flex: 1; padding: 10px 12px; border: 1px solid var(--hairline);
     background: var(--paper-raised); border-radius: 6px; font-size: 14px; color: var(--ink);
     transition: border-color .15s ease, box-shadow .15s ease;
   }
   .crs-searchbar input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(30,42,53,0.08); }
+  .crs-sortbar { display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .crs-sortbar select {
+    padding: 6px 8px; border: 1px solid var(--hairline); border-radius: 6px;
+    font-size: 12px; font-family: inherit; color: var(--ink); background: #fff; cursor: pointer;
+  }
+  .crs-tagfilter { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+  .crs-tagfilter-btn {
+    padding: 4px 11px; border: 1px solid var(--hairline); background: #fff; border-radius: 14px;
+    font-size: 11px; cursor: pointer; color: var(--ink-soft);
+    transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+  }
+  .crs-tagfilter-btn:hover { border-color: var(--sage); color: var(--sage); }
+  .crs-tagfilter-btn.crs-active { background: var(--sage); border-color: var(--sage); color: #fff; }
   .crs-btn {
     padding: 10px 14px; border: 1px solid var(--ink); background: var(--ink);
     color: var(--paper); border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit;
@@ -91,12 +104,13 @@
   .crs-badge {
     font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
     border: 1.5px solid var(--stamp); color: var(--stamp); padding: 3px 8px;
-    border-radius: 4px; white-space: nowrap; transform: rotate(-2deg);
+    border-radius: 4px; white-space: nowrap; transform: rotate(-2deg); flex-shrink: 0;
   }
   .crs-empty {
     text-align: center; padding: 2.5rem 1rem; color: var(--ink-soft); font-size: 14px;
     border: 1px dashed var(--hairline); border-radius: 6px;
   }
+  .crs-empty-icon { font-size: 28px; display: block; margin-bottom: 8px; }
 
   .crs-detail-head { margin-bottom: 1rem; }
   .crs-detail-head .crs-back { font-size: 12px; color: var(--ink-soft); cursor: pointer; margin-bottom: 8px; display: inline-block; }
@@ -122,7 +136,8 @@
 
   .crs-section-label { font-size: 12px; color: var(--ink-soft); border-bottom: 1px solid var(--hairline); padding-bottom: 6px; margin: 1.25rem 0 0.75rem; }
 
-  .crs-review { border: 1px solid var(--hairline); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; background: var(--paper-raised); }
+  .crs-review { border: 1px solid var(--hairline); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; background: var(--paper-raised); transition: box-shadow .15s ease, transform .15s ease; }
+  .crs-review:hover { box-shadow: 0 4px 12px rgba(30,42,53,0.08); transform: translateY(-1px); }
   .crs-review-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
   .crs-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; }
   .crs-tag-sage { background: #EAF1E8; color: var(--sage); }
@@ -159,6 +174,16 @@
   }
   @keyframes crs-spin { to { transform: rotate(360deg); } }
 
+  .crs-skel {
+    background: linear-gradient(90deg, var(--hairline) 25%, #ECE7D8 37%, var(--hairline) 63%);
+    background-size: 400% 100%;
+    animation: crs-shimmer 1.4s ease infinite;
+    border-radius: 6px;
+  }
+  @keyframes crs-shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+  .crs-skel-card { height: 52px; margin-bottom: 10px; border-radius: 4px; }
+  .crs-skel-line { height: 12px; margin-bottom: 8px; }
+
   .crs-scale { display: flex; align-items: center; gap: 6px; }
   .crs-scale-btn {
     width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--hairline);
@@ -184,13 +209,14 @@
   .crs-guideline ul { margin: 4px 0 0; padding-left: 18px; }
   .crs-guideline li { margin-bottom: 2px; }
 
-  .crs-gate { text-align: center; padding: 1.5rem 0.5rem; }
-  .crs-gate h2 { font-size: 18px; margin-bottom: 8px; }
-  .crs-gate p { font-size: 13px; color: var(--ink-soft); margin: 0 0 1.25rem; line-height: 1.6; }
-  .crs-gate .crs-form { text-align: left; max-width: 320px; margin: 0 auto; }
-
-  .crs-review { transition: box-shadow .15s ease, transform .15s ease; }
-  .crs-review:hover { box-shadow: 0 4px 12px rgba(30,42,53,0.08); transform: translateY(-1px); }
+  .crs-toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 12px);
+    background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 24px;
+    font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); opacity: 0;
+    transition: opacity .25s ease, transform .25s ease; z-index: 9999; pointer-events: none;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .crs-toast-show { opacity: 1; transform: translate(-50%, 0); }
 
   @media (max-width: 480px) {
     #crs-root { padding: 1.1rem; border-radius: 10px; }
@@ -207,10 +233,17 @@
 
 <div id="crs-root">
   <div class="crs-header">
-    <h1 id="crs-title">우리 학교 강의 카탈로그</h1>
+    <h1 id="crs-title">우리 학교 강의</h1>
     <span class="crs-mono">STUDENT REVIEWS</span>
   </div>
-  <div id="crs-view"><div class="crs-loading">불러오는 중…</div></div>
+  <div id="crs-view">
+    <div class="crs-page">
+      <div class="crs-skel crs-skel-line" style="width:100%;height:38px;margin-bottom:16px;"></div>
+      <div class="crs-skel crs-skel-card"></div>
+      <div class="crs-skel crs-skel-card"></div>
+      <div class="crs-skel crs-skel-card"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -249,9 +282,23 @@
   const TAG_OPTIONS = ['꿀강', '빡센 강의', '팀플 많음', '과제 많음', '출석 필수', '강의력 좋음', '성적 후함', '학점 짜다', '시험 위주', '필기 많음', '재수강 비추'];
   let courses = [];
   let searchTerm = '';
+  let sortMode = 'new';
+  let activeTag = null;
 
   function esc(s) {
     return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function showToast(msg) {
+    const el = document.createElement('div');
+    el.className = 'crs-toast';
+    el.textContent = msg;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('crs-toast-show'));
+    setTimeout(() => {
+      el.classList.remove('crs-toast-show');
+      setTimeout(() => el.remove(), 300);
+    }, 2200);
   }
 
   // ---------- storage helpers (Firestore) ----------
@@ -284,10 +331,51 @@
   function workloadLabel(v) { return v === '1' ? '적음' : v === '2' ? '보통' : '많음'; }
   function workloadTagClass(v) { return v === '1' ? 'crs-tag-sage' : v === '2' ? 'crs-tag-amber' : 'crs-tag-stamp'; }
 
+  function skeletonListInner() {
+    return '<div class="crs-page">' +
+      '<div class="crs-skel crs-skel-line" style="width:100%;height:38px;margin-bottom:16px;"></div>' +
+      '<div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div>' +
+      '</div>';
+  }
+  function skeletonDetailInner() {
+    return '<div class="crs-page">' +
+      '<div class="crs-skel crs-skel-line" style="width:40%;height:12px;margin-bottom:14px;"></div>' +
+      '<div class="crs-skel crs-skel-line" style="width:60%;height:24px;margin-bottom:20px;"></div>' +
+      '<div class="crs-skel" style="width:120px;height:56px;margin-bottom:20px;"></div>' +
+      '<div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div>' +
+      '</div>';
+  }
+
+  // ---------- routing ----------
+  function route() {
+    const hash = location.hash;
+    const m = hash.match(/^#\/course\/(.+)$/);
+    if (m) {
+      openCourseById(decodeURIComponent(m[1]));
+    } else {
+      renderList();
+    }
+  }
+
   // ---------- list view ----------
   function renderList() {
+    const allTags = Array.from(new Set(courses.flatMap(c => c.tags || [])));
+
     let html = '<div class="crs-page">';
     html += '<div class="crs-searchbar"><input type="text" id="crs-search" placeholder="강의명, 교수명으로 검색" value="' + esc(searchTerm) + '"></div>';
+    html += '<div class="crs-sortbar"><span class="crs-mono" style="font-size:11px;color:var(--ink-soft);">정렬</span>' +
+      '<select id="crs-sort">' +
+      '<option value="new"' + (sortMode === 'new' ? ' selected' : '') + '>최신순</option>' +
+      '<option value="ratingDesc"' + (sortMode === 'ratingDesc' ? ' selected' : '') + '>평점 높은순</option>' +
+      '<option value="ratingAsc"' + (sortMode === 'ratingAsc' ? ' selected' : '') + '>평점 낮은순</option>' +
+      '<option value="diffAsc"' + (sortMode === 'diffAsc' ? ' selected' : '') + '>난이도 쉬운순</option>' +
+      '</select></div>';
+    if (allTags.length) {
+      html += '<div class="crs-tagfilter" id="crs-tagfilter">';
+      html += '<button type="button" class="crs-tagfilter-btn' + (activeTag === null ? ' crs-active' : '') + '" data-tag="">전체</button>';
+      html += allTags.map(t => '<button type="button" class="crs-tagfilter-btn' + (activeTag === t ? ' crs-active' : '') + '" data-tag="' + esc(t) + '">' + esc(t) + '</button>').join('');
+      html += '</div>';
+    }
     html += '<div class="crs-toprow"><span class="crs-mono">총 ' + courses.length + '개 강의</span>';
     html += '<button class="crs-btn" id="crs-add-course-btn">+ 강의 추가</button></div>';
     html += '<div id="crs-add-course-form"></div>';
@@ -299,6 +387,21 @@
       searchTerm = e.target.value;
       renderCourseCards();
     });
+    document.getElementById('crs-sort').addEventListener('change', (e) => {
+      sortMode = e.target.value;
+      renderCourseCards();
+    });
+    const tagfilter = document.getElementById('crs-tagfilter');
+    if (tagfilter) {
+      tagfilter.addEventListener('click', (e) => {
+        const btn = e.target.closest('.crs-tagfilter-btn');
+        if (!btn) return;
+        activeTag = btn.getAttribute('data-tag') || null;
+        tagfilter.querySelectorAll('.crs-tagfilter-btn').forEach(b => b.classList.remove('crs-active'));
+        btn.classList.add('crs-active');
+        renderCourseCards();
+      });
+    }
     document.getElementById('crs-add-course-btn').addEventListener('click', toggleAddCourseForm);
     renderCourseCards();
   }
@@ -307,18 +410,35 @@
     const wrap = document.getElementById('crs-course-cards');
     if (!wrap) return;
     const t = searchTerm.trim();
-    const filtered = courses.filter(c => !t || (c.name + c.professor).includes(t));
+    let filtered = courses.filter(c => !t || (c.name + c.professor).includes(t));
+    if (activeTag) filtered = filtered.filter(c => (c.tags || []).includes(activeTag));
+
+    filtered = filtered.slice().sort((a, b) => {
+      if (sortMode === 'ratingDesc') return (b.rating || 0) - (a.rating || 0);
+      if (sortMode === 'ratingAsc') return (a.rating || 0) - (b.rating || 0);
+      if (sortMode === 'diffAsc') return (a.difficulty || 0) - (b.difficulty || 0);
+      return (b.createdAt || 0) - (a.createdAt || 0);
+    });
+
     if (!filtered.length) {
-      wrap.innerHTML = '<div class="crs-empty">' + (courses.length ? '검색 결과가 없어요.' : '아직 등록된 강의가 없어요. 첫 강의를 추가해보세요.') + '</div>';
+      wrap.innerHTML = '<div class="crs-empty"><span class="crs-empty-icon">' + (courses.length ? '🔍' : '📭') + '</span>' +
+        (courses.length ? '조건에 맞는 강의가 없어요.' : '아직 등록된 강의가 없어요. 첫 강의를 추가해보세요.') + '</div>';
       return;
     }
     wrap.innerHTML = filtered.map(c => {
+      const badge = c.rating != null ? c.rating + '.0' : '-';
+      const metaBits = [esc(c.professor) + ' 교수'];
+      if (c.difficulty != null) metaBits.push('난이도 ' + esc(c.difficulty));
+      if (c.workload != null) metaBits.push('과제 ' + workloadLabel(c.workload));
       return '<div class="crs-card" data-id="' + esc(c.id) + '">' +
         '<div><div class="crs-card-name">' + esc(c.name) + '</div>' +
-        '<div class="crs-card-meta">' + esc(c.professor) + ' 교수</div></div></div>';
+        '<div class="crs-card-meta">' + metaBits.join(' · ') + '</div></div>' +
+        '<div class="crs-badge">' + badge + '</div></div>';
     }).join('');
     wrap.querySelectorAll('.crs-card').forEach(el => {
-      el.addEventListener('click', () => openCourse(el.getAttribute('data-id')));
+      el.addEventListener('click', () => {
+        location.hash = '#/course/' + encodeURIComponent(el.getAttribute('data-id'));
+      });
     });
   }
 
@@ -355,12 +475,21 @@
       submitBtn.disabled = true;
       submitBtn.textContent = '등록 중…';
       try {
-        const courseId = await addCourseDoc({ name, professor: prof, createdAt: Date.now() });
         const newReview = fields.getData();
+        const courseId = await addCourseDoc({
+          name, professor: prof, createdAt: Date.now(),
+          rating: newReview.rating, difficulty: newReview.difficulty,
+          workload: newReview.workload, tags: newReview.tags
+        });
         await addReviewDoc(courseId, newReview);
+        courses.unshift({
+          id: courseId, name, professor: prof, createdAt: Date.now(),
+          rating: newReview.rating, difficulty: newReview.difficulty,
+          workload: newReview.workload, tags: newReview.tags
+        });
         wrap.innerHTML = '';
-        await loadCourses();
-        openCourse(courseId);
+        showToast('강의와 후기가 등록됐어요');
+        location.hash = '#/course/' + encodeURIComponent(courseId);
       } catch (e) {
         console.error('등록 실패', e);
         errEl.textContent = '등록 중 오류가 발생했어요. 다시 시도해주세요.';
@@ -372,9 +501,10 @@
   }
 
   // ---------- detail view ----------
-  async function openCourse(id) {
-    root.innerHTML = '<div class="crs-loading">불러오는 중…</div>';
-    const course = courses.find(c => c.id === id);
+  async function openCourseById(id) {
+    root.innerHTML = skeletonDetailInner();
+    let course = courses.find(c => c.id === id);
+    if (!course) { location.hash = ''; return; }
     const reviews = await loadReviews(id);
     renderDetail(course, reviews);
   }
@@ -421,7 +551,7 @@
     html += '<div class="crs-section-label">후기 ' + reviews.length + '개</div>';
     html += '<div id="crs-reviews">';
     if (!reviews.length) {
-      html += '<div class="crs-empty">아직 후기가 없어요. 첫 후기를 남겨보세요.</div>';
+      html += '<div class="crs-empty"><span class="crs-empty-icon">💬</span>아직 후기가 없어요. 첫 후기를 남겨보세요.</div>';
     } else {
       html += reviews.slice().reverse().map(r => {
         const date = new Date(r.createdAt);
@@ -443,7 +573,7 @@
     html += '</div>';
 
     root.innerHTML = html;
-    document.getElementById('crs-back-btn').addEventListener('click', renderList);
+    document.getElementById('crs-back-btn').addEventListener('click', () => { location.hash = ''; });
     requestAnimationFrame(() => {
       document.querySelectorAll('.crs-dist-fill').forEach(el => {
         const target = el.getAttribute('data-target') + '%';
@@ -550,7 +680,7 @@
 
   // ---------- boot ----------
   async function startApp() {
-    root.innerHTML = '<div class="crs-loading">불러오는 중…</div>';
+    root.innerHTML = skeletonListInner();
     try {
       await initFirebase();
     } catch (e) {
@@ -559,7 +689,8 @@
       return;
     }
     await loadCourses();
-    renderList();
+    window.addEventListener('hashchange', route);
+    route();
   }
 
   async function init() {
