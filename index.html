@@ -1,0 +1,499 @@
+<style>
+  * { box-sizing: border-box; }
+  :root {
+    --paper: #F7F4EC;
+    --paper-raised: #FFFDF8;
+    --ink: #1E2A35;
+    --ink-soft: #51606B;
+    --hairline: #D8D2C4;
+    --stamp: #A6392B;
+    --sage: #4F7A52;
+    --amber: #B9822E;
+  }
+  #crs-root {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 1.5rem;
+    border-radius: 12px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  #crs-root h1, #crs-root h2, #crs-root h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 500;
+    margin: 0;
+  }
+  .crs-mono { font-family: 'JetBrains Mono', monospace; }
+  .crs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .crs-header h1 { font-size: 21px; }
+  .crs-header .crs-mono { font-size: 11px; color: var(--ink-soft); letter-spacing: 0.02em; }
+  .crs-searchbar { display: flex; gap: 8px; margin-bottom: 1.25rem; }
+  .crs-searchbar input {
+    flex: 1; padding: 10px 12px; border: 1px solid var(--hairline);
+    background: var(--paper-raised); border-radius: 6px; font-size: 14px; color: var(--ink);
+  }
+  .crs-searchbar input:focus { outline: 1.5px solid var(--ink); }
+  .crs-btn {
+    padding: 10px 14px; border: 1px solid var(--ink); background: var(--ink);
+    color: var(--paper); border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit;
+  }
+  .crs-btn:hover { background: var(--ink-soft); }
+  .crs-btn-ghost { background: transparent; color: var(--ink); }
+  .crs-btn-ghost:hover { background: var(--paper-raised); }
+  .crs-toprow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .crs-toprow .crs-mono { font-size: 12px; color: var(--ink-soft); }
+
+  .crs-card {
+    background: var(--paper-raised); border: 1px solid var(--hairline); border-left: 3px solid var(--ink);
+    border-radius: 4px; padding: 12px 14px; margin-bottom: 10px; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  .crs-card:hover { border-left-color: var(--stamp); }
+  .crs-card-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+  .crs-card-meta { font-size: 12px; color: var(--ink-soft); }
+  .crs-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+    border: 1.5px solid var(--stamp); color: var(--stamp); padding: 3px 8px;
+    border-radius: 4px; white-space: nowrap; transform: rotate(-2deg);
+  }
+  .crs-empty {
+    text-align: center; padding: 2.5rem 1rem; color: var(--ink-soft); font-size: 14px;
+    border: 1px dashed var(--hairline); border-radius: 6px;
+  }
+
+  .crs-detail-head { margin-bottom: 1rem; }
+  .crs-detail-head .crs-back { font-size: 12px; color: var(--ink-soft); cursor: pointer; margin-bottom: 8px; display: inline-block; }
+  .crs-detail-head .crs-back:hover { color: var(--ink); }
+  .crs-detail-head h2 { font-size: 19px; }
+  .crs-detail-head .crs-mono { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+
+  .crs-hero { display: flex; gap: 1.5rem; align-items: flex-start; margin: 1rem 0 1.25rem; flex-wrap: wrap; }
+  .crs-hero-score { font-family: 'Noto Serif KR', serif; font-size: 56px; font-weight: 700; line-height: 1; }
+  .crs-hero-score span { font-size: 20px; color: var(--ink-soft); font-weight: 400; }
+  .crs-hero-sub { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+  .crs-hero-stats { display: flex; gap: 1.5rem; }
+  .crs-hero-stat-value { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; }
+  .crs-hero-stat-label { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  .crs-dist { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; margin-bottom: 1rem; }
+  .crs-dist-title { font-size: 12px; color: var(--ink-soft); margin-bottom: 10px; }
+  .crs-dist-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .crs-dist-label { width: 34px; font-size: 12px; text-align: right; color: var(--ink-soft); flex-shrink: 0; }
+  .crs-dist-track { flex: 1; height: 10px; background: var(--hairline); border-radius: 5px; overflow: hidden; }
+  .crs-dist-fill { height: 100%; background: var(--stamp); }
+  .crs-dist-count { width: 20px; font-size: 12px; color: var(--ink-soft); text-align: right; flex-shrink: 0; }
+
+  .crs-section-label { font-size: 12px; color: var(--ink-soft); border-bottom: 1px solid var(--hairline); padding-bottom: 6px; margin: 1.25rem 0 0.75rem; }
+
+  .crs-review { border: 1px solid var(--hairline); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; background: var(--paper-raised); }
+  .crs-review-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+  .crs-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; }
+  .crs-tag-sage { background: #EAF1E8; color: var(--sage); }
+  .crs-tag-amber { background: #F6ECDA; color: var(--amber); }
+  .crs-tag-stamp { background: #F5E4E1; color: var(--stamp); }
+  .crs-review-comment { font-size: 14px; line-height: 1.6; }
+  .crs-review-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+  .crs-review-date { font-size: 11px; color: var(--ink-soft); }
+
+  .crs-form { border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; background: var(--paper-raised); margin-top: 0.75rem; }
+  .crs-form label { display: block; font-size: 12px; color: var(--ink-soft); margin: 12px 0 6px; }
+  .crs-form label:first-child { margin-top: 0; }
+  .crs-form input[type="text"], .crs-form input[type="email"], .crs-form input[type="password"], .crs-form select, .crs-form textarea {
+    width: 100%; padding: 8px 10px; border: 1px solid var(--hairline); border-radius: 5px;
+    font-size: 14px; font-family: inherit; color: var(--ink); background: #fff;
+  }
+  .crs-form textarea { resize: vertical; }
+  .crs-form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+  .crs-error { color: var(--stamp); font-size: 12px; margin-top: 4px; }
+  .crs-hint { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+  .crs-loading { text-align: center; padding: 2rem; color: var(--ink-soft); font-size: 13px; }
+
+  .crs-scale { display: flex; align-items: center; gap: 6px; }
+  .crs-scale-btn {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--hairline);
+    background: #fff; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .crs-scale-btn.crs-active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .crs-scale-endpoints { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+
+  .crs-tagpick { display: flex; flex-wrap: wrap; gap: 6px; }
+  .crs-tagpick-btn { padding: 5px 12px; border: 1px solid var(--hairline); background: #fff; border-radius: 14px; font-size: 12px; cursor: pointer; color: var(--ink-soft); }
+  .crs-tagpick-btn.crs-active { background: var(--amber); border-color: var(--amber); color: #fff; }
+  .crs-tagpick-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .crs-guideline { background: #F2EEE2; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+  .crs-guideline ul { margin: 4px 0 0; padding-left: 18px; }
+  .crs-guideline li { margin-bottom: 2px; }
+
+  .crs-gate { text-align: center; padding: 1.5rem 0.5rem; }
+  .crs-gate h2 { font-size: 18px; margin-bottom: 8px; }
+  .crs-gate p { font-size: 13px; color: var(--ink-soft); margin: 0 0 1.25rem; line-height: 1.6; }
+  .crs-gate .crs-form { text-align: left; max-width: 320px; margin: 0 auto; }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<div id="crs-root">
+  <div class="crs-header">
+    <h1 id="crs-title">우리 학교 강의 카탈로그</h1>
+    <span class="crs-mono">STUDENT REVIEWS</span>
+  </div>
+  <div id="crs-view"><div class="crs-loading">불러오는 중…</div></div>
+</div>
+
+<script>
+(function () {
+  // ---- Firebase 프로젝트 만든 후, 아래 값을 본인 설정값으로 바꾸세요 ----
+  const firebaseConfig = {
+    apiKey: "AIzaSyCHPlq9qCTvWxwIEU6zt4E0WfSQ4_6CM4o",
+    authDomain: "gmuk-course-review.firebaseapp.com",
+    projectId: "gmuk-course-review",
+    storageBucket: "gmuk-course-review.firebasestorage.app",
+    messagingSenderId: "221296770909",
+    appId: "1:221296770909:web:7872de32c56473276932b4",
+    measurementId: "G-DXGBBNV2J7"
+  };
+  // -----------------------------------------------------------------
+  let db = null;
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('스크립트 로드 실패: ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function initFirebase() {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/firebase/12.18.0/firebase-app-compat.min.js');
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/firebase/12.18.0/firebase-firestore-compat.min.js');
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+  }
+
+  const root = document.getElementById('crs-view');
+  const TAG_OPTIONS = ['꿀강', '빡센 강의', '팀플 많음', '과제 많음', '출석 필수', '강의력 좋음', '성적 후함', '학점 짜다', '시험 위주', '필기 많음', '재수강 비추'];
+  let courses = [];
+  let searchTerm = '';
+
+  function esc(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // ---------- storage helpers (Firestore) ----------
+  async function loadCourses() {
+    try {
+      const snap = await db.collection('courses').orderBy('createdAt', 'desc').get();
+      courses = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch (e) { console.error('강의 목록 불러오기 실패', e); courses = []; }
+  }
+  async function addCourseDoc(data) {
+    const ref = await db.collection('courses').add(data);
+    return ref.id;
+  }
+  async function loadReviews(courseId) {
+    try {
+      const snap = await db.collection('courses').doc(courseId).collection('reviews').orderBy('createdAt').get();
+      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch (e) { console.error('후기 불러오기 실패', e); return []; }
+  }
+  async function addReviewDoc(courseId, data) {
+    await db.collection('courses').doc(courseId).collection('reviews').add(data);
+  }
+
+  // ---------- utils ----------
+  function avg(arr, key) {
+    if (!arr.length) return null;
+    const sum = arr.reduce((a, r) => a + Number(r[key] || 0), 0);
+    return Math.round((sum / arr.length) * 10) / 10;
+  }
+  function workloadLabel(v) { return v === '1' ? '적음' : v === '2' ? '보통' : '많음'; }
+  function workloadTagClass(v) { return v === '1' ? 'crs-tag-sage' : v === '2' ? 'crs-tag-amber' : 'crs-tag-stamp'; }
+
+  // ---------- list view ----------
+  function renderList() {
+    let html = '';
+    html += '<div class="crs-searchbar"><input type="text" id="crs-search" placeholder="강의명, 교수명으로 검색" value="' + esc(searchTerm) + '"></div>';
+    html += '<div class="crs-toprow"><span class="crs-mono">총 ' + courses.length + '개 강의</span>';
+    html += '<button class="crs-btn" id="crs-add-course-btn">+ 강의 추가</button></div>';
+    html += '<div id="crs-add-course-form"></div>';
+    html += '<div id="crs-course-cards"></div>';
+    root.innerHTML = html;
+
+    document.getElementById('crs-search').addEventListener('input', (e) => {
+      searchTerm = e.target.value;
+      renderCourseCards();
+    });
+    document.getElementById('crs-add-course-btn').addEventListener('click', toggleAddCourseForm);
+    renderCourseCards();
+  }
+
+  function renderCourseCards() {
+    const wrap = document.getElementById('crs-course-cards');
+    if (!wrap) return;
+    const t = searchTerm.trim();
+    const filtered = courses.filter(c => !t || (c.name + c.professor).includes(t));
+    if (!filtered.length) {
+      wrap.innerHTML = '<div class="crs-empty">' + (courses.length ? '검색 결과가 없어요.' : '아직 등록된 강의가 없어요. 첫 강의를 추가해보세요.') + '</div>';
+      return;
+    }
+    wrap.innerHTML = filtered.map(c => {
+      return '<div class="crs-card" data-id="' + esc(c.id) + '">' +
+        '<div><div class="crs-card-name">' + esc(c.name) + '</div>' +
+        '<div class="crs-card-meta">' + esc(c.professor) + ' 교수</div></div></div>';
+    }).join('');
+    wrap.querySelectorAll('.crs-card').forEach(el => {
+      el.addEventListener('click', () => openCourse(el.getAttribute('data-id')));
+    });
+  }
+
+  function toggleAddCourseForm() {
+    const wrap = document.getElementById('crs-add-course-form');
+    if (wrap.innerHTML) { wrap.innerHTML = ''; return; }
+    wrap.innerHTML =
+      '<div class="crs-form">' +
+      '<label>강의명</label><input type="text" id="crs-new-name" placeholder="예: 데이터구조론">' +
+      '<label>교수명</label><input type="text" id="crs-new-prof" placeholder="예: 김OO">' +
+      '<div class="crs-section-label" style="margin-top:16px;">첫 후기도 같이 남겨주세요</div>' +
+      reviewFieldsHtml() +
+      '<div id="crs-new-error" class="crs-error" style="display:none;"></div>' +
+      '<div class="crs-form-actions">' +
+      '<button class="crs-btn crs-btn-ghost" id="crs-new-cancel">취소</button>' +
+      '<button class="crs-btn" id="crs-new-submit">강의 등록하기</button>' +
+      '</div></div>';
+
+    const fields = wireReviewFields(wrap);
+
+    document.getElementById('crs-new-cancel').addEventListener('click', () => { wrap.innerHTML = ''; });
+    document.getElementById('crs-new-submit').addEventListener('click', async () => {
+      const name = document.getElementById('crs-new-name').value.trim();
+      const prof = document.getElementById('crs-new-prof').value.trim();
+      const errEl = document.getElementById('crs-new-error');
+      if (!name || !prof) {
+        errEl.textContent = '강의명과 교수명을 모두 입력해주세요.';
+        errEl.style.display = 'block';
+        return;
+      }
+      if (!fields.validate(errEl)) return;
+
+      const submitBtn = document.getElementById('crs-new-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '등록 중…';
+      try {
+        const courseId = await addCourseDoc({ name, professor: prof, createdAt: Date.now() });
+        const newReview = fields.getData();
+        await addReviewDoc(courseId, newReview);
+        wrap.innerHTML = '';
+        await loadCourses();
+        openCourse(courseId);
+      } catch (e) {
+        console.error('등록 실패', e);
+        errEl.textContent = '등록 중 오류가 발생했어요. 다시 시도해주세요.';
+        errEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = '강의 등록하기';
+      }
+    });
+  }
+
+  // ---------- detail view ----------
+  async function openCourse(id) {
+    root.innerHTML = '<div class="crs-loading">불러오는 중…</div>';
+    const course = courses.find(c => c.id === id);
+    const reviews = await loadReviews(id);
+    renderDetail(course, reviews);
+  }
+
+  function renderDetail(course, reviews) {
+    const rRating = avg(reviews, 'rating');
+    const rDiff = avg(reviews, 'difficulty');
+
+    const workloadCounts = { '1': 0, '2': 0, '3': 0 };
+    reviews.forEach(r => { workloadCounts[r.workload] = (workloadCounts[r.workload] || 0) + 1; });
+    const commonWorkload = reviews.length
+      ? Object.keys(workloadCounts).reduce((a, b) => workloadCounts[a] >= workloadCounts[b] ? a : b, '2')
+      : null;
+
+    const dist = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    reviews.forEach(r => { const k = String(r.rating); if (dist[k] !== undefined) dist[k]++; });
+    const maxCount = Math.max(1, ...Object.values(dist));
+
+    let html = '';
+    html += '<div class="crs-detail-head">';
+    html += '<span class="crs-back" id="crs-back-btn">← 목록으로</span>';
+    html += '<h2>' + esc(course.name) + '</h2>';
+    html += '<div class="crs-mono">' + esc(course.professor) + ' 교수</div>';
+    html += '</div>';
+
+    html += '<div class="crs-hero">';
+    html += '<div><div class="crs-hero-score">' + (rRating != null ? rRating : '-') + '<span> / 5</span></div>';
+    html += '<div class="crs-hero-sub">후기 ' + reviews.length + '개 기준 총평</div></div>';
+    html += '<div class="crs-hero-stats">';
+    html += '<div><div class="crs-hero-stat-value">' + (rDiff != null ? rDiff : '-') + '</div><div class="crs-hero-stat-label">난이도</div></div>';
+    html += '<div><div class="crs-hero-stat-value">' + (commonWorkload ? workloadLabel(commonWorkload) : '-') + '</div><div class="crs-hero-stat-label">과제량</div></div>';
+    html += '</div></div>';
+
+    html += '<div class="crs-dist"><div class="crs-dist-title">평점 분포</div>';
+    [5, 4, 3, 2, 1].forEach(n => {
+      const count = dist[n];
+      const pct = Math.round((count / maxCount) * 100);
+      html += '<div class="crs-dist-row"><div class="crs-dist-label">' + n + '점</div>' +
+        '<div class="crs-dist-track"><div class="crs-dist-fill" style="width:' + pct + '%"></div></div>' +
+        '<div class="crs-dist-count">' + count + '</div></div>';
+    });
+    html += '</div>';
+
+    html += '<div class="crs-section-label">후기 ' + reviews.length + '개</div>';
+    html += '<div id="crs-reviews">';
+    if (!reviews.length) {
+      html += '<div class="crs-empty">아직 후기가 없어요. 첫 후기를 남겨보세요.</div>';
+    } else {
+      html += reviews.slice().reverse().map(r => {
+        const date = new Date(r.createdAt);
+        const dateStr = date.getFullYear() + '.' + String(date.getMonth() + 1).padStart(2, '0') + '.' + String(date.getDate()).padStart(2, '0');
+        const tags = (r.tags || []).map(t => '<span class="crs-tag crs-tag-sage">' + esc(t) + '</span>').join('');
+        return '<div class="crs-review">' +
+          '<div class="crs-review-tags">' +
+          '<span class="crs-tag crs-tag-stamp">총평 ' + esc(r.rating) + '</span>' +
+          '<span class="crs-tag crs-tag-amber">난이도 ' + esc(r.difficulty) + '</span>' +
+          '<span class="crs-tag ' + workloadTagClass(r.workload) + '">과제 ' + workloadLabel(r.workload) + '</span>' +
+          '<span class="crs-tag crs-tag-sage">' + esc(r.examType) + '</span>' +
+          tags +
+          '</div>' +
+          (r.comment ? '<div class="crs-review-comment">' + esc(r.comment) + '</div>' : '') +
+          '<div class="crs-review-footer"><div class="crs-review-date">' + dateStr + '</div></div></div>';
+      }).join('');
+    }
+    html += '</div>';
+
+    root.innerHTML = html;
+    document.getElementById('crs-back-btn').addEventListener('click', renderList);
+  }
+
+  // ---------- review form building blocks ----------
+  function scaleButtons(idPrefix, leftLabel, rightLabel) {
+    let btns = '';
+    for (let i = 1; i <= 5; i++) {
+      btns += '<button type="button" class="crs-scale-btn" data-val="' + i + '" id="' + idPrefix + '-' + i + '">' + i + '</button>';
+    }
+    return '<div class="crs-scale">' + btns + '</div>' +
+      '<div class="crs-scale-endpoints"><span>' + leftLabel + '</span><span>' + rightLabel + '</span></div>';
+  }
+
+  function wireScale(idPrefix, defaultVal) {
+    let current = defaultVal;
+    const btns = [];
+    for (let i = 1; i <= 5; i++) {
+      const b = document.getElementById(idPrefix + '-' + i);
+      btns.push(b);
+      b.addEventListener('click', () => {
+        current = i;
+        btns.forEach(x => x.classList.remove('crs-active'));
+        b.classList.add('crs-active');
+      });
+    }
+    btns[defaultVal - 1].classList.add('crs-active');
+    return () => current;
+  }
+
+  function reviewFieldsHtml() {
+    let tagHtml = TAG_OPTIONS.map(t => '<button type="button" class="crs-tagpick-btn" data-tag="' + esc(t) + '">' + esc(t) + '</button>').join('');
+    return '<label>총평 *</label>' + scaleButtons('crs-rating', '1 - 별로예요', '5 - 최고예요') +
+      '<label>난이도 *</label>' + scaleButtons('crs-diff', '1 - 쉬워요', '5 - 어려워요') +
+      '<label>과제량</label><select id="crs-r-workload"><option value="1">적음</option><option value="2" selected>보통</option><option value="3">많음</option></select>' +
+      '<label>시험/평가 방식</label><select id="crs-r-exam"><option>중간+기말</option><option>팀플 위주</option><option>출석+과제</option><option>퀴즈 위주</option><option>기타</option></select>' +
+      '<label>태그 선택 (최대 3개)</label><div class="crs-tagpick" id="crs-tagpick">' + tagHtml + '</div>' +
+      '<label>한줄 후기</label>' +
+      '<textarea id="crs-r-comment" rows="2" maxlength="100" placeholder="예: 과제는 많지만 배우는 게 확실히 많아요"></textarea>' +
+      '<div class="crs-hint" id="crs-r-count">0/100자</div>' +
+      '<div class="crs-guideline"><strong>작성 가이드</strong><ul>' +
+      '<li>수업 방식, 과제, 시험에 대한 내용만 적어주세요.</li>' +
+      '<li>욕설이나 비속어, 인신공격성 표현은 삭제될 수 있어요.</li>' +
+      '<li>특정 개인의 신상 정보는 언급하지 말아주세요.</li>' +
+      '</ul></div>';
+  }
+
+  function wireReviewFields(wrap) {
+    const getRating = wireScale('crs-rating', 3);
+    const getDiff = wireScale('crs-diff', 3);
+
+    const selectedTags = [];
+    const tagBtns = wrap.querySelectorAll('.crs-tagpick-btn');
+    tagBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tag = btn.getAttribute('data-tag');
+        const idx = selectedTags.indexOf(tag);
+        if (idx >= 0) {
+          selectedTags.splice(idx, 1);
+          btn.classList.remove('crs-active');
+        } else {
+          if (selectedTags.length >= 3) return;
+          selectedTags.push(tag);
+          btn.classList.add('crs-active');
+        }
+        tagBtns.forEach(b => {
+          if (!b.classList.contains('crs-active')) b.disabled = selectedTags.length >= 3;
+        });
+      });
+    });
+
+    const commentIn = document.getElementById('crs-r-comment');
+    commentIn.addEventListener('input', () => {
+      document.getElementById('crs-r-count').textContent = commentIn.value.length + '/100자';
+    });
+
+    return {
+      validate(errEl) {
+        if (commentIn.value.trim().length > 100) {
+          errEl.textContent = '한줄 후기는 100자 이내로 작성해주세요.';
+          errEl.style.display = 'block';
+          return false;
+        }
+        return true;
+      },
+      getData() {
+        return {
+          id: 'r-' + Date.now(),
+          rating: getRating(),
+          difficulty: getDiff(),
+          workload: document.getElementById('crs-r-workload').value,
+          examType: document.getElementById('crs-r-exam').value,
+          tags: selectedTags,
+          comment: commentIn.value.trim(),
+          createdAt: Date.now()
+        };
+      }
+    };
+  }
+
+  // ---------- boot ----------
+  async function startApp() {
+    root.innerHTML = '<div class="crs-loading">불러오는 중…</div>';
+    try {
+      await initFirebase();
+    } catch (e) {
+      root.innerHTML = '<div class="crs-empty">사이트를 불러오는 데 문제가 생겼어요. 새로고침 해보세요.</div>';
+      console.error(e);
+      return;
+    }
+    await loadCourses();
+    renderList();
+  }
+
+  async function init() {
+    await startApp();
+  }
+  init();
+})();
+</script>
