@@ -1,8 +1,12 @@
-<title>우리 학교 강의</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%93%9A</text></svg>">
-
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우리 학교 생활 — GSAP Intro Prototype</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
 <style>
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --paper: #F7F4EC;
     --paper-raised: #FFFDF8;
@@ -12,739 +16,286 @@
     --stamp: #A6392B;
     --sage: #4F7A52;
     --amber: #B9822E;
+    --green-bg: #0A3D24;
+    --green-deep: #062616;
   }
-  html, body {
-    margin: 0;
-    min-height: 100vh;
-    background-color: #0A3D24;
-    font-family: 'Noto Sans KR', -apple-system, sans-serif;
-    color: var(--paper);
+  html, body { background: var(--green-bg); overflow-x: hidden; font-family: 'Noto Sans KR', sans-serif; color: var(--paper); }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- background ambience ---------- */
+  #bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; filter: blur(70px); opacity: 0.5; }
+  .blob { position: absolute; border-radius: 50%; }
+  .blob-1 { width: 460px; height: 460px; background: var(--stamp); top: -12%; left: -10%; animation: drift1 24s ease-in-out infinite; }
+  .blob-2 { width: 380px; height: 380px; background: var(--amber); bottom: -14%; right: -8%; animation: drift2 28s ease-in-out infinite; }
+  @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(70px,90px) scale(1.15); } }
+  @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-80px,-60px) scale(1.1); } }
+
+  section { position: relative; width: 100%; }
+
+  /* ---------- hero ---------- */
+  #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+  #hero .eyebrow { font-size: 12px; letter-spacing: 0.2em; color: var(--amber); margin-bottom: 18px; opacity: 0; }
+  #hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(38px, 8vw, 78px); line-height: 1.15; opacity: 0; }
+  #hero p { margin-top: 18px; font-size: 15px; color: rgba(247,244,236,0.75); max-width: 420px; opacity: 0; }
+  .cta-btn {
+    margin-top: 40px; padding: 15px 34px; border-radius: 30px; border: none;
+    background: var(--paper); color: var(--green-deep); font-weight: 700; font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif; cursor: pointer; opacity: 0;
+    box-shadow: 0 0 0 0 rgba(201,162,75,0.6);
+    animation: glow-pulse 2.4s ease-in-out infinite;
   }
-  h1, h2, h3 { font-family: 'Noto Serif KR', serif; font-weight: 500; margin: 0; }
-  .crs-mono { font-family: 'JetBrains Mono', monospace; }
-
-  #crs-navbar { position: sticky; top: 0; z-index: 50; background: var(--ink); box-shadow: 0 2px 10px rgba(0,0,0,0.25); }
-  .crs-navbar-inner { max-width: 1100px; margin: 0 auto; padding: 14px 20px; display: flex; justify-content: space-between; align-items: baseline; }
-  .crs-navbar-title { font-family: 'Noto Serif KR', serif; font-size: 19px; color: var(--paper); }
-  .crs-navbar-tag { color: rgba(247,244,236,0.55); font-size: 11px; letter-spacing: 0.02em; }
-
-  #crs-wrapper { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-
-  @keyframes crs-fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-  .crs-page { animation: crs-fadein 0.35s cubic-bezier(.2,.8,.3,1); }
-
-  .crs-hero-search {
-    background: var(--paper-raised); border: 1px solid var(--hairline); border-left: 4px solid var(--stamp);
-    border-radius: 10px; padding: 22px 24px; margin-bottom: 1.5rem;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 12px 26px rgba(0,0,0,0.18);
-    color: var(--ink);
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,75,0.45), 0 8px 24px rgba(0,0,0,0.3); }
+    50% { box-shadow: 0 0 0 16px rgba(201,162,75,0), 0 8px 24px rgba(0,0,0,0.3); }
   }
-  .crs-hero-search-label { font-family: 'Noto Serif KR', serif; font-size: 17px; margin-bottom: 12px; }
-  .crs-searchbar input {
-    width: 100%; padding: 12px 14px; border: 1px solid var(--hairline);
-    background: #fff; border-radius: 7px; font-size: 15px; color: var(--ink);
-    transition: border-color .15s ease, box-shadow .15s ease;
+
+  /* ---------- pinned card reveal ---------- */
+  #cards-section { height: 340vh; }
+  #cards-pin { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+  #cards-pin .section-label { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 12px; letter-spacing: 0.15em; color: var(--amber); }
+  #cards-glow {
+    position: absolute; inset: 0; z-index: -1; opacity: 0; filter: blur(90px);
+    background: radial-gradient(circle at 50% 50%, var(--stamp) 0%, transparent 65%);
+    transition: opacity 0.4s ease;
   }
-  .crs-searchbar input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(30,42,53,0.08); }
-
-  .crs-tagfilter { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
-  .crs-tagfilter-btn {
-    padding: 4px 11px; border: 1px solid var(--hairline); background: var(--paper-raised); border-radius: 14px;
-    font-size: 11px; cursor: pointer; color: var(--ink-soft);
-    transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+  .reveal-card {
+    position: absolute; width: min(84vw, 360px); background: var(--paper-raised); color: var(--ink);
+    border: 1px solid var(--hairline); border-top: 4px solid var(--ink); border-radius: 14px;
+    padding: 34px 28px; text-align: center; opacity: 0;
+    box-shadow: 0 24px 50px rgba(0,0,0,0.35);
+    will-change: transform, opacity;
   }
-  .crs-tagfilter-btn:hover { border-color: var(--sage); color: var(--sage); }
-  .crs-tagfilter-btn.crs-active { background: var(--sage); border-color: var(--sage); color: #fff; }
-
-  .crs-btn {
-    padding: 10px 14px; border: 1px solid var(--ink); background: var(--ink);
-    color: var(--paper); border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit;
-    transition: transform .1s ease, box-shadow .15s ease, background .15s ease;
+  .reveal-card .rc-icon, .reveal-card .rc-tag, .reveal-card .rc-title, .reveal-card .rc-desc {
+    opacity: 0; transform: translateY(14px);
   }
-  .crs-btn:hover { background: #33465A; box-shadow: 0 4px 10px rgba(0,0,0,0.25); transform: translateY(-1px); }
-  .crs-btn:active { transform: translateY(0) scale(0.98); box-shadow: none; }
-  .crs-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-  .crs-btn-ghost { background: transparent; color: var(--paper); border-color: rgba(247,244,236,0.5); box-shadow: none; }
-  .crs-btn-ghost:hover { background: rgba(247,244,236,0.08); transform: none; box-shadow: none; }
-
-  .crs-toprow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; color: var(--paper); }
-  .crs-toprow .crs-mono { font-size: 12px; color: rgba(247,244,236,0.75); }
-
-  .crs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-
-  .crs-card {
-    background: var(--paper-raised); border: 1px solid var(--hairline); border-top: 3px solid var(--ink);
-    border-radius: 8px; padding: 16px; cursor: pointer; color: var(--ink);
-    display: flex; flex-direction: column; gap: 9px;
-    transition: transform .15s ease, box-shadow .15s ease, border-top-color .15s ease;
+  .reveal-card .rc-link {
+    display: inline-block; margin-top: 14px; font-size: 12px; letter-spacing: 0.05em;
+    color: var(--stamp); text-decoration: none; border-bottom: 1px solid var(--stamp);
+    padding-bottom: 2px; transition: opacity .15s ease;
   }
-  .crs-card:hover { border-top-color: var(--stamp); transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.18); }
-  .crs-card:active { transform: translateY(-1px); }
-  .crs-card-name { font-size: 16px; font-weight: 600; font-family: 'Noto Serif KR', serif; line-height: 1.3; }
-  .crs-prof-pill {
-    display: inline-block; background: #EFEAD8; color: var(--ink-soft); font-size: 11px;
-    padding: 3px 9px; border-radius: 10px; width: fit-content;
+  .reveal-card .rc-link:hover { opacity: 0.7; }
+  .card-dots { position: absolute; bottom: 56px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+  .card-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(247,244,236,0.3); transition: background .3s ease, transform .3s ease; }
+  .card-dot.active { background: var(--amber); transform: scale(1.4); }
+  .reveal-card .rc-icon { font-size: 40px; margin-bottom: 14px; }
+  .reveal-card .rc-tag { font-size: 11px; letter-spacing: 0.1em; color: var(--stamp); margin-bottom: 8px; }
+  .reveal-card .rc-title { font-family: 'Noto Serif KR', serif; font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .reveal-card .rc-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ---------- horizontal showcase ---------- */
+  #horiz-section { height: 320vh; }
+  #horiz-pin { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+  #horiz-pin .section-label { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 12px; letter-spacing: 0.15em; color: var(--amber); text-align: center; }
+  #horiz-track { display: flex; gap: 28px; will-change: transform; padding: 0 8vw; }
+  .showcase-card {
+    flex: 0 0 auto; width: min(78vw, 320px); height: 380px; background: var(--paper-raised); color: var(--ink);
+    border: 1px solid var(--hairline); border-radius: 16px; padding: 30px; display: flex; flex-direction: column;
+    justify-content: flex-end; box-shadow: 0 24px 50px rgba(0,0,0,0.3); position: relative; overflow: hidden;
   }
-  .crs-card-stats { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .crs-star-rating { color: var(--amber); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; letter-spacing: 1px; }
-  .crs-card-count, .crs-card-meta-inline { color: var(--ink-soft); font-size: 12px; }
-  .crs-card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-
-  .crs-empty {
-    text-align: center; padding: 2.5rem 1rem; color: rgba(247,244,236,0.75); font-size: 14px;
-    border: 1px dashed rgba(247,244,236,0.3); border-radius: 6px;
+  .showcase-card .sc-badge {
+    position: absolute; top: 20px; right: 20px; border: 2px solid var(--stamp); color: var(--stamp);
+    border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; transform: rotate(-14deg); text-align: center; line-height: 1.2;
   }
-  .crs-empty-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+  .showcase-card .sc-icon { font-size: 42px; margin-bottom: 14px; }
+  .showcase-card .sc-title { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .showcase-card .sc-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+  #sc-courses { transition: transform .2s ease, box-shadow .2s ease; }
+  #sc-courses:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
 
-  .crs-detail-card {
-    background: var(--paper); border: 1px solid var(--hairline); border-radius: 14px; padding: 1.5rem;
-    max-width: 700px; margin: 0 auto; color: var(--ink);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 12px 30px rgba(0,0,0,0.2);
-  }
-  .crs-detail-head { margin-bottom: 1rem; }
-  .crs-detail-head .crs-back { font-size: 12px; color: var(--ink-soft); cursor: pointer; margin-bottom: 8px; display: inline-block; }
-  .crs-detail-head .crs-back:hover { color: var(--ink); }
-  .crs-detail-head h2 { font-size: 19px; }
-  .crs-detail-head .crs-mono { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
-
-  .crs-hero { display: flex; gap: 1.5rem; align-items: flex-start; margin: 1rem 0 1.25rem; flex-wrap: wrap; }
-  .crs-hero-score { font-family: 'Noto Serif KR', serif; font-size: 56px; font-weight: 700; line-height: 1; }
-  .crs-hero-score span { font-size: 20px; color: var(--ink-soft); font-weight: 400; }
-  .crs-hero-stars { color: var(--amber); font-size: 15px; letter-spacing: 2px; margin-top: 6px; }
-  .crs-hero-sub { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
-  .crs-hero-stats { display: flex; gap: 1.5rem; }
-  .crs-hero-stat-value { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; }
-  .crs-hero-stat-stars { font-size: 12px; color: var(--amber); letter-spacing: 1px; margin-top: 2px; }
-  .crs-hero-stat-label { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
-
-  .crs-dist { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; margin-bottom: 1rem; }
-  .crs-dist-title { font-size: 12px; color: var(--ink-soft); margin-bottom: 10px; }
-  .crs-dist-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .crs-dist-label { width: 34px; font-size: 12px; text-align: right; color: var(--ink-soft); flex-shrink: 0; }
-  .crs-dist-track { flex: 1; height: 10px; background: var(--hairline); border-radius: 5px; overflow: hidden; }
-  .crs-dist-fill { height: 100%; background: var(--stamp); width: 0; transition: width 0.6s cubic-bezier(.2,.8,.3,1); }
-  .crs-dist-count { width: 20px; font-size: 12px; color: var(--ink-soft); text-align: right; flex-shrink: 0; }
-
-  .crs-section-label { font-size: 12px; color: var(--ink-soft); border-bottom: 1px solid var(--hairline); padding-bottom: 6px; margin: 1.25rem 0 0.75rem; }
-
-  .crs-review { border: 1px solid var(--hairline); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; background: var(--paper-raised); transition: box-shadow .15s ease, transform .15s ease; }
-  .crs-review:hover { box-shadow: 0 4px 12px rgba(30,42,53,0.08); transform: translateY(-1px); }
-  .crs-review-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
-  .crs-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; }
-  .crs-tag-sage { background: #EAF1E8; color: var(--sage); }
-  .crs-tag-amber { background: #F6ECDA; color: var(--amber); }
-  .crs-tag-stamp { background: #F5E4E1; color: var(--stamp); }
-  .crs-review-comment { font-size: 14px; line-height: 1.6; }
-  .crs-review-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
-  .crs-review-date { font-size: 11px; color: var(--ink-soft); }
-
-  .crs-form { border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; background: #fff; margin-top: 0.75rem; animation: crs-fadein 0.25s ease; color: var(--ink); }
-  .crs-form label { display: block; font-size: 12px; color: var(--ink-soft); margin: 12px 0 6px; }
-  .crs-form label:first-child { margin-top: 0; }
-  .crs-form input[type="text"], .crs-form select, .crs-form textarea {
-    width: 100%; padding: 8px 10px; border: 1px solid var(--hairline); border-radius: 5px;
-    font-size: 14px; font-family: inherit; color: var(--ink); background: #fff;
-    transition: border-color .15s ease, box-shadow .15s ease;
-  }
-  .crs-form input[type="text"]:focus, .crs-form select:focus, .crs-form textarea:focus {
-    outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(30,42,53,0.08);
-  }
-  .crs-form textarea { resize: vertical; }
-  .crs-form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
-  .crs-error { color: var(--stamp); font-size: 12px; margin-top: 4px; animation: crs-fadein 0.2s ease; }
-  .crs-hint { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
-
-  .crs-loading {
-    text-align: center; padding: 2.5rem; color: rgba(247,244,236,0.8); font-size: 13px;
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-  }
-  .crs-loading::before {
-    content: ''; width: 22px; height: 22px; border-radius: 50%;
-    border: 2.5px solid rgba(247,244,236,0.3); border-top-color: var(--paper);
-    animation: crs-spin 0.7s linear infinite;
-  }
-  @keyframes crs-spin { to { transform: rotate(360deg); } }
-
-  .crs-skel {
-    background: linear-gradient(90deg, rgba(247,244,236,0.15) 25%, rgba(247,244,236,0.3) 37%, rgba(247,244,236,0.15) 63%);
-    background-size: 400% 100%; animation: crs-shimmer 1.4s ease infinite; border-radius: 6px;
-  }
-  @keyframes crs-shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
-  .crs-skel-card { height: 90px; border-radius: 8px; }
-  .crs-skel-line { height: 12px; }
-
-  .crs-scale { display: flex; align-items: center; gap: 6px; }
-  .crs-scale-btn {
-    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--hairline);
-    background: #fff; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700;
-    color: var(--ink-soft); cursor: pointer;
-    transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
-  }
-  .crs-scale-btn:hover { border-color: var(--ink); transform: translateY(-1px); }
-  .crs-scale-btn.crs-active { background: var(--ink); border-color: var(--ink); color: var(--paper); transform: scale(1.08); }
-  .crs-scale-endpoints { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
-
-  .crs-workload-picker { display: flex; gap: 6px; }
-  .crs-workload-btn {
-    flex: 1; padding: 9px 10px; border: 1px solid var(--hairline); background: #fff; border-radius: 7px;
-    font-size: 13px; cursor: pointer; color: var(--ink-soft); font-family: inherit;
-    transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
-  }
-  .crs-workload-btn:hover { border-color: var(--ink); }
-  .crs-workload-btn.crs-active { background: var(--ink); border-color: var(--ink); color: var(--paper); transform: translateY(-1px); }
-
-  .crs-tagpick { display: flex; flex-wrap: wrap; gap: 6px; }
-  .crs-tagpick-btn {
-    padding: 5px 12px; border: 1px solid var(--hairline); background: #fff; border-radius: 14px;
-    font-size: 12px; cursor: pointer; color: var(--ink-soft);
-    transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
-  }
-  .crs-tagpick-btn:hover:not(:disabled) { border-color: var(--amber); color: var(--amber); }
-  .crs-tagpick-btn.crs-active { background: var(--amber); border-color: var(--amber); color: #fff; transform: translateY(-1px); }
-  .crs-tagpick-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .crs-guideline { background: #F2EEE2; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
-  .crs-guideline ul { margin: 4px 0 0; padding-left: 18px; }
-  .crs-guideline li { margin-bottom: 2px; }
-
-  .crs-toast {
-    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 12px);
-    background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 24px;
-    font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); opacity: 0;
-    transition: opacity .25s ease, transform .25s ease; z-index: 9999; pointer-events: none;
-    font-family: 'Noto Sans KR', sans-serif;
-  }
-  .crs-toast-show { opacity: 1; transform: translate(-50%, 0); }
-
-  @media (max-width: 480px) {
-    .crs-navbar-title { font-size: 16px; }
-    .crs-hero-search { padding: 16px; }
-    .crs-detail-card { padding: 1.1rem; border-radius: 10px; }
-    .crs-hero-score { font-size: 42px; }
-    .crs-scale-btn { width: 32px; height: 32px; font-size: 13px; }
-  }
+  /* ---------- final cta ---------- */
+  #outro { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+  #outro h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(28px, 6vw, 50px); opacity: 0; }
+  #outro p.mono { margin-top: 10px; font-size: 12px; letter-spacing: 0.15em; color: rgba(247,244,236,0.6); opacity: 0; }
 </style>
+</head>
+<body>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
+<div id="bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
 
-<div id="crs-navbar">
-  <div class="crs-navbar-inner">
-    <span class="crs-navbar-title">우리 학교 강의</span>
-    <span class="crs-mono crs-navbar-tag">STUDENT REVIEWS</span>
+<section id="hero">
+  <div class="eyebrow mono">STUDENT LIFE GUIDE</div>
+  <h1>우리 학교 생활,<br>한 곳에서</h1>
+  <p>강의 후기부터 자취, 동아리까지 — 학교 생활에 필요한 모든 정보를 모으고 있어요.</p>
+  <button class="cta-btn" id="hero-cta">둘러보기 ↓</button>
+</section>
+
+<section id="cards-section">
+  <div id="cards-pin">
+    <div id="cards-glow"></div>
+    <div class="section-label mono">SCROLL TO REVEAL</div>
+    <div class="reveal-card" id="rc-1" data-accent="sage">
+      <div class="rc-icon">📜</div>
+      <div class="rc-tag mono">CATEGORY 01 · SOON</div>
+      <div class="rc-title">학칙</div>
+      <div class="rc-desc">휴학 · 복학 · 학점 초과신청<br>학사경고까지 한눈에</div>
+    </div>
+    <div class="reveal-card" id="rc-2" data-accent="stamp">
+      <div class="rc-icon">📚</div>
+      <div class="rc-tag mono">CATEGORY 02 · NOW OPEN</div>
+      <div class="rc-title">강의 평가</div>
+      <div class="rc-desc">수강신청 전 꼭 확인하는<br>강의 · 교수 후기</div>
+      <a class="rc-link mono" href="https://seung341.github.io/gmuk-course-review/">바로가기 →</a>
+    </div>
+    <div class="reveal-card" id="rc-3" data-accent="amber">
+      <div class="rc-icon">❓</div>
+      <div class="rc-tag mono">CATEGORY 03 · SOON</div>
+      <div class="rc-title">FAQ</div>
+      <div class="rc-desc">학생들이 자주 묻는 질문<br>모아보기</div>
+    </div>
+    <div class="card-dots" id="card-dots">
+      <div class="card-dot active"></div>
+      <div class="card-dot"></div>
+      <div class="card-dot"></div>
+    </div>
   </div>
-</div>
-<div id="crs-wrapper">
-  <div id="crs-view">
-    <div class="crs-page">
-      <div class="crs-skel crs-skel-line" style="width:100%;height:96px;margin-bottom:20px;"></div>
-      <div class="crs-grid">
-        <div class="crs-skel crs-skel-card"></div>
-        <div class="crs-skel crs-skel-card"></div>
-        <div class="crs-skel crs-skel-card"></div>
+</section>
+
+<section id="horiz-section">
+  <div id="horiz-pin">
+    <div class="section-label mono">한 장씩 훑어보기 →</div>
+    <div id="horiz-track">
+      <div class="showcase-card">
+        <div class="sc-badge">SOON</div>
+        <div class="sc-icon">📜</div>
+        <div class="sc-title">학칙</div>
+        <div class="sc-desc">휴학, 복학, 학점 초과신청, 학사경고 기준까지</div>
+      </div>
+      <div class="showcase-card" id="sc-courses" style="cursor:pointer;">
+        <div class="sc-badge">NOW<br>OPEN</div>
+        <div class="sc-icon">📚</div>
+        <div class="sc-title">강의 평가</div>
+        <div class="sc-desc">평점, 난이도, 과제량까지 — 강의 등록하고 바로 후기 남기기</div>
+      </div>
+      <div class="showcase-card">
+        <div class="sc-badge">SOON</div>
+        <div class="sc-icon">❓</div>
+        <div class="sc-title">FAQ</div>
+        <div class="sc-desc">학생들이 자주 묻는 질문 모음</div>
+      </div>
+      <div class="showcase-card" style="border-style:dashed; align-items:center; justify-content:center; text-align:center;">
+        <div class="sc-icon">➕</div>
+        <div class="sc-title">새 카테고리</div>
+        <div class="sc-desc">곧 추가될 예정이에요</div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
+<section id="outro">
+  <h2>이 모든 걸 한 곳에서</h2>
+  <p class="mono">GEORGE MASON UNIVERSITY KOREA</p>
+  <button class="cta-btn" id="outro-cta">입장하기 →</button>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 <script>
 (function () {
-  // ---- Firebase 프로젝트 만든 후, 아래 값을 본인 설정값으로 바꾸세요 ----
-  const firebaseConfig = {
-    apiKey: "AIzaSyCHPlq9qCTvWxwIEU6zt4E0WfSQ4_6CM4o",
-    authDomain: "gmuk-course-review.firebaseapp.com",
-    projectId: "gmuk-course-review",
-    storageBucket: "gmuk-course-review.firebasestorage.app",
-    messagingSenderId: "221296770909",
-    appId: "1:221296770909:web:7872de32c56473276932b4",
-    measurementId: "G-DXGBBNV2J7"
-  };
-  // -----------------------------------------------------------------
-  let db = null;
+  gsap.registerPlugin(ScrollTrigger);
 
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = src;
-      s.onload = () => resolve();
-      s.onerror = () => reject(new Error('스크립트 로드 실패: ' + src));
-      document.head.appendChild(s);
-    });
+  // ---------- hero ----------
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .to('#hero .eyebrow', { opacity: 1, y: -6, duration: 0.6 })
+    .to('#hero h1', { opacity: 1, y: -10, duration: 0.9 }, '-=0.3')
+    .to('#hero p', { opacity: 1, y: -6, duration: 0.7 }, '-=0.4')
+    .to('#hero .cta-btn', { opacity: 1, duration: 0.6 }, '-=0.3');
+
+  document.getElementById('hero-cta').addEventListener('click', () => {
+    document.getElementById('cards-section').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('sc-courses').addEventListener('click', () => {
+    window.location.href = 'https://seung341.github.io/gmuk-course-review/';
+  });
+
+  // ---------- pinned scroll-triggered cards ----------
+  const revealCards = ['#rc-1', '#rc-2', '#rc-3'];
+  const accentColors = { stamp: '#A6392B', amber: '#B9822E', sage: '#4F7A52' };
+  const dots = document.querySelectorAll('.card-dot');
+  const glow = document.getElementById('cards-glow');
+
+  gsap.set('#cards-pin', { perspective: 1000 });
+  gsap.to('.rc-icon', { scale: 1.08, duration: 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
+  function setActiveCard(idx) {
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    const accent = document.querySelector(revealCards[idx]).dataset.accent;
+    glow.style.background = 'radial-gradient(circle at 50% 50%, ' + accentColors[accent] + ' 0%, transparent 65%)';
+    glow.style.opacity = 0.55;
   }
 
-  async function initFirebase() {
-    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/firebase/12.18.0/firebase-app-compat.min.js');
-    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/firebase/12.18.0/firebase-firestore-compat.min.js');
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-  }
-
-  const root = document.getElementById('crs-view');
-  const TAG_OPTIONS = ['꿀강', '빡센 강의', '팀플 많음', '과제 많음', '출석 필수', '강의력 좋음', '성적 후함', '학점 짜다', '시험 위주', '필기 많음', '재수강 비추'];
-  let courses = [];
-  let searchTerm = '';
-  let activeTag = null;
-
-  function esc(s) {
-    return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-
-  function showToast(msg) {
-    const el = document.createElement('div');
-    el.className = 'crs-toast';
-    el.textContent = msg;
-    document.body.appendChild(el);
-    requestAnimationFrame(() => el.classList.add('crs-toast-show'));
-    setTimeout(() => {
-      el.classList.remove('crs-toast-show');
-      setTimeout(() => el.remove(), 300);
-    }, 2200);
-  }
-
-  // ---------- storage helpers (Firestore) ----------
-  async function loadCourses() {
-    try {
-      const snap = await db.collection('courses').orderBy('createdAt', 'desc').get();
-      courses = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    } catch (e) { console.error('강의 목록 불러오기 실패', e); courses = []; }
-  }
-  async function addCourseDoc(data) {
-    const ref = await db.collection('courses').add(data);
-    return ref.id;
-  }
-  async function loadReviews(courseId) {
-    try {
-      const snap = await db.collection('courses').doc(courseId).collection('reviews').orderBy('createdAt').get();
-      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    } catch (e) { console.error('후기 불러오기 실패', e); return []; }
-  }
-  async function addReviewDoc(courseId, data) {
-    await db.collection('courses').doc(courseId).collection('reviews').add(data);
-  }
-  async function updateCourseDoc(courseId, data) {
-    await db.collection('courses').doc(courseId).update(data);
-  }
-  function findMatchingCourse(name, professor) {
-    const n = name.trim().replace(/\s+/g, '');
-    const p = professor.trim().replace(/\s+/g, '');
-    return courses.find(c => c.name.trim().replace(/\s+/g, '') === n && c.professor.trim().replace(/\s+/g, '') === p);
-  }
-
-  // ---------- utils ----------
-  function avg(arr, key) {
-    if (!arr.length) return null;
-    const sum = arr.reduce((a, r) => a + Number(r[key] || 0), 0);
-    return Math.round((sum / arr.length) * 10) / 10;
-  }
-  function workloadLabel(v) { return v === '1' ? '적음' : v === '2' ? '보통' : '많음'; }
-  function workloadTagClass(v) { return v === '1' ? 'crs-tag-sage' : v === '2' ? 'crs-tag-amber' : 'crs-tag-stamp'; }
-  function starStr(n) {
-    if (n == null) return '—';
-    const full = Math.max(0, Math.min(5, Math.round(n)));
-    return '★'.repeat(full) + '☆'.repeat(5 - full);
-  }
-
-  function skeletonListInner() {
-    return '<div class="crs-page">' +
-      '<div class="crs-skel crs-skel-line" style="width:100%;height:96px;margin-bottom:20px;"></div>' +
-      '<div class="crs-grid"><div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div><div class="crs-skel crs-skel-card"></div></div>' +
-      '</div>';
-  }
-  function skeletonDetailInner() {
-    return '<div class="crs-page"><div class="crs-detail-card">' +
-      '<div class="crs-skel crs-skel-line" style="width:40%;margin-bottom:14px;"></div>' +
-      '<div class="crs-skel crs-skel-line" style="width:60%;height:24px;margin-bottom:20px;"></div>' +
-      '<div class="crs-skel" style="width:120px;height:56px;margin-bottom:20px;"></div>' +
-      '<div class="crs-skel crs-skel-card" style="height:50px;margin-bottom:10px;"></div>' +
-      '<div class="crs-skel crs-skel-card" style="height:50px;"></div>' +
-      '</div></div>';
-  }
-
-  // ---------- routing ----------
-  function route() {
-    const hash = location.hash;
-    const m = hash.match(/^#\/course\/(.+)$/);
-    if (m) {
-      openCourseById(decodeURIComponent(m[1]));
-    } else {
-      renderList();
-    }
-  }
-
-  // ---------- list view ----------
-  function renderList() {
-    const allTags = Array.from(new Set(courses.flatMap(c => c.tags || [])));
-
-    let html = '<div class="crs-page">';
-    html += '<div class="crs-hero-search"><div class="crs-hero-search-label">어떤 강의를 찾고 있나요?</div>' +
-      '<div class="crs-searchbar"><input type="text" id="crs-search" placeholder="강의명 또는 교수명 검색" value="' + esc(searchTerm) + '"></div></div>';
-    if (allTags.length) {
-      html += '<div class="crs-tagfilter" id="crs-tagfilter">';
-      html += '<button type="button" class="crs-tagfilter-btn' + (activeTag === null ? ' crs-active' : '') + '" data-tag="">전체</button>';
-      html += allTags.map(t => '<button type="button" class="crs-tagfilter-btn' + (activeTag === t ? ' crs-active' : '') + '" data-tag="' + esc(t) + '">' + esc(t) + '</button>').join('');
-      html += '</div>';
-    }
-    html += '<div class="crs-toprow"><span class="crs-mono">총 ' + courses.length + '개 강의</span>';
-    html += '<button class="crs-btn" id="crs-add-course-btn">+ 강의 추가</button></div>';
-    html += '<div id="crs-add-course-form"></div>';
-    html += '<div id="crs-course-cards"></div>';
-    html += '</div>';
-    root.innerHTML = html;
-
-    document.getElementById('crs-search').addEventListener('input', (e) => {
-      searchTerm = e.target.value;
-      renderCourseCards();
-    });
-    const tagfilter = document.getElementById('crs-tagfilter');
-    if (tagfilter) {
-      tagfilter.addEventListener('click', (e) => {
-        const btn = e.target.closest('.crs-tagfilter-btn');
-        if (!btn) return;
-        activeTag = btn.getAttribute('data-tag') || null;
-        tagfilter.querySelectorAll('.crs-tagfilter-btn').forEach(b => b.classList.remove('crs-active'));
-        btn.classList.add('crs-active');
-        renderCourseCards();
-      });
-    }
-    document.getElementById('crs-add-course-btn').addEventListener('click', toggleAddCourseForm);
-    renderCourseCards();
-  }
-
-  function renderCourseCards() {
-    const wrap = document.getElementById('crs-course-cards');
-    if (!wrap) return;
-    const t = searchTerm.trim();
-    let filtered = courses.filter(c => !t || (c.name + c.professor).includes(t));
-    if (activeTag) filtered = filtered.filter(c => (c.tags || []).includes(activeTag));
-    filtered = filtered.slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-
-    if (!filtered.length) {
-      wrap.innerHTML = '<div class="crs-empty"><span class="crs-empty-icon">' + (courses.length ? '🔍' : '📭') + '</span>' +
-        (courses.length ? '조건에 맞는 강의가 없어요.' : '아직 등록된 강의가 없어요. 첫 강의를 추가해보세요.') + '</div>';
-      return;
-    }
-    wrap.innerHTML = '<div class="crs-grid">' + filtered.map(c => {
-      const ratingStr = c.rating != null ? '★ ' + c.rating.toFixed(1) : '—';
-      const countStr = '후기 ' + (c.reviewCount || 1) + '개';
-      const metaInline = (c.difficulty != null ? '난이도 ' + c.difficulty : '') +
-        (c.workload != null ? ' · 과제 ' + workloadLabel(c.workload) : '');
-      const chips = (c.tags || []).slice(0, 3).map(tg => '<span class="crs-tag crs-tag-sage">' + esc(tg) + '</span>').join('');
-      return '<div class="crs-card" data-id="' + esc(c.id) + '">' +
-        '<div class="crs-card-name">' + esc(c.name) + '</div>' +
-        '<span class="crs-prof-pill">' + esc(c.professor) + ' 교수</span>' +
-        '<div class="crs-card-stats"><span class="crs-star-rating">' + ratingStr + '</span>' +
-        '<span class="crs-card-count">' + countStr + '</span></div>' +
-        (metaInline ? '<div class="crs-card-meta-inline">' + metaInline + '</div>' : '') +
-        (chips ? '<div class="crs-card-tags">' + chips + '</div>' : '') +
-        '</div>';
-    }).join('') + '</div>';
-
-    wrap.querySelectorAll('.crs-card').forEach(el => {
-      el.addEventListener('click', () => {
-        location.hash = '#/course/' + encodeURIComponent(el.getAttribute('data-id'));
-      });
-    });
-  }
-
-  function toggleAddCourseForm() {
-    const wrap = document.getElementById('crs-add-course-form');
-    if (wrap.innerHTML) { wrap.innerHTML = ''; return; }
-    wrap.innerHTML =
-      '<div class="crs-form">' +
-      '<label>강의명</label><input type="text" id="crs-new-name" placeholder="예: 데이터구조론">' +
-      '<label>교수명</label><input type="text" id="crs-new-prof" placeholder="예: 김OO">' +
-      '<div class="crs-section-label" style="margin-top:16px;">첫 후기도 같이 남겨주세요</div>' +
-      reviewFieldsHtml() +
-      '<div id="crs-new-error" class="crs-error" style="display:none;"></div>' +
-      '<div class="crs-form-actions">' +
-      '<button class="crs-btn crs-btn-ghost" id="crs-new-cancel">취소</button>' +
-      '<button class="crs-btn" id="crs-new-submit">강의 등록하기</button>' +
-      '</div></div>';
-
-    const fields = wireReviewFields(wrap);
-
-    document.getElementById('crs-new-cancel').addEventListener('click', () => { wrap.innerHTML = ''; });
-    document.getElementById('crs-new-submit').addEventListener('click', async () => {
-      const name = document.getElementById('crs-new-name').value.trim();
-      const prof = document.getElementById('crs-new-prof').value.trim();
-      const errEl = document.getElementById('crs-new-error');
-      if (!name || !prof) {
-        errEl.textContent = '강의명과 교수명을 모두 입력해주세요.';
-        errEl.style.display = 'block';
-        return;
-      }
-      if (!fields.validate(errEl)) return;
-
-      const submitBtn = document.getElementById('crs-new-submit');
-      submitBtn.disabled = true;
-      submitBtn.textContent = '등록 중…';
-      try {
-        const newReview = fields.getData();
-        const existing = findMatchingCourse(name, prof);
-
-        if (existing) {
-          await addReviewDoc(existing.id, newReview);
-          const updatedReviews = await loadReviews(existing.id);
-          const wc = { '1': 0, '2': 0, '3': 0 };
-          updatedReviews.forEach(r => { wc[r.workload] = (wc[r.workload] || 0) + 1; });
-          const commonWorkload = Object.keys(wc).reduce((a, b) => wc[a] >= wc[b] ? a : b, '2');
-          const mergedTags = Array.from(new Set(updatedReviews.flatMap(r => r.tags || [])));
-          const patch = {
-            rating: avg(updatedReviews, 'rating'),
-            difficulty: avg(updatedReviews, 'difficulty'),
-            workload: commonWorkload,
-            tags: mergedTags,
-            reviewCount: updatedReviews.length
-          };
-          await updateCourseDoc(existing.id, patch);
-          Object.assign(existing, patch);
-          wrap.innerHTML = '';
-          showToast('같은 강의를 찾아서 후기를 추가했어요');
-          location.hash = '#/course/' + encodeURIComponent(existing.id);
-        } else {
-          const courseId = await addCourseDoc({
-            name, professor: prof, createdAt: Date.now(),
-            rating: newReview.rating, difficulty: newReview.difficulty,
-            workload: newReview.workload, tags: newReview.tags, reviewCount: 1
-          });
-          await addReviewDoc(courseId, newReview);
-          courses.unshift({
-            id: courseId, name, professor: prof, createdAt: Date.now(),
-            rating: newReview.rating, difficulty: newReview.difficulty,
-            workload: newReview.workload, tags: newReview.tags, reviewCount: 1
-          });
-          wrap.innerHTML = '';
-          showToast('강의와 후기가 등록됐어요');
-          location.hash = '#/course/' + encodeURIComponent(courseId);
-        }
-      } catch (e) {
-        console.error('등록 실패', e);
-        errEl.textContent = '등록 중 오류가 발생했어요. 다시 시도해주세요.';
-        errEl.style.display = 'block';
-        submitBtn.disabled = false;
-        submitBtn.textContent = '강의 등록하기';
-      }
-    });
-  }
-
-  // ---------- detail view ----------
-  async function openCourseById(id) {
-    root.innerHTML = skeletonDetailInner();
-    let course = courses.find(c => c.id === id);
-    if (!course) { location.hash = ''; return; }
-    const reviews = await loadReviews(id);
-    renderDetail(course, reviews);
-  }
-
-  function renderDetail(course, reviews) {
-    const rRating = avg(reviews, 'rating');
-    const rDiff = avg(reviews, 'difficulty');
-
-    const workloadCounts = { '1': 0, '2': 0, '3': 0 };
-    reviews.forEach(r => { workloadCounts[r.workload] = (workloadCounts[r.workload] || 0) + 1; });
-    const commonWorkload = reviews.length
-      ? Object.keys(workloadCounts).reduce((a, b) => workloadCounts[a] >= workloadCounts[b] ? a : b, '2')
-      : null;
-
-    const dist = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-    reviews.forEach(r => { const k = String(r.rating); if (dist[k] !== undefined) dist[k]++; });
-    const maxCount = Math.max(1, ...Object.values(dist));
-
-    let html = '<div class="crs-page"><div class="crs-detail-card">';
-    html += '<div class="crs-detail-head">';
-    html += '<span class="crs-back" id="crs-back-btn">← 목록으로</span>';
-    html += '<h2>' + esc(course.name) + '</h2>';
-    html += '<div class="crs-mono">' + esc(course.professor) + ' 교수</div>';
-    html += '</div>';
-
-    html += '<div class="crs-hero">';
-    html += '<div><div class="crs-hero-score">' + (rRating != null ? rRating : '-') + '<span> / 5</span></div>';
-    html += '<div class="crs-hero-stars">' + starStr(rRating) + '</div>';
-    html += '<div class="crs-hero-sub">후기 ' + reviews.length + '개 기준 총평</div></div>';
-    html += '<div class="crs-hero-stats">';
-    html += '<div><div class="crs-hero-stat-value">' + (rDiff != null ? rDiff : '-') + '</div>' +
-      '<div class="crs-hero-stat-stars">' + starStr(rDiff) + '</div><div class="crs-hero-stat-label">난이도</div></div>';
-    html += '<div><div class="crs-hero-stat-value">' + (commonWorkload ? workloadLabel(commonWorkload) : '-') + '</div>' +
-      '<div class="crs-hero-stat-stars">&nbsp;</div><div class="crs-hero-stat-label">과제량</div></div>';
-    html += '</div></div>';
-
-    html += '<div class="crs-dist"><div class="crs-dist-title">평점 분포</div>';
-    [5, 4, 3, 2, 1].forEach(n => {
-      const count = dist[n];
-      const pct = Math.round((count / maxCount) * 100);
-      html += '<div class="crs-dist-row"><div class="crs-dist-label">' + n + '점</div>' +
-        '<div class="crs-dist-track"><div class="crs-dist-fill" data-target="' + pct + '"></div></div>' +
-        '<div class="crs-dist-count">' + count + '</div></div>';
-    });
-    html += '</div>';
-
-    html += '<div class="crs-section-label">후기 ' + reviews.length + '개</div>';
-    html += '<div id="crs-reviews">';
-    if (!reviews.length) {
-      html += '<div class="crs-empty"><span class="crs-empty-icon">💬</span>아직 후기가 없어요. 첫 후기를 남겨보세요.</div>';
-    } else {
-      html += reviews.slice().reverse().map(r => {
-        const date = new Date(r.createdAt);
-        const dateStr = date.getFullYear() + '.' + String(date.getMonth() + 1).padStart(2, '0') + '.' + String(date.getDate()).padStart(2, '0');
-        const tags = (r.tags || []).map(t => '<span class="crs-tag crs-tag-sage">' + esc(t) + '</span>').join('');
-        return '<div class="crs-review">' +
-          '<div class="crs-review-tags">' +
-          '<span class="crs-tag crs-tag-stamp">총평 ' + esc(r.rating) + '</span>' +
-          '<span class="crs-tag crs-tag-amber">난이도 ' + esc(r.difficulty) + '</span>' +
-          '<span class="crs-tag ' + workloadTagClass(r.workload) + '">과제 ' + workloadLabel(r.workload) + '</span>' +
-          '<span class="crs-tag crs-tag-sage">' + esc(r.examType) + '</span>' +
-          tags +
-          '</div>' +
-          (r.comment ? '<div class="crs-review-comment">' + esc(r.comment) + '</div>' : '') +
-          '<div class="crs-review-footer"><div class="crs-review-date">' + dateStr + '</div></div></div>';
-      }).join('');
-    }
-    html += '</div>';
-    html += '</div></div>';
-
-    root.innerHTML = html;
-    document.getElementById('crs-back-btn').addEventListener('click', () => { location.hash = ''; });
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.crs-dist-fill').forEach(el => {
-        const target = el.getAttribute('data-target') + '%';
-        requestAnimationFrame(() => { el.style.width = target; });
-      });
-    });
-  }
-
-  // ---------- review form building blocks ----------
-  function scaleButtons(idPrefix, leftLabel, rightLabel) {
-    let btns = '';
-    for (let i = 1; i <= 5; i++) {
-      btns += '<button type="button" class="crs-scale-btn" data-val="' + i + '" id="' + idPrefix + '-' + i + '">' + i + '</button>';
-    }
-    return '<div class="crs-scale">' + btns + '</div>' +
-      '<div class="crs-scale-endpoints"><span>' + leftLabel + '</span><span>' + rightLabel + '</span></div>';
-  }
-
-  function wireScale(idPrefix, defaultVal) {
-    let current = defaultVal;
-    const btns = [];
-    for (let i = 1; i <= 5; i++) {
-      const b = document.getElementById(idPrefix + '-' + i);
-      btns.push(b);
-      b.addEventListener('click', () => {
-        current = i;
-        btns.forEach(x => x.classList.remove('crs-active'));
-        b.classList.add('crs-active');
-      });
-    }
-    btns[defaultVal - 1].classList.add('crs-active');
-    return () => current;
-  }
-
-  function workloadButtons() {
-    return '<div class="crs-workload-picker" id="crs-workload-picker">' +
-      ['1', '2', '3'].map(v => '<button type="button" class="crs-workload-btn" data-val="' + v + '" id="crs-workload-' + v + '">' + workloadLabel(v) + '</button>').join('') +
-      '</div>';
-  }
-  function wireWorkload(defaultVal) {
-    let current = defaultVal;
-    const btns = ['1', '2', '3'].map(v => document.getElementById('crs-workload-' + v));
-    btns.forEach((b, idx) => {
-      b.addEventListener('click', () => {
-        current = String(idx + 1);
-        btns.forEach(x => x.classList.remove('crs-active'));
-        b.classList.add('crs-active');
-      });
-    });
-    btns[Number(defaultVal) - 1].classList.add('crs-active');
-    return () => current;
-  }
-
-  function reviewFieldsHtml() {
-    let tagHtml = TAG_OPTIONS.map(t => '<button type="button" class="crs-tagpick-btn" data-tag="' + esc(t) + '">' + esc(t) + '</button>').join('');
-    return '<label>총평 *</label>' + scaleButtons('crs-rating', '1 - 별로예요', '5 - 최고예요') +
-      '<label>난이도 *</label>' + scaleButtons('crs-diff', '1 - 쉬워요', '5 - 어려워요') +
-      '<label>과제량 *</label>' + workloadButtons() +
-      '<label>시험/평가 방식</label><select id="crs-r-exam"><option>중간+기말</option><option>팀플 위주</option><option>출석+과제</option><option>퀴즈 위주</option><option>기타</option></select>' +
-      '<label>태그 선택 (최대 3개)</label><div class="crs-tagpick" id="crs-tagpick">' + tagHtml + '</div>' +
-      '<label>한줄 후기</label>' +
-      '<textarea id="crs-r-comment" rows="2" maxlength="100" placeholder="예: 과제는 많지만 배우는 게 확실히 많아요"></textarea>' +
-      '<div class="crs-hint" id="crs-r-count">0/100자</div>' +
-      '<div class="crs-guideline"><strong>작성 가이드</strong><ul>' +
-      '<li>수업 방식, 과제, 시험에 대한 내용만 적어주세요.</li>' +
-      '<li>욕설이나 비속어, 인신공격성 표현은 삭제될 수 있어요.</li>' +
-      '<li>특정 개인의 신상 정보는 언급하지 말아주세요.</li>' +
-      '</ul></div>';
-  }
-
-  function wireReviewFields(wrap) {
-    const getRating = wireScale('crs-rating', 3);
-    const getDiff = wireScale('crs-diff', 3);
-    const getWorkload = wireWorkload('2');
-
-    const selectedTags = [];
-    const tagBtns = wrap.querySelectorAll('.crs-tagpick-btn');
-    tagBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tag = btn.getAttribute('data-tag');
-        const idx = selectedTags.indexOf(tag);
-        if (idx >= 0) {
-          selectedTags.splice(idx, 1);
-          btn.classList.remove('crs-active');
-        } else {
-          if (selectedTags.length >= 3) return;
-          selectedTags.push(tag);
-          btn.classList.add('crs-active');
-        }
-        tagBtns.forEach(b => {
-          if (!b.classList.contains('crs-active')) b.disabled = selectedTags.length >= 3;
-        });
-      });
-    });
-
-    const commentIn = document.getElementById('crs-r-comment');
-    commentIn.addEventListener('input', () => {
-      document.getElementById('crs-r-count').textContent = commentIn.value.length + '/100자';
-    });
-
-    return {
-      validate(errEl) {
-        if (commentIn.value.trim().length > 100) {
-          errEl.textContent = '한줄 후기는 100자 이내로 작성해주세요.';
-          errEl.style.display = 'block';
-          return false;
-        }
-        return true;
+  const cardTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#cards-section',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1,
+      pin: '#cards-pin',
+      onUpdate: (self) => {
+        const idx = Math.min(revealCards.length - 1, Math.floor(self.progress * revealCards.length));
+        setActiveCard(idx);
       },
-      getData() {
-        return {
-          id: 'r-' + Date.now(),
-          rating: getRating(),
-          difficulty: getDiff(),
-          workload: getWorkload(),
-          examType: document.getElementById('crs-r-exam').value,
-          tags: selectedTags,
-          comment: commentIn.value.trim(),
-          createdAt: Date.now()
-        };
-      }
-    };
-  }
-
-  // ---------- boot ----------
-  async function startApp() {
-    root.innerHTML = skeletonListInner();
-    try {
-      await initFirebase();
-    } catch (e) {
-      root.innerHTML = '<div class="crs-empty">사이트를 불러오는 데 문제가 생겼어요. 새로고침 해보세요.</div>';
-      console.error(e);
-      return;
+      onLeave: () => { glow.style.opacity = 0; },
+      onEnterBack: () => { setActiveCard(revealCards.length - 1); }
     }
-    await loadCourses();
-    window.addEventListener('hashchange', route);
-    route();
-  }
+  });
 
-  async function init() {
-    await startApp();
+  revealCards.forEach((sel, i) => {
+    const el = document.querySelector(sel);
+    const inner = el.querySelectorAll('.rc-icon, .rc-tag, .rc-title, .rc-desc');
+    const dir = i % 2 === 0 ? -1 : 1;
+    const label = i;
+
+    if (i > 0) {
+      const prevEl = document.querySelector(revealCards[i - 1]);
+      const prevDir = (i - 1) % 2 === 0 ? -1 : 1;
+      cardTl.to(prevEl, {
+        opacity: 0, scale: 0.75, x: prevDir * -90, y: -30, rotateY: prevDir * -28, duration: 1, ease: 'power2.in'
+      }, label - 0.15);
+    }
+
+    gsap.set(el, { x: dir * 90, y: 40, scale: 0.7, rotateY: dir * 30 });
+    cardTl.to(el, {
+      opacity: 1, scale: 1, x: 0, y: 0, rotateY: 0, duration: 1.1, ease: 'power3.out'
+    }, i > 0 ? label - 0.15 : 0);
+    cardTl.to(inner, {
+      opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out'
+    }, (i > 0 ? label - 0.15 : 0) + 0.3);
+    cardTl.to({}, { duration: 0.6 }); // 잠깐 머무는 구간
+  });
+  cardTl.to('#rc-3', { opacity: 0, scale: 0.8, x: -90, y: -30, rotateY: -28, duration: 1, ease: 'power2.in' });
+
+  // ---------- horizontal showcase ----------
+  const track = document.getElementById('horiz-track');
+  function getScrollDistance() {
+    return track.scrollWidth - window.innerWidth + 160;
   }
-  init();
+  gsap.to(track, {
+    x: () => -getScrollDistance(),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#horiz-section',
+      start: 'top top',
+      end: () => '+=' + (getScrollDistance() + window.innerHeight),
+      scrub: 0.6,
+      pin: '#horiz-pin',
+      invalidateOnRefresh: true
+    }
+  });
+
+  // ---------- outro ----------
+  gsap.timeline({
+    scrollTrigger: { trigger: '#outro', start: 'top 70%' }
+  })
+    .to('#outro h2', { opacity: 1, y: -10, duration: 0.8, ease: 'power3.out' })
+    .to('#outro p.mono', { opacity: 1, duration: 0.6 }, '-=0.4')
+    .to('#outro .cta-btn', { opacity: 1, duration: 0.6 }, '-=0.3');
+
+  document.getElementById('outro-cta').addEventListener('click', () => {
+    alert('실제 사이트에서는 여기서 강의 후기 등 메인 홈 화면으로 넘어가게 연결할 거예요.');
+  });
 })();
 </script>
+</body>
+</html>
