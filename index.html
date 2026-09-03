@@ -102,6 +102,8 @@
   .showcase-card .sc-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
   #sc-courses { transition: transform .2s ease, box-shadow .2s ease; }
   #sc-courses:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+  #sc-rules { transition: transform .2s ease, box-shadow .2s ease; }
+  #sc-rules:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
 
   /* ---------- final cta ---------- */
   #outro { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
@@ -126,9 +128,10 @@
     <div class="section-label mono">SCROLL TO REVEAL</div>
     <div class="reveal-card" id="rc-1" data-accent="sage">
       <div class="rc-icon">📜</div>
-      <div class="rc-tag mono">CATEGORY 01 · SOON</div>
+      <div class="rc-tag mono">CATEGORY 01 · NOW OPEN</div>
       <div class="rc-title">학칙</div>
       <div class="rc-desc">휴학 · 복학 · 학점 초과신청<br>학사경고까지 한눈에</div>
+      <a class="rc-link mono" href="https://seung341.github.io/gmuk-course-review/rules_site.html">바로가기 →</a>
     </div>
     <div class="reveal-card" id="rc-2" data-accent="stamp">
       <div class="rc-icon">📚</div>
@@ -155,8 +158,8 @@
   <div id="horiz-pin">
     <div class="section-label mono">한 장씩 훑어보기 →</div>
     <div id="horiz-track">
-      <div class="showcase-card">
-        <div class="sc-badge">SOON</div>
+      <div class="showcase-card" id="sc-rules" style="cursor:pointer;">
+        <div class="sc-badge">NOW<br>OPEN</div>
         <div class="sc-icon">📜</div>
         <div class="sc-title">학칙</div>
         <div class="sc-desc">휴학, 복학, 학점 초과신청, 학사경고 기준까지</div>
@@ -207,6 +210,10 @@
 
   document.getElementById('sc-courses').addEventListener('click', () => {
     window.location.href = 'https://seung341.github.io/gmuk-course-review/course_review_site.html#/courses';
+  });
+
+  document.getElementById('sc-rules').addEventListener('click', () => {
+    window.location.href = 'https://seung341.github.io/gmuk-course-review/rules_site.html';
   });
 
   // ---------- pinned scroll-triggered cards ----------
