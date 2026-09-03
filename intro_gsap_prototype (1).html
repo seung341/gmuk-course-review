@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우리 학교 생활 — GSAP Intro Prototype</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #F7F4EC;
+    --paper-raised: #FFFDF8;
+    --ink: #1E2A35;
+    --ink-soft: #51606B;
+    --hairline: #D8D2C4;
+    --stamp: #A6392B;
+    --sage: #4F7A52;
+    --amber: #B9822E;
+    --green-bg: #0A3D24;
+    --green-deep: #062616;
+  }
+  html, body { background: var(--green-bg); overflow-x: hidden; font-family: 'Noto Sans KR', sans-serif; color: var(--paper); }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- background ambience ---------- */
+  #bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; filter: blur(70px); opacity: 0.5; }
+  .blob { position: absolute; border-radius: 50%; }
+  .blob-1 { width: 460px; height: 460px; background: var(--stamp); top: -12%; left: -10%; animation: drift1 24s ease-in-out infinite; }
+  .blob-2 { width: 380px; height: 380px; background: var(--amber); bottom: -14%; right: -8%; animation: drift2 28s ease-in-out infinite; }
+  @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(70px,90px) scale(1.15); } }
+  @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-80px,-60px) scale(1.1); } }
+
+  section { position: relative; width: 100%; }
+
+  /* ---------- hero ---------- */
+  #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+  #hero .eyebrow { font-size: 12px; letter-spacing: 0.2em; color: var(--amber); margin-bottom: 18px; opacity: 0; }
+  #hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(38px, 8vw, 78px); line-height: 1.15; opacity: 0; }
+  #hero p { margin-top: 18px; font-size: 15px; color: rgba(247,244,236,0.75); max-width: 420px; opacity: 0; }
+  .cta-btn {
+    margin-top: 40px; padding: 15px 34px; border-radius: 30px; border: none;
+    background: var(--paper); color: var(--green-deep); font-weight: 700; font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif; cursor: pointer; opacity: 0;
+    box-shadow: 0 0 0 0 rgba(201,162,75,0.6);
+    animation: glow-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,75,0.45), 0 8px 24px rgba(0,0,0,0.3); }
+    50% { box-shadow: 0 0 0 16px rgba(201,162,75,0), 0 8px 24px rgba(0,0,0,0.3); }
+  }
+
+  /* ---------- pinned card reveal ---------- */
+  #cards-section { height: 340vh; }
+  #cards-pin { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+  #cards-pin .section-label { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 12px; letter-spacing: 0.15em; color: var(--amber); }
+  #cards-glow {
+    position: absolute; inset: 0; z-index: -1; opacity: 0; filter: blur(90px);
+    background: radial-gradient(circle at 50% 50%, var(--stamp) 0%, transparent 65%);
+    transition: opacity 0.4s ease;
+  }
+  .reveal-card {
+    position: absolute; width: min(84vw, 360px); background: var(--paper-raised); color: var(--ink);
+    border: 1px solid var(--hairline); border-top: 4px solid var(--ink); border-radius: 14px;
+    padding: 34px 28px; text-align: center; opacity: 0;
+    box-shadow: 0 24px 50px rgba(0,0,0,0.35);
+    will-change: transform, opacity;
+  }
+  .reveal-card .rc-icon, .reveal-card .rc-tag, .reveal-card .rc-title, .reveal-card .rc-desc {
+    opacity: 0; transform: translateY(14px);
+  }
+  .reveal-card .rc-link {
+    display: inline-block; margin-top: 14px; font-size: 12px; letter-spacing: 0.05em;
+    color: var(--stamp); text-decoration: none; border-bottom: 1px solid var(--stamp);
+    padding-bottom: 2px; transition: opacity .15s ease;
+  }
+  .reveal-card .rc-link:hover { opacity: 0.7; }
+  .card-dots { position: absolute; bottom: 56px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+  .card-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(247,244,236,0.3); transition: background .3s ease, transform .3s ease; }
+  .card-dot.active { background: var(--amber); transform: scale(1.4); }
+  .reveal-card .rc-icon { font-size: 40px; margin-bottom: 14px; }
+  .reveal-card .rc-tag { font-size: 11px; letter-spacing: 0.1em; color: var(--stamp); margin-bottom: 8px; }
+  .reveal-card .rc-title { font-family: 'Noto Serif KR', serif; font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .reveal-card .rc-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ---------- horizontal showcase ---------- */
+  #horiz-section { height: 320vh; }
+  #horiz-pin { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+  #horiz-pin .section-label { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 12px; letter-spacing: 0.15em; color: var(--amber); text-align: center; }
+  #horiz-track { display: flex; gap: 28px; will-change: transform; padding: 0 8vw; }
+  .showcase-card {
+    flex: 0 0 auto; width: min(78vw, 320px); height: 380px; background: var(--paper-raised); color: var(--ink);
+    border: 1px solid var(--hairline); border-radius: 16px; padding: 30px; display: flex; flex-direction: column;
+    justify-content: flex-end; box-shadow: 0 24px 50px rgba(0,0,0,0.3); position: relative; overflow: hidden;
+  }
+  .showcase-card .sc-badge {
+    position: absolute; top: 20px; right: 20px; border: 2px solid var(--stamp); color: var(--stamp);
+    border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; transform: rotate(-14deg); text-align: center; line-height: 1.2;
+  }
+  .showcase-card .sc-icon { font-size: 42px; margin-bottom: 14px; }
+  .showcase-card .sc-title { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .showcase-card .sc-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+  #sc-courses { transition: transform .2s ease, box-shadow .2s ease; }
+  #sc-courses:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+
+  /* ---------- final cta ---------- */
+  #outro { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+  #outro h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(28px, 6vw, 50px); opacity: 0; }
+  #outro p.mono { margin-top: 10px; font-size: 12px; letter-spacing: 0.15em; color: rgba(247,244,236,0.6); opacity: 0; }
+</style>
+</head>
+<body>
+
+<div id="bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+
+<section id="hero">
+  <div class="eyebrow mono">STUDENT LIFE GUIDE</div>
+  <h1>우리 학교 생활,<br>한 곳에서</h1>
+  <p>강의 후기부터 자취, 동아리까지 — 학교 생활에 필요한 모든 정보를 모으고 있어요.</p>
+  <button class="cta-btn" id="hero-cta">둘러보기 ↓</button>
+</section>
+
+<section id="cards-section">
+  <div id="cards-pin">
+    <div id="cards-glow"></div>
+    <div class="section-label mono">SCROLL TO REVEAL</div>
+    <div class="reveal-card" id="rc-1" data-accent="sage">
+      <div class="rc-icon">📜</div>
+      <div class="rc-tag mono">CATEGORY 01 · SOON</div>
+      <div class="rc-title">학칙</div>
+      <div class="rc-desc">휴학 · 복학 · 학점 초과신청<br>학사경고까지 한눈에</div>
+    </div>
+    <div class="reveal-card" id="rc-2" data-accent="stamp">
+      <div class="rc-icon">📚</div>
+      <div class="rc-tag mono">CATEGORY 02 · NOW OPEN</div>
+      <div class="rc-title">강의 평가</div>
+      <div class="rc-desc">수강신청 전 꼭 확인하는<br>강의 · 교수 후기</div>
+      <a class="rc-link mono" href="https://seung341.github.io/gmuk-course-review/">바로가기 →</a>
+    </div>
+    <div class="reveal-card" id="rc-3" data-accent="amber">
+      <div class="rc-icon">❓</div>
+      <div class="rc-tag mono">CATEGORY 03 · SOON</div>
+      <div class="rc-title">FAQ</div>
+      <div class="rc-desc">학생들이 자주 묻는 질문<br>모아보기</div>
+    </div>
+    <div class="card-dots" id="card-dots">
+      <div class="card-dot active"></div>
+      <div class="card-dot"></div>
+      <div class="card-dot"></div>
+    </div>
+  </div>
+</section>
+
+<section id="horiz-section">
+  <div id="horiz-pin">
+    <div class="section-label mono">한 장씩 훑어보기 →</div>
+    <div id="horiz-track">
+      <div class="showcase-card">
+        <div class="sc-badge">SOON</div>
+        <div class="sc-icon">📜</div>
+        <div class="sc-title">학칙</div>
+        <div class="sc-desc">휴학, 복학, 학점 초과신청, 학사경고 기준까지</div>
+      </div>
+      <div class="showcase-card" id="sc-courses" style="cursor:pointer;">
+        <div class="sc-badge">NOW<br>OPEN</div>
+        <div class="sc-icon">📚</div>
+        <div class="sc-title">강의 평가</div>
+        <div class="sc-desc">평점, 난이도, 과제량까지 — 강의 등록하고 바로 후기 남기기</div>
+      </div>
+      <div class="showcase-card">
+        <div class="sc-badge">SOON</div>
+        <div class="sc-icon">❓</div>
+        <div class="sc-title">FAQ</div>
+        <div class="sc-desc">학생들이 자주 묻는 질문 모음</div>
+      </div>
+      <div class="showcase-card" style="border-style:dashed; align-items:center; justify-content:center; text-align:center;">
+        <div class="sc-icon">➕</div>
+        <div class="sc-title">새 카테고리</div>
+        <div class="sc-desc">곧 추가될 예정이에요</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="outro">
+  <h2>이 모든 걸 한 곳에서</h2>
+  <p class="mono">GEORGE MASON UNIVERSITY KOREA</p>
+  <button class="cta-btn" id="outro-cta">입장하기 →</button>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ---------- hero ----------
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .to('#hero .eyebrow', { opacity: 1, y: -6, duration: 0.6 })
+    .to('#hero h1', { opacity: 1, y: -10, duration: 0.9 }, '-=0.3')
+    .to('#hero p', { opacity: 1, y: -6, duration: 0.7 }, '-=0.4')
+    .to('#hero .cta-btn', { opacity: 1, duration: 0.6 }, '-=0.3');
+
+  document.getElementById('hero-cta').addEventListener('click', () => {
+    document.getElementById('cards-section').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('sc-courses').addEventListener('click', () => {
+    window.location.href = 'https://seung341.github.io/gmuk-course-review/';
+  });
+
+  // ---------- pinned scroll-triggered cards ----------
+  const revealCards = ['#rc-1', '#rc-2', '#rc-3'];
+  const accentColors = { stamp: '#A6392B', amber: '#B9822E', sage: '#4F7A52' };
+  const dots = document.querySelectorAll('.card-dot');
+  const glow = document.getElementById('cards-glow');
+
+  gsap.set('#cards-pin', { perspective: 1000 });
+  gsap.to('.rc-icon', { scale: 1.08, duration: 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
+  function setActiveCard(idx) {
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    const accent = document.querySelector(revealCards[idx]).dataset.accent;
+    glow.style.background = 'radial-gradient(circle at 50% 50%, ' + accentColors[accent] + ' 0%, transparent 65%)';
+    glow.style.opacity = 0.55;
+  }
+
+  const cardTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#cards-section',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1,
+      pin: '#cards-pin',
+      onUpdate: (self) => {
+        const idx = Math.min(revealCards.length - 1, Math.floor(self.progress * revealCards.length));
+        setActiveCard(idx);
+      },
+      onLeave: () => { glow.style.opacity = 0; },
+      onEnterBack: () => { setActiveCard(revealCards.length - 1); }
+    }
+  });
+
+  revealCards.forEach((sel, i) => {
+    const el = document.querySelector(sel);
+    const inner = el.querySelectorAll('.rc-icon, .rc-tag, .rc-title, .rc-desc');
+    const dir = i % 2 === 0 ? -1 : 1;
+    const label = i;
+
+    if (i > 0) {
+      const prevEl = document.querySelector(revealCards[i - 1]);
+      const prevDir = (i - 1) % 2 === 0 ? -1 : 1;
+      cardTl.to(prevEl, {
+        opacity: 0, scale: 0.75, x: prevDir * -90, y: -30, rotateY: prevDir * -28, duration: 1, ease: 'power2.in'
+      }, label - 0.15);
+    }
+
+    gsap.set(el, { x: dir * 90, y: 40, scale: 0.7, rotateY: dir * 30 });
+    cardTl.to(el, {
+      opacity: 1, scale: 1, x: 0, y: 0, rotateY: 0, duration: 1.1, ease: 'power3.out'
+    }, i > 0 ? label - 0.15 : 0);
+    cardTl.to(inner, {
+      opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out'
+    }, (i > 0 ? label - 0.15 : 0) + 0.3);
+    cardTl.to({}, { duration: 0.6 }); // 잠깐 머무는 구간
+  });
+  cardTl.to('#rc-3', { opacity: 0, scale: 0.8, x: -90, y: -30, rotateY: -28, duration: 1, ease: 'power2.in' });
+
+  // ---------- horizontal showcase ----------
+  const track = document.getElementById('horiz-track');
+  function getScrollDistance() {
+    return track.scrollWidth - window.innerWidth + 160;
+  }
+  gsap.to(track, {
+    x: () => -getScrollDistance(),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#horiz-section',
+      start: 'top top',
+      end: () => '+=' + (getScrollDistance() + window.innerHeight),
+      scrub: 0.6,
+      pin: '#horiz-pin',
+      invalidateOnRefresh: true
+    }
+  });
+
+  // ---------- outro ----------
+  gsap.timeline({
+    scrollTrigger: { trigger: '#outro', start: 'top 70%' }
+  })
+    .to('#outro h2', { opacity: 1, y: -10, duration: 0.8, ease: 'power3.out' })
+    .to('#outro p.mono', { opacity: 1, duration: 0.6 }, '-=0.4')
+    .to('#outro .cta-btn', { opacity: 1, duration: 0.6 }, '-=0.3');
+
+  document.getElementById('outro-cta').addEventListener('click', () => {
+    alert('실제 사이트에서는 여기서 강의 후기 등 메인 홈 화면으로 넘어가게 연결할 거예요.');
+  });
+})();
+</script>
+</body>
+</html>
