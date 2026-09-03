@@ -188,7 +188,7 @@
 <section id="outro">
   <h2>이 모든 걸 한 곳에서</h2>
   <p class="mono">GEORGE MASON UNIVERSITY KOREA</p>
-  <button class="cta-btn" id="outro-cta">입장하기 →</button>
+  <button class="cta-btn" id="outro-cta">학교 홈페이지 바로가기 →</button>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
@@ -307,7 +307,7 @@
     .to('#outro .cta-btn', { opacity: 1, duration: 0.6 }, '-=0.3');
 
   document.getElementById('outro-cta').addEventListener('click', () => {
-    alert('실제 사이트에서는 여기서 강의 후기 등 메인 홈 화면으로 넘어가게 연결할 거예요.');
+    window.open('https://masonkorea.gmu.edu', '_blank', 'noopener');
   });
 })();
 </script>
