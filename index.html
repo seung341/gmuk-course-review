@@ -50,7 +50,7 @@
   }
 
   /* ---------- pinned card reveal ---------- */
-  #cards-section { height: 340vh; }
+  #cards-section { height: 510vh; }
   #cards-pin { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
   #cards-pin .section-label { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 12px; letter-spacing: 0.15em; color: var(--amber); }
   #cards-glow {
@@ -141,13 +141,27 @@
       <a class="rc-link mono" href="https://seung341.github.io/gmuk-course-review/course_review_site.html#/courses">바로가기 →</a>
     </div>
     <div class="reveal-card" id="rc-3" data-accent="amber">
-      <div class="rc-icon">❓</div>
+      <div class="rc-icon">🏠</div>
       <div class="rc-tag mono">CATEGORY 03 · SOON</div>
+      <div class="rc-title">자취 · 원룸</div>
+      <div class="rc-desc">보증금, 매물, 동네 정보까지<br>곧 만나요</div>
+    </div>
+    <div class="reveal-card" id="rc-4" data-accent="sage">
+      <div class="rc-icon">🎉</div>
+      <div class="rc-tag mono">CATEGORY 04 · SOON</div>
+      <div class="rc-title">동아리 · 학생회</div>
+      <div class="rc-desc">모집 정보와 행사 소식<br>곧 만나요</div>
+    </div>
+    <div class="reveal-card" id="rc-5" data-accent="stamp">
+      <div class="rc-icon">❓</div>
+      <div class="rc-tag mono">CATEGORY 05 · SOON</div>
       <div class="rc-title">FAQ</div>
       <div class="rc-desc">학생들이 자주 묻는 질문<br>모아보기</div>
     </div>
     <div class="card-dots" id="card-dots">
       <div class="card-dot active"></div>
+      <div class="card-dot"></div>
+      <div class="card-dot"></div>
       <div class="card-dot"></div>
       <div class="card-dot"></div>
     </div>
@@ -169,6 +183,18 @@
         <div class="sc-icon">📚</div>
         <div class="sc-title">강의 평가</div>
         <div class="sc-desc">평점, 난이도, 과제량까지 — 강의 등록하고 바로 후기 남기기</div>
+      </div>
+      <div class="showcase-card">
+        <div class="sc-badge">SOON</div>
+        <div class="sc-icon">🏠</div>
+        <div class="sc-title">자취 · 원룸</div>
+        <div class="sc-desc">송도 근처 매물, 보증금 시세, 동네 꿀팁</div>
+      </div>
+      <div class="showcase-card">
+        <div class="sc-badge">SOON</div>
+        <div class="sc-icon">🎉</div>
+        <div class="sc-title">동아리 · 학생회</div>
+        <div class="sc-desc">모집 공고, 행사 일정, 활동 후기</div>
       </div>
       <div class="showcase-card">
         <div class="sc-badge">SOON</div>
@@ -217,7 +243,7 @@
   });
 
   // ---------- pinned scroll-triggered cards ----------
-  const revealCards = ['#rc-1', '#rc-2', '#rc-3'];
+  const revealCards = ['#rc-1', '#rc-2', '#rc-3', '#rc-4', '#rc-5'];
   const accentColors = { stamp: '#A6392B', amber: '#B9822E', sage: '#4F7A52' };
   const dots = document.querySelectorAll('.card-dot');
   const glow = document.getElementById('cards-glow');
@@ -278,7 +304,7 @@
     }, (i > 0 ? label - 0.15 : 0) + 0.3);
     cardTl.to({}, { duration: 0.6 }); // 잠깐 머무는 구간
   });
-  cardTl.to('#rc-3', { opacity: 0, scale: 0.8, x: -90, y: -30, rotateY: -28, duration: 1, ease: 'power2.in' });
+  cardTl.to(revealCards[revealCards.length - 1], { opacity: 0, scale: 0.8, x: -90, y: -30, rotateY: -28, duration: 1, ease: 'power2.in' });
 
   // ---------- horizontal showcase ----------
   const track = document.getElementById('horiz-track');
