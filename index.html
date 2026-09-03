@@ -61,7 +61,7 @@
   .reveal-card {
     position: absolute; width: min(84vw, 360px); background: var(--paper-raised); color: var(--ink);
     border: 1px solid var(--hairline); border-top: 4px solid var(--ink); border-radius: 14px;
-    padding: 34px 28px; text-align: center; opacity: 0;
+    padding: 34px 28px; text-align: center; opacity: 0; pointer-events: none;
     box-shadow: 0 24px 50px rgba(0,0,0,0.35);
     will-change: transform, opacity;
   }
@@ -226,6 +226,13 @@
   }
 
   const cardTl = gsap.timeline({
+    onUpdate: function () {
+      revealCards.forEach((sel) => {
+        const el = document.querySelector(sel);
+        const op = parseFloat(el.style.opacity || '0');
+        el.style.pointerEvents = op > 0.5 ? 'auto' : 'none';
+      });
+    },
     scrollTrigger: {
       trigger: '#cards-section',
       start: 'top top',
