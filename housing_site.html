@@ -1,0 +1,384 @@
+<title>자취 · 원룸 — 우리 학교 생활</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8F%A0</text></svg>">
+
+<style>
+  * { box-sizing: border-box; }
+  :root {
+    --paper: #F7F4EC; --paper-raised: #FFFDF8; --ink: #1E2A35; --ink-soft: #51606B;
+    --hairline: #D8D2C4; --stamp: #A6392B; --sage: #4F7A52; --amber: #B9822E;
+  }
+  html, body { margin: 0; min-height: 100vh; background-color: #0A3D24; font-family: 'Noto Sans KR', -apple-system, sans-serif; color: var(--ink); }
+  h1, h2, h3 { font-family: 'Noto Serif KR', serif; font-weight: 500; margin: 0; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  #hs-navbar { position: sticky; top: 0; z-index: 50; background: var(--ink); box-shadow: 0 2px 10px rgba(0,0,0,0.25); }
+  .hs-navbar-inner { max-width: 900px; margin: 0 auto; padding: 14px 20px; display: flex; justify-content: space-between; align-items: baseline; }
+  .hs-navbar-title { font-family: 'Noto Serif KR', serif; font-size: 18px; color: var(--paper); cursor: pointer; }
+  .hs-navbar-home-link { color: rgba(247,244,236,0.75); font-size: 11px; letter-spacing: 0.02em; cursor: pointer; text-decoration: none; transition: color .15s ease; }
+  .hs-navbar-home-link:hover { color: #fff; }
+
+  #hs-wrapper { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  @keyframes hs-fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .hs-page { animation: hs-fadein 0.3s ease; }
+
+  .hs-back { font-size: 12px; color: rgba(247,244,236,0.75); cursor: pointer; margin-bottom: 14px; display: inline-block; transition: opacity .15s ease; }
+  .hs-back:hover { opacity: 0.7; }
+
+  .hs-intro { color: var(--paper); margin-bottom: 1.5rem; }
+  .hs-intro .eyebrow { font-size: 12px; letter-spacing: 0.15em; color: var(--amber); margin-bottom: 8px; }
+  .hs-intro h1 { font-size: clamp(26px, 5vw, 36px); margin-bottom: 8px; }
+  .hs-intro p { font-size: 14px; color: rgba(247,244,236,0.8); line-height: 1.6; }
+
+  .hs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .hs-card {
+    background: var(--paper-raised); border: 1px solid var(--hairline); border-top: 3px solid var(--ink);
+    border-radius: 8px; padding: 18px; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, border-top-color .15s ease;
+  }
+  .hs-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.18); border-top-color: var(--stamp); }
+  .hs-card-icon { font-size: 26px; margin-bottom: 8px; }
+  .hs-card-title { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .hs-card-sub { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+
+  .hs-detail-card {
+    background: var(--paper); border: 1px solid var(--hairline); border-radius: 14px; padding: 1.6rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 12px 30px rgba(0,0,0,0.2);
+  }
+  .hs-detail-head { margin-bottom: 1rem; }
+  .hs-detail-head .hs-mono { font-size: 11px; color: var(--ink-soft); letter-spacing: 0.1em; margin-bottom: 6px; }
+  .hs-detail-head h2 { font-size: 24px; margin-bottom: 6px; }
+  .hs-detail-head .hs-sub { font-size: 13px; color: var(--ink-soft); }
+
+  .hs-section { margin: 1.5rem 0; }
+  .hs-section-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .hs-section-body { font-size: 13.5px; color: var(--ink-soft); line-height: 1.75; white-space: pre-line; }
+
+  .hs-num-divider { font-size: 12px; color: var(--amber); letter-spacing: 0.1em; border-bottom: 1px solid var(--hairline); padding-bottom: 6px; margin: 2rem 0 1rem; }
+
+  .hs-list { margin: 6px 0 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.8; }
+  .hs-checklist { list-style: none; margin: 6px 0 0; padding: 0; font-size: 13.5px; color: var(--ink); line-height: 1.9; }
+  .hs-checklist li { padding-left: 24px; position: relative; }
+  .hs-checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--sage); }
+
+  .hs-steps { counter-reset: hs-step; margin-top: 8px; }
+  .hs-step { display: flex; gap: 12px; margin-bottom: 14px; }
+  .hs-step-num {
+    counter-increment: hs-step; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--ink); color: var(--paper); font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+  .hs-step-num::before { content: counter(hs-step); }
+  .hs-step-body .hs-step-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .hs-step-body .hs-step-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.7; white-space: pre-line; }
+
+  .hs-compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 8px; }
+  .hs-compare-card { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; }
+  .hs-compare-card .cc-title { font-size: 13.5px; font-weight: 700; margin-bottom: 8px; }
+  .hs-compare-card .cc-label { font-size: 11px; color: var(--sage); font-weight: 700; margin: 8px 0 4px; }
+  .hs-compare-card .cc-label.neg { color: var(--stamp); }
+  .hs-compare-card ul { margin: 0; padding-left: 16px; font-size: 12px; color: var(--ink-soft); line-height: 1.7; }
+  .hs-compare-card .cc-tag { display: inline-block; margin-top: 8px; font-size: 11px; background: #F6ECDA; color: var(--amber); padding: 3px 9px; border-radius: 10px; }
+
+  details.hs-faq { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; margin-bottom: 8px; padding: 0; overflow: hidden; }
+  details.hs-faq summary { padding: 12px 14px; font-size: 13.5px; font-weight: 500; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  details.hs-faq summary::-webkit-details-marker { display: none; }
+  details.hs-faq summary::after { content: '+'; font-family: 'JetBrains Mono', monospace; color: var(--ink-soft); font-size: 16px; flex-shrink: 0; }
+  details.hs-faq[open] summary::after { content: '−'; }
+  details.hs-faq .hs-faq-body { padding: 0 14px 14px; font-size: 13px; color: var(--ink-soft); line-height: 1.75; white-space: pre-line; }
+
+  .hs-warning { background: #F6ECDA; border-left: 3px solid var(--amber); border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; font-size: 12.5px; color: var(--ink); line-height: 1.6; }
+  .hs-warning.hs-danger { background: #F5E4E1; border-left-color: var(--stamp); }
+  .hs-warning strong { display: block; margin-bottom: 3px; font-size: 13px; }
+
+  .hs-linkcard { display: block; background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; padding: 10px 14px; margin-top: 8px; text-decoration: none; color: var(--ink); transition: border-color .15s ease, transform .15s ease; }
+  .hs-linkcard:hover { border-color: var(--stamp); transform: translateX(3px); }
+  .hs-linkcard .lc-title { font-size: 12.5px; font-weight: 700; }
+  .hs-linkcard .lc-go { font-size: 11px; color: var(--stamp); font-family: 'JetBrains Mono', monospace; margin-top: 3px; }
+
+  .hs-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  .hs-table th, .hs-table td { border: 1px solid var(--hairline); padding: 8px 10px; text-align: left; }
+  .hs-table th { background: var(--paper-raised); font-weight: 700; font-size: 12px; color: var(--ink-soft); }
+
+  .hs-flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; font-size: 12px; }
+  .hs-flow span.step { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 14px; padding: 4px 10px; }
+  .hs-flow span.arrow { color: var(--ink-soft); }
+
+  @media (max-width: 480px) {
+    .hs-detail-card { padding: 1.1rem; border-radius: 10px; }
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<div id="hs-navbar">
+  <div class="hs-navbar-inner">
+    <span class="hs-navbar-title" id="hs-navbar-home">우리 학교 생활 · 자취 · 원룸</span>
+    <a class="mono hs-navbar-home-link" href="https://seung341.github.io/gmuk-course-review/">← 홈으로</a>
+  </div>
+</div>
+<div id="hs-wrapper">
+  <div id="hs-view"></div>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById('hs-view');
+  function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  const HOUSING = {
+    start: {
+      icon: '🏠', title: '자취 시작하기', sub: '기숙사 vs 자취, 비용까지 — 자취를 결정하기 전에 확인하세요',
+      blocks: [
+        { type: 'text', title: '처음 자취를 시작한다면?', body: '기숙사를 나와 자취를 시작하면 원하는 지역과 주거 형태를 직접 선택할 수 있습니다. 하지만 월세만 내면 끝나는 게 아니라 보증금, 관리비, 공과금, 계약기간, 전입신고 등 직접 확인해야 할 사항도 많아집니다. 방을 알아보기 전에 먼저 거주 가능 여부, 예산, 통학거리와 계약조건을 확인하세요.' },
+        { type: 'warning', danger: true, title: '먼저 확인! 첫 학기 학생도 자취할 수 있나요?', body: 'Mason Korea의 First-Semester Experience(FSE) 정책에 따라 현재 모든 first-semester 학생은 원칙적으로 첫 학기 동안 IGC Housing에 거주해야 합니다. 장애·이동 관련 accommodation이나 심각한 개인 사정 등 특별한 경우에만 exemption 심사를 받을 수 있고, 단순히 이미 집을 계약했거나 가족과 거주하고 싶다는 이유만으로는 exemption 사유가 되지 않습니다.', link: { title: 'FSE Housing Requirement 확인 →', url: 'https://masonkorea.gmu.edu/housing-residentiallife/fsemasonkorea/requirement-fse' } },
+        { type: 'compare', title: '기숙사와 자취, 무엇이 다른가요?', items: [
+          { title: '🏫 IGC 기숙사', pos: ['캠퍼스 내에 있어 통학이 편리함', '별도의 임대차계약이 필요하지 않음', '책상·의자·옷장·침대 등 기본 비품 제공', '세탁실·택배실 등 공용시설 이용 가능'], neg: ['정해진 입주·퇴실 기간이 있음', 'IGC Housing 규정을 따라야 함', '일부 생활용품은 직접 준비해야 함', '신청 및 납부 기간을 지켜야 함'] },
+          { title: '🏡 자취', pos: ['원하는 지역과 주거형태 선택 가능', '자신의 생활패턴에 맞게 생활 가능', '계약조건에 따라 방을 장기간 유지 가능', '원룸·오피스텔·쉐어하우스 중 선택 가능'], neg: ['보증금과 월세 부담', '관리비와 공과금 별도 발생 가능', '직접 매물을 확인하고 계약해야 함', '전입신고 가능 여부 확인 필요'] }
+        ]},
+        { type: 'table', title: '기숙사 비용은 어느 정도인가요? (2026 Fall, 17주 기준)', headers: ['구분', '17주 비용'], rows: [['1인실', '1,912,500원'], ['2인실', '1,275,000원']], note: '학기 길이와 시기에 따라 비용이 달라질 수 있으므로 신청할 학기의 최신 공지를 확인하세요.', link: { title: 'IGC Housing 비용 확인 →', url: 'https://masonkorea.gmu.edu/housing-residential-life/for-continuing-students/igc-housing' } },
+        { type: 'text', title: '자취하면 어떤 비용이 드나요?', body: '월세만 비교하면 안 됩니다.\n\n처음 입주할 때: 보증금(반환받는 금액) + 첫 달 월세 + 부동산 중개보수 + 생활용품 구입비\n매달: 월세 + 관리비 + 전기 + 수도 + 가스/난방 + 인터넷 + 기타 생활비\n\n월세 50만 원인 방을 발견했다고 해서 실제 주거비가 월 50만 원이라는 뜻은 아닙니다.' },
+        { type: 'qa', items: [
+          { q: '500 / 60 이라고 적혀 있으면 무슨 뜻인가요?', a: '일반적으로 보증금 500만 원 / 월세 60만 원이라는 의미입니다. 여기에 관리비가 별도로 붙을 수 있습니다.' },
+          { q: '관리비는 월세에 포함되어 있나요?', a: '매물마다 다릅니다. 수도·인터넷·전기·난방 등 일부 항목이 포함될 수도, 전부 별도일 수도 있습니다. "관리비가 얼마인가요?"에서 끝내지 말고 "관리비에 어떤 항목이 포함되어 있나요?"까지 확인하세요.' },
+          { q: '학교에서 안내하는 외부 숙소도 있나요?', a: '네. Mason Korea University Life가 Off-Campus Housing 정보 페이지에서 쉐어하우스 등 여러 옵션을 안내합니다. 다만 Mason Korea가 해당 업체를 보증·추천하는 것은 아니며, 실제 가격·서비스·계약조건은 업체에 직접 최신 정보를 확인해야 합니다.' }
+        ]},
+        { type: 'warning', danger: true, title: 'International Student라면 꼭 확인하세요', body: '외국인 학생은 계약 전 해당 주소로 체류지 신고가 가능한지 반드시 확인해야 합니다. Mason Korea가 소개하는 외부 주거 옵션 중에도 전입신고가 불가능하다고 명시된 곳이 있으니, 가격과 위치만 보고 계약하지 말고 "이 주소로 전입신고가 가능한가요?"를 계약 전에 꼭 물어보세요.' },
+        { type: 'checklist', title: '✅ 자취하기로 결정하기 전에', items: ['월 최대 주거 예산은 얼마인가?', '보증금은 얼마까지 가능한가?', '학교까지 통학시간은 어느 정도까지 괜찮은가?', '원룸 / 오피스텔 / 쉐어하우스 중 무엇을 원하는가?', '최소 계약기간은 얼마인가?', '관리비와 공과금을 포함한 실제 월 주거비는 얼마인가?', '전입신고가 필요한 경우 전입신고 가능한 집인가?', '현재 Mason Korea Housing Requirement 대상인가?'] }
+      ]
+    },
+
+    where: {
+      icon: '📍', title: '어디서 살까?', sub: '송도 4개 생활권 비교 — 통학, 지하철, 상권 중 뭐가 중요한지에 따라',
+      blocks: [
+        { type: 'text', title: '무엇을 기준으로 비교할까요?', body: 'Mason Korea는 Incheon Global Campus 안에 있으며, 공식 주소는 인천광역시 연수구 송도문화로 119-4입니다. 단순히 월세가 저렴한 곳만 찾기보다 학교까지의 거리, 지하철 접근성, 주변 상권과 자신의 생활패턴을 함께 고려하세요.' },
+        { type: 'compare', title: '송도 4개 생활권', items: [
+          { title: '🟢 ① IGC · 글로벌캠퍼스 주변', tag: '통학 최우선형', pos: ['Mason Korea와 가까워 통학하기 편리함', '공강 시간에 집에 다녀오기 편함', '아침/늦은 수업이 있을 때 유리'], neg: ['원하는 매물이 충분한지 확인 필요', '지하철역까지 이동방법 고려'] },
+          { title: '🔵 ② 캠퍼스타운역 주변', tag: '통학 + 교통 균형형', pos: ['인천지하철 1호선 이용 편리', '버스(6-2, 16, 91번 등)로 IGC 이동 가능', '평일 IGC-캠퍼스타운역 셔틀버스 운행'], neg: ['IGC 바로 앞보다 통학시간 추가', '버스·셔틀 운행시간 확인 필요'] },
+          { title: '🟠 ③ 테크노파크역 · 트리플스트리트 주변', tag: '생활편의 + 통학 균형형', pos: ['IGC까지 도보 약 10~20분(출처마다 다름)', '식당·카페·쇼핑 등 편의시설 많음', 'Hyundai Premium Outlet Songdo 인근'], neg: ['상권 근처라 소음 등 확인 필요', '오피스텔은 관리비도 함께 비교'] },
+          { title: '🟣 ④ 인천대입구역 · 송도 중심부', tag: '송도 생활 중심형', pos: ['지하철 접근성 좋음', '공원·식당 등 송도 IBD 생활환경'], neg: ['IGC까지 별도 통학 필요', '아침 수업이 많다면 통학시간 확인'] }
+        ]},
+        { type: 'text', title: '그래서 어디가 제일 좋나요?', body: '정답은 없습니다. 무엇을 가장 중요하게 생각하는지에 따라 달라집니다.\n\n🏫 학교와 최대한 가까이 → IGC 주변\n🚇 통학 + 지하철 → 캠퍼스타운역\n🍽️ 통학 + 상권·생활편의 → 테크노파크역\n🌆 송도 중심 생활 → 인천대입구역 일대\n\nIGC 주변과 테크노파크역 주변부터 비교한 뒤, 생활패턴에 따라 범위를 넓혀보는 방식을 추천해요.' },
+        { type: 'checklist', title: '💡 집 위치는 지도에서 꼭 확인하세요', items: ['① 집 → Mason Korea: 아침 수업 기준 실제 통학경로 확인', '② 집 → 가장 가까운 지하철역: 도보시간과 버스 이용 여부', '③ 집 → 마트·편의점: 밤에도 이용 가능한 생활시설이 있는지'] },
+        { type: 'warning', title: '"근처" "역세권"이라는 광고 문구를 그대로 믿지 마세요', body: '부동산 매물에 "Mason Korea 근처", "IGC 인근", "역세권"이라고 적혀 있어도 실제로 가까운 것은 아닐 수 있어요. 버스·셔틀 시간표도 변경될 수 있으니, 도보·지하철·일반버스 등 대체 이동방법도 함께 확인하세요.' },
+        { type: 'linkonly', links: [
+          { title: 'IGC 공식 교통정보 확인 →', url: 'https://www.igc.or.kr/en/igc07.do' },
+          { title: 'IGC 셔틀버스 시간표 확인 →', url: 'https://www.igc.or.kr/en/igc09.do' }
+        ]}
+      ]
+    },
+
+    find: {
+      icon: '🔍', title: '방 구하기', sub: '예산 정하기부터 매물 비교까지 — 처음 자취한다면 이 순서대로',
+      blocks: [
+        { type: 'text', title: '방 구하는 순서', body: '처음 자취한다면 아래 순서대로 진행해보세요. 여러 매물을 비교하고, 가능하면 계약 전에 직접 방을 확인하는 과정이 중요합니다.' },
+        { type: 'steps', items: [
+          { title: 'STEP 1. 예산 정하기', desc: '월세만 정하지 말고 월세 + 관리비 + 공과금 + 교통비까지 고려하세요. 학교에서 먼 집의 월세가 저렴해도 교통비·통학시간이 늘면 반드시 더 좋은 선택은 아니에요.' },
+          { title: 'STEP 2. 살고 싶은 지역 정하기', desc: '통학이 중요하면 IGC 주변, 지하철도 중요하면 캠퍼스타운역, 학교+상권이면 테크노파크역, 송도 중심생활이면 인천대입구역 일대. 처음부터 송도 전체를 검색하기보다 1~2개 지역을 정해서 비교하세요.' },
+          { title: 'STEP 3. 온라인으로 매물 찾아보기', desc: '지역/주거형태/보증금/월세/관리비/면적/층수/입주가능일/옵션을 조건으로 설정하세요. 목적은 바로 계약이 아니라 "이 지역에서 이 예산이면 어떤 방을 구할 수 있는가"를 파악하는 것이에요.' },
+          { title: 'STEP 4. 공인중개사에게 문의하기', desc: '"IGC에 다니는 학생인데 테크노파크역 근처에서 방을 찾고 있습니다. 보증금은 ○○만 원, 월세+관리비는 ○○만 원 정도, ○월부터 입주 가능한 원룸을 찾고 있습니다"처럼 조건을 구체적으로 말하면 다른 매물도 같이 확인하기 쉬워요.' },
+          { title: 'STEP 5. 직접 방 보러 가기', desc: '온라인 사진만 보고 바로 계약하지 마세요. 소음, 냄새, 채광, 곰팡이, 수압 같은 문제는 실제 방문해야 보여요.' },
+          { title: 'STEP 6. 마음에 드는 방 비교하기', desc: '보증금/월세/관리비/공과금/학교까지 시간/지하철역까지/옵션/입주가능일/계약기간/전입신고 여부를 매물 A·B·C로 표를 만들어 비교하세요.' }
+        ]},
+        { type: 'text', title: '매물 가격은 이렇게 비교하세요', body: 'A 매물: 보증금 500만 원 / 월세 55만 원 / 관리비 15만 원 → 월 70만 원\nB 매물: 보증금 500만 원 / 월세 60만 원 / 관리비 5만 원 → 월 65만 원\n\n월세만 보면 A가 저렴하지만 관리비까지 포함하면 결과가 달라져요. 전기·가스·수도가 별도라면 실제 비용은 더 높아질 수 있으니, 월세와 관리비를 반드시 같이 비교하세요.' },
+        { type: 'qa', items: [
+          { q: '방 보러 가기 전에 무엇을 물어봐야 하나요?', a: '💰 비용: 월세/보증금/관리비 및 포함 항목, 전기·가스·수도·인터넷 별도 여부\n📅 계약: 입주 가능일, 최소 계약기간(단기계약 가능 여부)\n🏠 주거: 가구·가전 포함 여부, 주차, 반려동물 가능 여부, 전입신고 가능 여부(International Student는 필수 확인)' }
+        ]},
+        { type: 'checklist', title: '🏠 방 방문 시 체크리스트 — 방 내부', items: ['벽·천장에 곰팡이가 없는가?', '누수 흔적이 없는가?', '창문이 제대로 열리고 닫히는가?', '채광·환기·방음은 괜찮은가?'] },
+        { type: 'checklist', title: '🚿 화장실', items: ['수압이 괜찮은가?', '온수가 제대로 나오는가?', '배수가 잘 되는가?', '곰팡이나 악취가 없는가?'] },
+        { type: 'checklist', title: '❄️ 가전 · 옵션 ("풀옵션"이어도 정확한 목록 확인)', items: ['에어컨 / 냉장고 / 세탁기', '인덕션·가스레인지 / 전자레인지', '침대 / 책상 / 옷장'] },
+        { type: 'checklist', title: '🏢 건물 · 주변환경', items: ['공동현관 보안, CCTV, 엘리베이터, 택배 보관 장소, 주차장, 쓰레기 배출 장소', '밤에 주변이 너무 어둡지 않은가?', '편의점·마트가 가까운가?', '지하철·버스 이용이 편리한가? 주변 소음은?'] },
+        { type: 'checklist', title: '🎓 Mason Korea 학생이라면 추가로', items: ['집 → 강의실까지 실제 통학경로(오전 수업 기준)', '막차와 대중교통 이용시간', '공강 시간대 이동 편의성'] },
+        { type: 'warning', danger: true, title: '"지금 계약해야 해요"라는 말에 바로 결정하지 마세요', body: '🚩 시세보다 지나치게 저렴한 매물 🚩 직접 방을 보여주지 않으려는 경우 🚩 계약조건을 명확히 설명하지 않는 경우 🚩 관리비 포함 항목이 불분명한 경우 🚩 권리관계 확인 전 송금을 요구하는 경우 — 이런 경우 추가 확인이 필요해요.', link: { title: 'HUG 안심전세 확인 →', url: 'https://www.khug.or.kr/jeonse/index_jeonse.jsp' } },
+        { type: 'warning', title: '아직 계약금을 보내지 마세요', body: '마음에 드는 방을 골랐다고 계약이 끝난 게 아니에요. 등기부등본, 건축물대장 등 공적장부와 임대인 정보를 추가로 확인해야 합니다 (자세한 내용은 다음 카테고리 "계약하기"에서 다뤄요).' }
+      ]
+    },
+
+    cost: {
+      icon: '💰', title: '보증금 · 월세 · 관리비', sub: '500/60이 무슨 뜻인지부터 실제 한 달 주거비 계산까지',
+      blocks: [
+        { type: 'qa', items: [
+          { q: '500 / 60은 무슨 뜻인가요?', a: '보증금 500만 원 / 월세 60만 원을 의미합니다.' },
+          { q: '보증금이란 무엇인가요?', a: '계약할 때 임대인에게 맡기는 금액입니다. 매달 지출되는 돈이 아니며, 정상적으로 계약이 종료되면 미납 월세나 정산 비용을 제외하고 반환받는 구조예요. "사라지는 비용"이 아니라 돌려받아야 하는 돈이지만, 금액이 클수록 계약 전 보증금 보호 여부를 꼼꼼히 확인해야 합니다.' },
+          { q: '관리비는 무엇인가요?', a: '월세와 별도로 건물 관리 등에 필요한 비용입니다. 같은 관리비 10만 원이라도 건물마다 포함 항목이 달라요. 수도·인터넷·공용전기·엘리베이터·청소비가 포함될 수도, 세대 전기·가스·냉난방·수도가 별도 청구될 수도 있습니다. "관리비 얼마예요?" 대신 "관리비가 얼마이고 어떤 항목이 포함되어 있나요?"라고 물어보세요.' }
+        ]},
+        { type: 'text', title: '실제 한 달 주거비는 이렇게 계산하세요', body: '실제 월 주거비 = 월세 + 관리비 + 전기 + 수도 + 가스/난방 + 인터넷 등\n\n예: 매물 A — 보증금 500만 원 / 월세 55만 원 / 관리비 10만 원 / 전기·가스 별도\n광고에서 보이는 월세는 55만 원이지만, 관리비까지 더하면 이미 월 65만 원이고 실사용 공과금이 추가됩니다. 이 방을 "월 55만 원짜리 방"이라고 생각하면 안 돼요.' },
+        { type: 'table', title: '어떤 방이 더 저렴할까요?', headers: ['', '매물 A', '매물 B'], rows: [['보증금', '500만 원', '500만 원'], ['월세', '50만 원', '57만 원'], ['관리비', '15만 원', '5만 원'], ['월세+관리비 합계', '65만 원', '62만 원']], note: '월세만 보면 A가 7만 원 저렴하지만, 관리비까지 합치면 B가 더 저렴해요. 월세 숫자 하나만 보고 매물을 비교하지 마세요.' },
+        { type: 'checklist', title: '💵 처음 입주할 때 필요한 돈', items: ['① 보증금 — 가장 큰 초기자금', '② 첫 월세', '③ 중개보수 — 공인중개사를 통했다면 발생 가능', '④ 생활용품 — 침구·식기·조리도구·청소용품·욕실용품·소형가전'] },
+        { type: 'text', title: '부동산 중개보수는 얼마인가요?', body: '거래금액과 부동산 유형에 따라 상한이 달라집니다. 인천광역시는 주택 임대차의 경우 거래금액별 0.3~0.6% 상한요율(1억 원 미만 구간은 별도 한도액)을 두고 있어요.\n\n월세의 "거래금액" = 보증금 + (월세 × 100). 이 금액이 5천만 원 미만이면 보증금 + (월세 × 70)을 적용합니다.\n\n전용면적 85㎡ 이하 오피스텔은 임대차 중개보수 상한요율이 현재 0.4%입니다. 실제 계약 전 공인중개사에게 적용 기준을 꼭 확인하세요.', link: { title: '인천시 중개보수 요율 확인 →', url: 'https://www.incheon.go.kr/build/BU060102/274' } },
+        { type: 'linkonly', links: [
+          { title: '국토교통부 실거래가 공개시스템 (주변 시세 확인) →', url: 'https://rt.molit.go.kr/' }
+        ]},
+        { type: 'warning', danger: true, title: '이런 매물은 한 번 더 확인하세요', body: '🚩 월세는 매우 저렴한데 관리비가 지나치게 높은 경우 🚩 관리비 포함 항목 설명이 불분명한 경우 🚩 추가 비용(주차비/인터넷/수도/냉난방) 설명이 없는 경우 🚩 보증금이 큰데 주변 시세를 확인하지 않은 경우' },
+        { type: 'text', title: '💡 인천시 지원도 확인하세요', body: '인천광역시는 일정 요건을 충족하는 청년·신혼부부 등 무주택 대상자에게 주택 중개보수를 최대 30만 원 범위에서 지원하는 사업을 운영해요. 주택가격, 계약기간, 거주요건 등 세부 조건이 있어 모든 학생이 대상은 아니니, 계약 후 본인이 지원대상인지 확인해볼 만해요.' },
+        { type: 'checklist', title: '✅ 계약 전에 최종 계산!', items: ['보증금 / 월세 / 관리비 / 관리비 포함 항목 / 별도 공과금 / 중개보수 / 기타 초기비용을 모두 적어보고', '"초기 필요자금은 얼마인가?", "매달 실제로 얼마가 나가는가?" 두 질문에 답할 수 있으면 완료'] }
+      ]
+    },
+
+    contract: {
+      icon: '📝', title: '계약하기', sub: '등기부등본 확인부터 전입신고까지 — 계약금을 보내기 전 확인할 것들',
+      blocks: [
+        { type: 'text', title: '마음에 드는 방을 찾았더라도 바로 계약금을 보내면 안 돼요', body: '계약 전에는 집의 권리관계와 실제 임대인을 확인하고, 계약 당일에는 계약서 내용을 꼼꼼히 확인해야 합니다. 입주 후에도 전입신고 등 보증금을 보호하기 위한 절차가 남아 있어요.' },
+        { type: 'steps', items: [
+          { title: 'STEP 1. 계약 전에 집부터 확인하세요', desc: '① 등기부등본(등기사항증명서) — 표제부(건물 기본정보), 갑구(소유권), 을구(근저당 등)를 확인해 계약 상대방이 실제 소유자인지, 보증금 회수에 영향 줄 권리가 있는지 보세요.\n② 건축물대장 — 건물 용도와 위반건축물 여부를 확인하세요.' },
+          { title: 'STEP 2. 계약 상대방을 확인하세요', desc: '등기부등본의 소유자와 계약서의 임대인이 일치하는지 확인하세요. 대리인이 나온다면 대리권을 확인할 서류를 추가로 확인해야 합니다. "부동산에서 알아서 해주겠지"라고 생각하지 말고 직접 확인하세요.' },
+          { title: 'STEP 3. 보증금이 안전한지 확인하세요', desc: '적정 주택 시세, 적정 전세가율, 선순위 권리관계, 임대인 관련 정보, 보증 가입 가능 여부를 확인하세요. 월세도 보증금이 있다면 마찬가지로 확인하는 습관을 들이세요.' },
+          { title: 'STEP 4. 계약서를 꼼꼼히 읽으세요', desc: '🏠 주소·동호수 일치 여부\n💵 보증금/월세/관리비/계약금/잔금 및 월세 지급일·방법\n📅 계약 시작일/종료일/실제 입주가능일\n💡 관리비 포함 항목, 전기·수도·가스 별도 부담 항목, 주차비 등 추가비용' },
+          { title: 'STEP 5. 특약사항도 확인하세요', desc: '🔧 기존 시설 수리(누가 언제까지) 🛏️ 계약에 포함되는 옵션 🧹 퇴실 시 원상복구 범위 💰 보증금 반환 관련 조건 — 인터넷에서 본 특약 문구를 그대로 복사하지 말고 본인 계약에 맞는지 확인하세요.' },
+          { title: 'STEP 6. 돈을 보내기 전 마지막 확인', desc: '집 실제 확인, 등기부등본 확인, 실제 소유자 확인, 계약서 주소 일치, 보증금·월세·관리비 정확성, 특약사항, 입주일·계약기간을 모두 확인하세요. 계약 상대방과 송금 대상이 다르면 이유를 확인하지 않은 채 바로 송금하지 마세요.' },
+          { title: 'STEP 7. 잔금 지급 · 입주', desc: '입주 직후 벽지 손상, 바닥 흠집, 곰팡이, 누수, 가구·가전 상태 등 집 전체를 사진·영상으로 남기고, 필요하면 임대인/중개사에게 바로 알려두세요. 나중에 퇴실 시 기존 하자인지 구분하는 데 도움이 됩니다.' }
+        ]},
+        { type: 'text', title: 'STEP 8~9. 전입신고와 확정일자', body: '주민등록 전입신고는 새 거주지로 이동한 날부터 14일 이내에 정부24 또는 관할 기관을 통해 신청해야 합니다. 외국인 학생의 체류지 변경 신고는 절차가 다르므로 본인 체류자격에 맞는 절차를 별도로 확인하세요.\n\n계약 후 3가지 확인: 실제 입주 → 전입신고 → 확정일자 확인. 다만 법적 보호요건은 계약 형태에 따라 다를 수 있어, 보증금이 크거나 권리관계가 복잡하면 전문가·공식기관에 확인하세요.', link: { title: '전입신고 신청 (정부24) →', url: 'https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=13100000016' } },
+        { type: 'text', title: '전세보증금 반환보증도 확인해보세요', body: 'HUG의 전세보증금반환보증은 계약 종료 후 임대인이 반환해야 할 보증금을 일정 요건 아래 HUG가 책임지는 보증상품이에요. 모든 주택·계약이 가입 가능한 건 아니므로 계약 전 가입 가능 여부를 확인하세요. 등기부등본이나 권리관계 확인이 어렵다면 HUG의 안전계약 컨설팅을 활용하는 것도 방법입니다.', link: { title: 'HUG 안심전세 / 안전계약 컨설팅 →', url: 'https://onestop.khug.or.kr/webView' } },
+        { type: 'warning', danger: true, title: '계약할 때 이것만은 기억하세요', body: '❌ 사진만 보고 계약하지 않기 ❌ 등기부등본 확인 없이 계약금부터 보내지 않기 ❌ "부동산에서 확인했어요"라는 말만 믿고 넘어가지 않기 ❌ 관리비·추가비용 확인 없이 서명하지 않기 ❌ 이해 못 한 특약에 그대로 동의하지 않기 ❌ 입주 후 필요한 행정절차 미루지 않기' },
+        { type: 'flow', title: '✅ 계약 전체 과정 한눈에 보기', items: ['방 직접 확인', '시세·건축물대장 확인', '등기부등본 확인', '임대인 확인', '보증금 위험 확인', '계약서·특약 확인', '계약금/잔금 지급', '입주+집 상태 기록', '전입신고·확정일자', '자료 보관'] }
+      ]
+    },
+
+    movein: {
+      icon: '📦', title: '입주 · 퇴실 체크리스트', sub: '짐 옮기기 전 사진부터 보증금 반환 확인까지',
+      blocks: [
+        { type: 'num', label: '입주할 때' },
+        { type: 'checklist', title: 'STEP 1. 입주 전 다시 확인 — 계약정보', items: ['주소와 동·호수가 정확한가?', '계약 시작일이 맞는가?', '보증금·잔금 지급내역을 보관했는가?', '월세 지급일과 관리비 납부방법을 알고 있는가?'] },
+        { type: 'checklist', title: 'STEP 1. 옵션 확인', items: ['에어컨 / 냉장고 / 세탁기 / 전자레인지 / 인덕션·가스레인지', '침대 / 책상·의자 / 옷장 / 기타 계약상 옵션'] },
+        { type: 'text', title: 'STEP 2. 짐을 풀기 전에 사진부터 찍으세요', body: '가구를 배치하고 짐을 풀면 입주 전부터 있었던 손상인지 구분하기 어려워져요. 빈 방 상태에서 벽지 얼룩, 바닥 흠집, 천장 누수, 곰팡이, 창문·방충망, 화장실·싱크대, 문·도어락, 가구·가전 상태를 촬영하세요. 방 전체 영상 + 손상 부위 근접 촬영을 추천하고, 원본 파일로 촬영 날짜가 확인되게 보관하세요. 기존 하자는 사진과 함께 바로 임대인/중개사에게 알려두면 좋아요.' },
+        { type: 'checklist', title: 'STEP 3. 시설을 실제로 작동시켜 보세요 — 수도/전기/냉난방/보안', items: ['수압·온수·배수는 괜찮은가? 세면대 아래 누수는 없는가?', '조명·콘센트가 작동하는가? 차단기 위치를 아는가?', '에어컨·난방이 정상 작동하는가?', '현관문·도어락이 정상적으로 잠기는가?'] },
+        { type: 'text', title: 'STEP 4. 관리비와 공과금 납부방법 확인', body: '월세는 누구에게/언제/어떤 계좌로, 관리비는 관리사무소인지 임대인인지·매월 언제, 전기·수도·가스·인터넷은 각각 어떻게 납부하는지 확인하세요. 건물마다 관리비 포함 항목이 달라서 직접 납부해야 하는 공과금이 뭔지 알아둬야 해요.' },
+        { type: 'text', title: 'STEP 5. 필요한 행정절차 확인', body: '내국인의 전입신고는 이동일로부터 14일 이내(정부24). 외국인의 체류지 변경 신고는 절차가 달라 본인 체류자격에 맞는 방법·기한을 별도 확인하세요.' },
+        { type: 'checklist', title: 'STEP 6. 계약 관련 자료 보관', items: ['임대차계약서', '계약금·보증금·월세·관리비 송금/납부내역', '입주 당시 사진·영상', '임대인/중개사와의 중요 메시지', '수리 관련 기록, 확정일자 관련 자료'] },
+        { type: 'text', title: '살다가 문제가 생기면?', body: '누수, 보일러·에어컨 고장, 배수 문제, 도어락 고장, 곰팡이 등이 생기면 무조건 자기 돈으로 수리하기보다 임대인/관리주체에게 먼저 알리세요. 문제 발생 → 사진/영상 기록 → 임대인에게 알림 → 수리방법 협의 → 영수증·대화내용 보관 순서를 지키세요.' },
+        { type: 'num', label: '퇴실할 때' },
+        { type: 'checklist', title: 'STEP 7. 퇴실 전 준비 — 일정 · 비용', items: ['계약 종료일 확인, 임대인에게 퇴실 일정 전달, 이사업체 예약(필요시)', '마지막 월세, 관리비·전기·수도·가스 정산, 인터넷 등 해지/이전 (자동이체 확인!)'] },
+        { type: 'checklist', title: 'STEP 8. 방을 정리하세요', items: ['개인 물품 제거, 냉장고 비우기, 쓰레기 처리, 기본 청소', '계약상 옵션은 그대로 두기 (임대인 제공 가구·가전을 실수로 버리지 않기)', '임의로 설치한 물건 확인, 계약서의 원상복구 조건 확인'] },
+        { type: 'text', title: 'STEP 9. 퇴실할 때도 사진을 찍으세요', body: '짐을 모두 뺀 뒤 방 전체, 벽, 바닥, 화장실, 주방, 옵션 가전, 창문, 현관, 특별히 문제 있던 부분을 다시 촬영하세요. 입주 당시 사진과 비교할 수 있게요.' },
+        { type: 'warning', danger: true, title: 'STEP 10. 보증금 반환 확인', body: '임대인과 보증금 반환 시점·방법을 미리 확인하세요. 새 집 보증금이나 이사비용을 기존 보증금 반환에 의존하고 있다면 일정을 사전에 조율해야 해요. 보증금을 못 돌려받은 채 권리보호에 영향을 줄 수 있는 절차를 먼저 진행해야 하는 상황이면 임의 판단 없이 HUG 등 공식 상담기관에 확인하세요.' },
+        { type: 'checklist', title: 'STEP 11. 마지막으로 반납할 것', items: ['현관 열쇠, 공동현관 카드, 주차카드, 우편함 열쇠, 기타 지급받은 물품', '도어락 비밀번호를 썼다면 필요한 조치도 확인'] },
+        { type: 'text', title: '임대차 신고도 확인하세요', body: '일정 요건에 해당하는 주택 임대차계약은 체결일부터 30일 이내 임대차 신고 대상이 될 수 있어요. 국토교통부는 2025년 6월 1일 이후 체결되는 신고 대상 계약부터 지연신고 등에 과태료를 적용한다고 안내하고 있으니, 본인 계약이 신고 대상인지 확인해두세요.' }
+      ]
+    },
+
+    life: {
+      icon: '🧺', title: '송도 자취 생활', sub: '쓰레기 버리기부터 통학, 병원, 장보기까지 — 처음 혼자 살 때 헷갈리는 것들',
+      blocks: [
+        { type: 'text', title: '07-1. 일반쓰레기 버리기', body: '송도는 연수구의 생활폐기물 배출기준을 따릅니다. 종량제봉투를 사용해야 하고, 아파트·오피스텔 등 공동주택은 지정 배출장소에, 일반주택·상가는 지정 방식으로 문전 배출합니다. 자동집하시설이 설치된 지역은 종량제봉투를 담아 시설을 이용해요.\n\n일반적인 배출시간은 해당 동 배출요일 일몰 후 18:00~다음 날 04:00 이지만, 건물마다 다를 수 있어 입주하면 관리실/임대인에게 "이 건물 쓰레기는 어디에 버리나요?"라고 먼저 물어보는 게 가장 정확해요. 배출방법·시간 위반 시 과태료가 부과될 수 있습니다.', link: { title: '연수구 생활폐기물 배출기준 →', url: 'https://www.yeonsu.go.kr/main/part/clean/house.asp' } },
+        { type: 'qa', items: [
+          { q: '음식물쓰레기는 어떻게 버리나요?', a: '일반쓰레기와 분리해서 버려야 해요. 공동주택은 보통 RFID 종량기기, 일반주택·상가는 전용용기+납부필증, 자동집하시설 지역은 음식물 전용 종량제봉투를 사용해요. 건물마다 달라서 입주 후 관리실에서 먼저 확인하세요.' },
+          { q: '이것도 음식물쓰레기인가요?', a: '달걀껍데기, 소·돼지·닭 등의 뼈, 게·조개 등 단단한 껍데기, 호두·땅콩 등 단단한 껍데기, 복숭아·자두 등 단단한 씨, 티백 — 연수구는 이런 품목을 음식물쓰레기가 아닌 일반쓰레기로 안내하고 있어요.' }
+        ]},
+        { type: 'text', title: '07-3. 재활용품 버리기', body: '종이, 캔, 유리병, 플라스틱, 비닐, 투명 PET병 등을 종류별로 분리배출하세요. 플라스틱·페트병은 내용물을 비우고 이물질을 제거하는 게 기본이고, 투명 음료·생수 페트병은 라벨 제거 후 압착해서 배출하도록 연수구가 안내해요. 음식물이 심하게 묻었거나 여러 재질이 섞인 물건은 재활용품으로 분류되지 않을 수 있어요.', link: { title: '연수구 재활용품 배출기준 →', url: 'https://www.yeonsu.go.kr/main/part/clean/recycle.asp' } },
+        { type: 'text', title: '07-4. 침대나 책상은 어떻게 버리나요?', body: '종량제봉투에 안 들어가는 침대·책상·의자·서랍장·매트리스 등은 대형폐기물로 처리해야 해요. 그냥 쓰레기장에 두면 안 되고, 지정판매소 스티커·온라인 배출신고·키오스크·전화접수 등으로 신고 후 비용을 결제하고 배출번호에 따라 배출하세요. 퇴실할 때 특히 주의하세요 — 그냥 두고 가지 말고 정상 폐기 절차를 확인하세요.', link: { title: '연수구 대형폐기물 신고 →', url: 'https://www.yeonsu.go.kr/main/part/clean/waste.asp' } },
+        { type: 'text', title: '07-5. 빨래는 어떻게 하지?', body: '원룸·오피스텔에는 세탁기가 옵션으로 포함된 경우가 많아요. 이불·겨울 침구·큰 담요처럼 세탁기로 처리하기 어려운 세탁물은 주변 셀프빨래방의 대형 세탁기·건조기가 편리해요. 처음 세탁기를 쓰기 전에는 사용법, 세제 투입 위치, 건조 기능 여부, 배수 상태 정도는 알아두세요. 세탁기 문을 계속 닫아두면 습기·냄새가 생길 수 있으니 사용 후 환기하세요.' },
+        { type: 'text', title: '07-6. 장보기', body: '테크노파크역·캠퍼스타운 생활권에는 HOMEPLUS Incheon Songdo 같은 대형 쇼핑시설과 올잇마켓 캠퍼스타운역점 같은 지역 슈퍼가 있어요. 자취 초반엔 한 번에 많이 사기보다, 실제로 얼마나 요리하는지 파악한 뒤 구매량을 늘리는 걸 추천해요.\n\n처음 사두면 편한 것 — 주방: 즉석밥·계란·라면·식용유·소금·냉동식품 / 생활용품: 휴지·물티슈·쓰레기봉투·세제·수세미·지퍼백 / 욕실: 샴푸·바디워시·치약·수건·욕실청소용품\n\n편의점(GS25 포스코이앤씨타워점, CU 송도더프라우점 등)도 간단한 식사와 택배 등 생활서비스에 유용해요.' },
+        { type: 'text', title: '07-7. 병원 · 약국', body: '아프고 나서 찾기보다 입주할 때 미리 집 근처 내과, 치과, 약국(예: 송도캠퍼스약국), 가까운 응급의료기관 위치를 저장해두는 걸 추천해요. 운영시간은 변경될 수 있으니 방문 전 다시 확인하세요.' },
+        { type: 'checklist', title: '07-8. 택배 — 입주할 때 확인할 것', items: ['문 앞 배송이 가능한가?', '무인택배함이 있는가?', '공동현관 비밀번호 전달방식은?', '택배 보관장소가 따로 있는가?'] },
+        { type: 'text', title: '07-9. 학교 갈 때', body: 'IGC 근처 → 도보 중심 / 캠퍼스타운역 근처 → 버스·셔틀·도보 조합 / 테크노파크역 근처 → 도보·버스 / 송도 중심부 → 인천1호선+버스·도보. 첫 수업이 오전이라면 개강 전에 실제 평일 통학시간에 한번 이동해보는 걸 추천해요.' },
+        { type: 'checklist', title: '💡 07-10. 처음 자취한다면 이것만은 기억하세요', items: ['💰 돈: 월세+관리비+공과금+식비+교통비를 함께 관리', '🍳 음식: 처음부터 식재료를 많이 사지 않기 (초반엔 외식·배달이 많을 수 있음)', '🧹 청소: 몰아서 하기보다 조금씩, 특히 화장실·싱크대·음식물쓰레기는 오래 방치하지 않기', '📄 계약: 보증금 반환받고 계약관계가 완전히 끝날 때까지 계약서 보관', '📸 기록: 집에 문제가 생기면 사진 먼저, 수리·임대인과의 중요 대화도 기록 보관'] },
+        { type: 'text', title: '🆘 문제가 생겼다면?', body: '쓰레기·재활용 문제 → 연수구청 청소행정 안내\n건물 시설 문제 → 관리사무소 / 임대인\n계약·보증금 문제 → HUG 등 공식 주거상담기관\nMason Korea Housing 관련 문제 → Mason Korea University Life / Housing\n긴급상황 → 경찰 112 / 소방·구급 119' }
+      ]
+    }
+  };
+
+  const ORDER = ['start', 'where', 'find', 'cost', 'contract', 'movein', 'life'];
+
+  function route() {
+    const hash = location.hash;
+    const m = hash.match(/^#\/housing\/(.+)$/);
+    if (m && HOUSING[m[1]]) renderDetail(m[1]);
+    else renderHome();
+  }
+
+  function renderHome() {
+    let html = '<div class="hs-page">';
+    html += '<div class="hs-intro"><div class="eyebrow mono">HOUSING GUIDE</div><h1>자취 · 원룸</h1>';
+    html += '<p>기숙사를 나와 자취를 시작한다면 꼭 확인해야 할 것들 — 지역 선택부터 계약, 입주, 송도 생활 팁까지 정리했어요.</p></div>';
+    html += '<div class="hs-grid">';
+    ORDER.forEach(key => {
+      const h = HOUSING[key];
+      html += '<div class="hs-card" data-key="' + key + '"><div class="hs-card-icon">' + h.icon + '</div>' +
+        '<div class="hs-card-title">' + esc(h.title) + '</div><div class="hs-card-sub">' + esc(h.sub) + '</div></div>';
+    });
+    html += '</div></div>';
+    root.innerHTML = html;
+    root.querySelectorAll('.hs-card').forEach(el => {
+      el.addEventListener('click', () => { location.hash = '#/housing/' + el.getAttribute('data-key'); });
+    });
+  }
+
+  function renderBlock(b) {
+    if (b.type === 'text') {
+      return '<div class="hs-section"><div class="hs-section-title">' + esc(b.title) + '</div><div class="hs-section-body">' + esc(b.body) + '</div>' +
+        (b.link ? '<a class="hs-linkcard" href="' + esc(b.link.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(b.link.title) + '</div></a>' : '') + '</div>';
+    }
+    if (b.type === 'warning') {
+      return '<div class="hs-warning' + (b.danger ? ' hs-danger' : '') + '"><strong>' + esc(b.title) + '</strong>' + esc(b.body) + '</div>' +
+        (b.link ? '<a class="hs-linkcard" href="' + esc(b.link.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(b.link.title) + '</div></a>' : '');
+    }
+    if (b.type === 'checklist') {
+      return '<div class="hs-section"><div class="hs-section-title">' + esc(b.title) + '</div><ul class="hs-checklist">' +
+        b.items.map(it => '<li>' + esc(it) + '</li>').join('') + '</ul></div>';
+    }
+    if (b.type === 'steps') {
+      return '<div class="hs-steps">' + b.items.map(s =>
+        '<div class="hs-step"><div class="hs-step-num"></div><div class="hs-step-body"><div class="hs-step-title">' + esc(s.title) + '</div>' +
+        '<div class="hs-step-desc">' + esc(s.desc) + '</div></div></div>'
+      ).join('') + '</div>';
+    }
+    if (b.type === 'compare') {
+      let html = '<div class="hs-section">';
+      if (b.title) html += '<div class="hs-section-title">' + esc(b.title) + '</div>';
+      html += '<div class="hs-compare">';
+      b.items.forEach(it => {
+        html += '<div class="hs-compare-card"><div class="cc-title">' + esc(it.title) + '</div>';
+        if (it.tag) html += '<span class="cc-tag">' + esc(it.tag) + '</span>';
+        if (it.pos) html += '<div class="cc-label">👍 장점</div><ul>' + it.pos.map(p => '<li>' + esc(p) + '</li>').join('') + '</ul>';
+        if (it.neg) html += '<div class="cc-label neg">👀 확인할 점</div><ul>' + it.neg.map(n => '<li>' + esc(n) + '</li>').join('') + '</ul>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+      return html;
+    }
+    if (b.type === 'table') {
+      let html = '<div class="hs-section"><div class="hs-section-title">' + esc(b.title) + '</div><table class="hs-table"><thead><tr>' +
+        b.headers.map(h => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>' +
+        b.rows.map(r => '<tr>' + r.map(c => '<td>' + esc(c) + '</td>').join('') + '</tr>').join('') + '</tbody></table>';
+      if (b.note) html += '<div class="hs-section-body" style="margin-top:8px;">' + esc(b.note) + '</div>';
+      if (b.link) html += '<a class="hs-linkcard" href="' + esc(b.link.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(b.link.title) + '</div></a>';
+      html += '</div>';
+      return html;
+    }
+    if (b.type === 'qa') {
+      return '<div class="hs-section">' + b.items.map(qa =>
+        '<details class="hs-faq"><summary>' + esc(qa.q) + '</summary><div class="hs-faq-body">' + esc(qa.a) + '</div></details>'
+      ).join('') + '</div>';
+    }
+    if (b.type === 'linkonly') {
+      return '<div class="hs-section">' + b.links.map(l =>
+        '<a class="hs-linkcard" href="' + esc(l.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(l.title) + '</div></a>'
+      ).join('') + '</div>';
+    }
+    if (b.type === 'flow') {
+      return '<div class="hs-section"><div class="hs-section-title">' + esc(b.title) + '</div><div class="hs-flow">' +
+        b.items.map((s, i) => '<span class="step">' + esc(s) + '</span>' + (i < b.items.length - 1 ? '<span class="arrow">→</span>' : '')).join('') + '</div></div>';
+    }
+    if (b.type === 'num') {
+      return '<div class="hs-num-divider mono">' + esc(b.label) + '</div>';
+    }
+    return '';
+  }
+
+  function renderDetail(key) {
+    const h = HOUSING[key];
+    let html = '<div class="hs-page"><span class="hs-back" id="hs-back-btn">← 자취·원룸 목록으로</span>';
+    html += '<div class="hs-detail-card"><div class="hs-detail-head"><div class="hs-mono">' + h.icon + ' HOUSING GUIDE</div>';
+    html += '<h2>' + esc(h.title) + '</h2><div class="hs-sub">' + esc(h.sub) + '</div></div>';
+    html += h.blocks.map(renderBlock).join('');
+    html += '</div></div>';
+    root.innerHTML = html;
+    document.getElementById('hs-back-btn').addEventListener('click', () => { location.hash = ''; });
+    window.scrollTo({ top: 0 });
+  }
+
+  document.getElementById('hs-navbar-home').addEventListener('click', () => { location.hash = ''; route(); });
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
