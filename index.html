@@ -105,6 +105,8 @@
   #sc-courses:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
   #sc-rules { transition: transform .2s ease, box-shadow .2s ease; }
   #sc-rules:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+  #sc-housing { transition: transform .2s ease, box-shadow .2s ease; }
+  #sc-housing:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
 
   /* ---------- final cta ---------- */
   #outro { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
@@ -143,9 +145,10 @@
     </div>
     <div class="reveal-card" id="rc-3" data-accent="amber">
       <div class="rc-icon">🏠</div>
-      <div class="rc-tag mono">CATEGORY 03 · SOON</div>
+      <div class="rc-tag mono">CATEGORY 03 · NOW OPEN</div>
       <div class="rc-title">자취 · 원룸</div>
-      <div class="rc-desc">보증금, 매물, 동네 정보까지<br>곧 만나요</div>
+      <div class="rc-desc">보증금, 매물, 동네 정보까지<br>지역 비교부터 계약까지</div>
+      <a class="rc-link mono" href="https://seung341.github.io/gmuk-course-review/housing_site.html">바로가기 →</a>
     </div>
     <div class="reveal-card" id="rc-4" data-accent="sage">
       <div class="rc-icon">🎉</div>
@@ -185,8 +188,8 @@
         <div class="sc-title">강의 평가</div>
         <div class="sc-desc">평점, 난이도, 과제량까지 — 강의 등록하고 바로 후기 남기기</div>
       </div>
-      <div class="showcase-card">
-        <div class="sc-badge">SOON</div>
+      <div class="showcase-card" id="sc-housing" style="cursor:pointer;">
+        <div class="sc-badge">NOW<br>OPEN</div>
         <div class="sc-icon">🏠</div>
         <div class="sc-title">자취 · 원룸</div>
         <div class="sc-desc">송도 근처 매물, 보증금 시세, 동네 꿀팁</div>
@@ -241,6 +244,10 @@
 
   document.getElementById('sc-rules').addEventListener('click', () => {
     window.location.href = 'https://seung341.github.io/gmuk-course-review/rules_site.html';
+  });
+
+  document.getElementById('sc-housing').addEventListener('click', () => {
+    window.location.href = 'https://seung341.github.io/gmuk-course-review/housing_site.html';
   });
 
   // ---------- pinned scroll-triggered cards ----------
