@@ -140,7 +140,8 @@
         { title: '➕ Add / Drop', items: ['Add → 학기 초 정해진 기간 내 수업 추가', 'Drop → Drop 기간 내 수업 철회 (Transcript에 안 남음)', 'Drop 시점에 따라 등록금 환불 비율 상이', 'Add/Drop 후 Patriot Web에서 최종 시간표 확인 필수'] },
         { title: '↩️ Withdrawal', items: ['Drop 기간 이후 수업을 그만두려면 Withdrawal', 'Transcript에 W 표시, GPA엔 영향 없음', 'W는 재수강 graded attempt 횟수에 미포함', 'Selective Withdrawal은 학부 재학 전체 최대 3과목', '처리된 Withdrawal은 취소 불가'] },
         { title: '🔄 재수강', items: ['동일 과목 최대 3회의 graded attempt', 'W는 graded attempt로 미계산', '모든 성적·학점이 최대 허용까지 GPA에 반영', '모든 수강 기록은 Transcript에 계속 표시', '동일 과목 학점 중복 취득 불가'] },
-        { title: '🏫 타 대학 수강 (Study Elsewhere)', items: ['원칙적으로 수강 전 승인 필요', '학부생은 Mason GPA 2.00 이상 등 자격요건 존재', 'Mason에서 시도한 과목(W 포함)은 재시도 불가', '전공/단과대별 추가 제한 있을 수 있음'] }
+        { title: '🏫 타 대학 수강 (Study Elsewhere)', items: ['원칙적으로 수강 전 승인 필요', '학부생은 Mason GPA 2.00 이상 등 자격요건 존재', 'Mason에서 시도한 과목(W 포함)은 재시도 불가', '전공/단과대별 추가 제한 있을 수 있음'] },
+        { title: '🔄 편입 (Transfer)', items: ['다른 대학 → GMU: Transfer Student로 지원, 최대 90학점 인정 가능', 'C(2.0) 이상 대학 수준 과목만 Transfer Credit 심사 대상', 'GMU → 다른 대학: 편입 대학의 Transfer Admission 절차로 별도 지원', 'Mason 학점을 얼마나 인정할지는 편입 대상 학교가 최종 결정', 'F-1 학생의 미국 내 편입은 SEVIS Transfer 절차 별도 필요'] }
       ],
       faq: [
         { section: '수강신청', qa: [
@@ -162,6 +163,24 @@
         ]},
         { section: '타 대학 수강', qa: [
           { q: '다른 대학에서 수업을 들을 수 있나요?', a: '가능한 경우가 있지만 Study Elsewhere는 원칙적으로 사전 승인이 필요합니다. 학부생은 Mason cumulative GPA 최소 2.00이 요구되며, Mason 입학 후 첫 학기인 Freshman/Transfer Student는 허용되지 않습니다. 또한 Mason에서 이미 시도한 과목(W 포함)은 다른 학교에서 다시 들어 Study Elsewhere로 처리할 수 없습니다.' }
+        ]},
+        { section: '편입 — 다른 대학 → George Mason University', qa: [
+          { q: '이전 대학을 다닌 적이 있으면 편입생으로 지원해야 하나요?', a: '고등학교 졸업 후 다른 대학에서 학점을 취득한 이력이 있다면 Mason 지원 시 Transfer Student로 지원해야 합니다. 이전 대학에서 취득한 학점이 실제로 인정되는지와 별개로, 학업 이력은 지원 과정에서 정확하게 제출해야 합니다.' },
+          { q: '이전 대학에서 들은 과목은 모두 인정되나요?', a: '아니요. Transfer Credit으로 인정되려면 일반적으로 대학 수준의 과목이면서 C(2.0) 이상 성적을 받았고, Mason이 인정하는 교육기관에서 취득했으며 Mason Academic Standards에 부합해야 합니다. 따라서 이전 대학에서 취득한 총 학점과 Mason에서 최종 인정되는 학점은 다를 수 있습니다.' },
+          { q: '최대 몇 학점까지 인정받을 수 있나요?', a: '학부 과정에서는 최대 90학점까지 Transfer Credit으로 인정될 수 있습니다. 다만 90학점을 인정받았다고 해서 그 학점이 모두 Major나 Mason Core 등 특정 졸업요건을 충족하는 것은 아닙니다.' },
+          { q: 'C-를 받은 과목도 인정되나요?', a: '일반적인 Transfer Credit 기준은 C(2.0) 이상이라 C-는 기준을 충족하지 않습니다. Pass/Satisfactory로 이수한 과목도 자동 인정되는 게 아니라, 해당 성적이 C 이상에 해당하는지 별도로 확인해야 할 수 있습니다.' },
+          { q: '이전 대학의 성적도 Mason GPA에 포함되나요?', a: '아니요. 인정된 Transfer Credit은 Degree에 적용될 수 있지만, 이전 대학에서 받은 성적 자체는 Mason Cumulative GPA에 포함되지 않습니다.' },
+          { q: '해외 또는 한국 대학에서 편입하면 어떻게 되나요?', a: '미국 외 대학에서 취득한 학점은 추가 평가와 서류가 필요할 수 있습니다. Course-by-Course Evaluation, 영문 Transcript, Course Description 또는 Syllabus 등을 요구받을 수 있으므로 Mason Korea Admissions의 안내를 확인해야 합니다.' },
+          { q: '이전 대학 과목이 Mason의 어떤 과목으로 인정되는지는 어떻게 결정되나요?', a: 'Mason의 Transfer Credit Evaluation을 통해 결정됩니다. 과목명이 비슷하더라도 자동으로 동일한 Mason Course로 인정되는 것은 아니며, 과목 내용과 학점 등을 바탕으로 Course Equivalency가 결정됩니다.' },
+          { q: 'Transfer Credit 결과는 어디서 확인하나요?', a: '입학 후 Mason의 Transfer Credit Evaluation 결과를 확인해야 합니다. 인정된 학점이 Mason Core, Major 또는 General Elective 등에 어떻게 적용되는지도 Degree Evaluation과 Academic Advisor를 통해 확인하는 게 좋습니다.' }
+        ]},
+        { section: '편입 — George Mason University → 다른 대학', qa: [
+          { q: 'Mason에서 다른 대학으로 편입할 수도 있나요?', a: '네. Mason 재학 중 다른 대학으로 이동하려면 편입하려는 대학의 Transfer Admission 절차에 따라 직접 지원해야 합니다. 학교마다 Transfer Applicant 자격, 최소 GPA, 필요한 선수과목, 최소/최대 Transfer Credit, 지원 서류, 지원 마감일이 다르므로 목표 대학의 요건을 먼저 확인해야 합니다.' },
+          { q: 'Mason에서 들은 과목은 모두 새 학교에서 인정되나요?', a: '반드시 그렇지는 않습니다. Mason에서 취득한 학점을 얼마나 인정할지는 편입하려는 대학이 결정하며, 특정 전공과목·General Elective·졸업학점으로만 인정되거나 아예 인정되지 않을 수도 있습니다. 따라서 지원 전 목표 대학의 Transfer Credit Policy를 미리 확인하는 게 중요합니다.' },
+          { q: '다른 대학에 지원할 때 Mason 성적표는 어떻게 제출하나요?', a: 'Official Transcript가 필요하다면 University Registrar가 지정한 Parchment 시스템을 통해 전자 또는 종이 형태로 주문할 수 있습니다. Patriot Web의 Student Dashboard → Order Official Transcript에서도 접근 가능합니다.' },
+          { q: '편입할 대학에 합격하면 바로 Mason을 그만두면 되나요?', a: '단순히 수업에 나오지 않는 방식으로 처리하면 안 됩니다. 학기 도중 그만두는 경우 Drop 또는 Withdrawal 규정이 별도로 적용될 수 있어, 학기 중 편입한다면 Mason Korea Academic Affairs나 Academic Advisor에게 학적 및 수강 상태를 확인하는 게 좋습니다.' },
+          { q: '편입하기 전에 무엇을 확인하는 것이 좋나요?', a: '현재까지 취득한 학점 중 몇 학점이 인정되는지, 전공과목이 동일한 요건으로 인정되는지, General Elective로만 인정되는 과목은 없는지, 새 대학의 Residency Requirement와 예상 졸업 시기, 등록금·장학금 조건을 비교해보는 게 좋습니다. "편입 합격"과 "학점 인정"은 별개의 문제라, 가능하다면 최종 결정 전에 새 대학의 Transfer Credit Evaluation을 확인하세요.' },
+          { q: 'F-1 학생이 미국의 다른 대학으로 편입하면 추가 절차가 있나요?', a: '네. 일반적인 편입 절차 외에 SEVIS Record Transfer가 필요합니다. 새 학교에 합격한 뒤 Mason의 Office of International Programs and Services(OIPS)를 통해 Transfer-Out 절차를 진행해야 하며, 새 학교의 시작일이 정해진 기간 안에 있어야 하므로 학교를 옮기기 전 OIPS에 반드시 확인해야 합니다.' }
         ]}
       ],
       warnings: [
@@ -170,12 +189,20 @@
         { title: 'Selective Withdrawal은 횟수가 제한되어 있어요', body: '한 학기당 3개가 아니라 학부 재학 전체에서 최대 3과목입니다.' },
         { title: 'W도 완전히 영향이 없는 건 아니에요', body: 'GPA엔 영향 없지만 Attempted Credit Hours엔 포함됩니다. Financial Aid, 국제학생 신분 등에 영향을 줄 수 있습니다.' },
         { title: '재수강은 무제한이 아니에요', body: '최대 3회의 graded attempt. 전공에 따라 더 엄격한 제한이 있을 수 있어 반복수강 전 Advisor 확인이 안전합니다.' },
-        { title: '마감일은 매 학기 확인하세요', body: 'Add/Drop/Withdrawal 기간은 학기마다 다르며, 짧은 기간 과목은 15주 수업과 다른 마감일이 적용될 수 있습니다.' }
+        { title: '마감일은 매 학기 확인하세요', body: 'Add/Drop/Withdrawal 기간은 학기마다 다르며, 짧은 기간 과목은 15주 수업과 다른 마감일이 적용될 수 있습니다.' },
+        { title: '"편입 합격"과 "학점 인정"은 별개예요', body: '편입 대학에 합격했다고 지금까지 딴 학점이 그대로 인정된다는 뜻은 아니에요. 최종 결정 전에 반드시 Transfer Credit Evaluation을 확인하세요.' },
+        { title: 'Mason 학점이 새 학교에서 자동 인정되지 않아요', body: '편입하려는 대학이 인정 여부와 적용 방식(전공/General Elective/졸업학점/불인정)을 결정합니다.' }
       ],
       links: [
         { title: 'George Mason University — Registration & Attendance', desc: '수강신청, 최대 수강학점, 재수강, Study Elsewhere 및 Withdrawal 공식 규정', url: 'https://catalog.gmu.edu/policies/academic/registration-attendance/' },
         { title: 'Mason Korea — Withdrawal', desc: 'Unrestricted/Selective Withdrawal 및 이후 처리 안내', url: 'https://masonkorea.gmu.edu/advising-and-course-registration/withdrawal' },
-        { title: 'Mason Korea — Academic Calendar', desc: '현재 학기 Add/Drop/Withdrawal 및 주요 학사 일정', url: 'https://masonkorea.gmu.edu/academic-calendars' }
+        { title: 'Mason Korea — Academic Calendar', desc: '현재 학기 Add/Drop/Withdrawal 및 주요 학사 일정', url: 'https://masonkorea.gmu.edu/academic-calendars' },
+        { title: 'George Mason University — Transfer Requirements', desc: '다른 대학에서 GMU로 편입할 때 지원 자격 및 필요 서류', url: 'https://www.gmu.edu/transfer/requirements' },
+        { title: 'George Mason University — Transfer Credit', desc: 'Transfer Credit Evaluation, 재평가 및 학점 인정 절차', url: 'https://www.gmu.edu/transfer/credits' },
+        { title: 'George Mason University — Transfer Credit Criteria', desc: 'C 이상 성적 기준, 최대 인정 학점 및 Course Equivalency 기준', url: 'https://www.gmu.edu/transfer/credits/criteria' },
+        { title: 'Mason Korea — International Transfer Requirements', desc: '한국 등 미국 외 대학에서 Mason Korea로 편입 시 필요 서류', url: 'https://masonkorea.gmu.edu/future-students/https-masonkorea-gmu-edu-future-students-apply-now/international-students' },
+        { title: 'George Mason University — Official Transcripts', desc: '다른 대학 편입 시 필요한 Official Transcript 발급 방법', url: 'https://registrar.gmu.edu/students/transcripts-parchment/' },
+        { title: 'George Mason University OIPS — F-1 Transfer Out', desc: 'F-1 학생의 미국 내 편입 시 SEVIS Transfer-Out 절차', url: 'https://oips.gmu.edu/transfer-procedures/' }
       ]
     },
 
@@ -308,6 +335,22 @@
           { q: 'ENGH 101과 ENGH 302도 졸업요건인가요?', a: '네. Bachelor 학생은 ENGH 101(Composition)과 ENGH 302(Advanced Composition)를 최소 성적 기준 이상으로 이수해야 합니다. ENGH 302는 전공에 맞는 Section을 선택해야 하는 경우가 많습니다.' },
           { q: 'Writing-Intensive Course란 무엇인가요?', a: '모든 학부생은 Major에서 지정된 Writing-Intensive Course를 최소 하나 이수해야 합니다. 보통 300/400-level 전공과목 중 하나가 지정되며, 전공마다 다릅니다.' }
         ]},
+        { section: 'General Elective', qa: [
+          { q: 'General Elective가 무엇인가요?', a: 'Mason Core, Major Requirement 등 특정 졸업요건을 충족한 뒤 전체 졸업학점을 채우는 데 사용할 수 있는 선택 학점입니다. 필수 Mason Core와 전공과목만으로 120학점이 채워지지 않으면 남은 학점을 General Elective로 채울 수 있는데, 필요한 학점 수는 전공과 Catalog Year에 따라 달라질 수 있습니다.' },
+          { q: 'General Elective는 아무 과목이나 들으면 되나요?', a: '반드시 그렇지는 않습니다. Major Requirement보다 선택의 자유가 크지만, 해당 과목이 자신의 Degree에 학점으로 적용될 수 있는지는 확인해야 합니다. 총 학점뿐 아니라 Mason Core, Major/Concentration Requirements, Upper-Level Credit, Residency Requirement까지 모두 함께 충족해야 하므로, "120학점만 채우기"보다는 Degree Evaluation을 보면서 선택하는 게 중요합니다.' },
+          { q: 'Major Elective와 General Elective는 같은 건가요?', a: '아니요. Major Elective는 자신의 전공에서 정해 놓은 선택과목 중 하나를 골라 전공요건을 충족하는 과목이고, General Elective는 특정 Major Requirement에 속하지 않아도 전체 Degree에 적용해 졸업학점을 채우는 데 쓸 수 있는 학점입니다. 이름은 비슷하지만 Degree Evaluation에서 적용되는 영역이 다릅니다.' }
+        ]},
+        { section: 'Natural Science — Lab / Non-Lab', qa: [
+          { q: 'Science Lab과 Non-Lab의 차이는 무엇인가요?', a: '둘 다 Mason Core의 Natural Science 영역에 포함될 수 있지만, 가장 큰 차이는 Laboratory Experience 포함 여부입니다. Lab Course는 실험·관찰 등 과학적 탐구 과정에 직접 참여하고, Non-Lab Course는 개념과 과학적 사고는 배우지만 필수 laboratory experience는 포함하지 않습니다.' },
+          { q: 'Natural Science는 몇 학점을 들어야 하나요?', a: 'Mason Core Natural Science Requirement는 총 7학점입니다. 이 중 4학점은 반드시 Laboratory Experience가 포함된 과목이어야 하고, 나머지 3학점은 승인된 Natural Science 과목(Lab 또는 Non-Lab)으로 이수할 수 있습니다. 즉 7학점을 채웠다고 끝이 아니라, 그중 최소 4학점은 반드시 Lab Requirement를 충족해야 합니다.' },
+          { q: '3학점짜리 Non-Lab Science 두 과목을 들으면 되나요?', a: '그것만으로는 Requirement를 모두 충족할 수 없습니다. Natural Science Requirement에는 4학점의 Laboratory Experience가 반드시 포함되어야 하므로, 수강신청 전에 해당 과목이 Lab 포함 과목인지 아닌지 확인해야 합니다.' }
+        ]},
+        { section: '한국 군 복무 학점', qa: [
+          { q: '한국에서 군 복무를 하면 학점을 받을 수 있나요?', a: '네. George Mason University는 대한민국 군 복무(South Korean Military Service)를 한 Mason 학생에게 최대 6학점의 Undergraduate Elective Credit을 인정할 수 있도록 규정하고 있습니다.' },
+          { q: '전역하면 무조건 6학점을 받나요?', a: '공식 규정의 표현은 "up to six (6) hours", 즉 최대 6학점입니다. 모든 학생에게 자동으로 정확히 6학점이 부여된다고 이해하면 안 되고, 필요한 증빙서류와 실제 인정 절차는 Mason Korea Office of Admissions에 확인해야 합니다.' },
+          { q: '군 복무 학점은 전공학점으로 인정되나요?', a: '공식 규정에서는 이를 Undergraduate Elective Credit으로 명시하고 있어서, 특정 Major Requirement 과목을 대체하는 전공학점이라고 생각하면 안 됩니다. 자신의 Degree에서 실제로 어떻게 적용되는지는 Degree Evaluation 및 Academic Advisor를 통해 확인하는 게 좋습니다.' },
+          { q: '어떻게 신청하나요?', a: '한국 군 복무 학점에 필요한 Documentation Requirements는 Mason Korea Office of Admissions에 문의하도록 안내되어 있습니다. 전역 후 자동으로 학점이 입력된다고 가정하지 말고, Office of Admissions를 통해 필요한 증빙서류와 처리 절차를 직접 확인해야 합니다.' }
+        ]},
         { section: 'Fairfax 수학', qa: [
           { q: 'Mason Korea 학생은 미국 캠퍼스에 꼭 가야 하나요?', a: '네. 최소 2 Regular Semesters를 Fairfax Campus에서 수학해야 합니다. 보통 6·7학기(→8학기 Korea 복귀) 또는 7·8학기(Fairfax에서 졸업) 방식으로 진행되며, 전공/개인계획에 따라 3학기 이상 가능합니다.' },
           { q: 'Summer에 Fairfax 수업을 들으면 한 학기로 인정되나요?', a: '아니요. Summer Session은 Two-Semester Fairfax Requirement에 포함되지 않습니다 (Fall/Spring만 인정).' },
@@ -328,11 +371,16 @@
         { title: 'Summer는 Fairfax 2학기에 포함되지 않아요', body: '학점 취득엔 쓰이지만 Two-Semester Requirement는 줄이지 못합니다.' },
         { title: 'Four-Year Plan은 미리 확인하세요', body: 'Prerequisite 순서를 잘못 잡으면 Fairfax Transition·졸업 시기가 늦어질 수 있습니다.' },
         { title: 'Catalog Year를 확인하세요', body: '자신에게 적용되는 Catalog Requirements 기준으로 판단해야 하며, 같은 전공이라도 Catalog Year가 다르면 요건이 다를 수 있습니다.' },
-        { title: '졸업은 자동으로 처리되지 않아요', body: 'Graduation Application 제출 필요. Deadline을 놓치면 Late/Retroactive Graduation 절차가 필요할 수 있습니다.' }
+        { title: '졸업은 자동으로 처리되지 않아요', body: 'Graduation Application 제출 필요. Deadline을 놓치면 Late/Retroactive Graduation 절차가 필요할 수 있습니다.' },
+        { title: 'Natural Science는 학점 수만 채우면 안 돼요', body: '7학점 중 최소 4학점은 반드시 Lab 포함 과목이어야 해요. Non-Lab 과목만으로는 Requirement를 못 채워요.' },
+        { title: '군 복무 학점은 최대 6학점이지 보장된 6학점이 아니에요', body: '자동 지급이 아니라 Mason Korea Office of Admissions에 증빙서류를 제출해야 인정돼요.' }
       ],
       links: [
         { title: "George Mason — Bachelor's Degree Requirements", desc: '120학점, GPA, Upper-Level, Residency 등 기본 졸업요건', url: 'https://catalog.gmu.edu/policies/academic/undergraduate-policies/' },
         { title: 'George Mason — Mason Core', desc: 'Mason Core 영역과 인정 과목', url: 'https://catalog.gmu.edu/mason-core/' },
+        { title: 'George Mason University — Degree Works', desc: 'General Elective가 Degree Evaluation에서 어떻게 분류되는지', url: 'https://webdocs.gmu.edu/wp-content/uploads/how-to-read-degree-works.pdf' },
+        { title: 'George Mason University — Natural Sciences, Lab and Non-Lab', desc: 'Mason Core Natural Science의 Lab/Non-Lab 차이 및 이수학점', url: 'https://masoncore.gmu.edu/mason-core-course-categories/natural-science-lab-and-non-lab/' },
+        { title: 'George Mason University — Undergraduate Admission Policies', desc: '대한민국 군 복무 학점(최대 6학점) 인정 기준', url: 'https://catalog.gmu.edu/admissions/undergraduate-policies/' },
         { title: 'Mason Korea — Four-Year Plans', desc: '전공별 추천 수강계획과 Fairfax Transition 전 이수 과목', url: 'https://masonkorea.gmu.edu/advising-and-course-registration/four-year-plans' },
         { title: 'Mason Korea — Graduation Application', desc: 'Degree Evaluation부터 Degree Conferral까지 졸업 신청 절차', url: 'https://masonkorea.gmu.edu/advising-and-course-registration/graduation/graduation-application-process' },
         { title: 'Mason Korea — Campus Transition', desc: 'Fairfax Campus 이수 학기와 Transition 일정', url: 'https://masonkorea.gmu.edu/campus-transition/campus-transition-calendar' }
