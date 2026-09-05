@@ -49,27 +49,42 @@
   .hs-detail-head h2 { font-size: 24px; margin-bottom: 6px; }
   .hs-detail-head .hs-sub { font-size: 13px; color: var(--ink-soft); }
 
-  .hs-section { margin: 1.5rem 0; }
-  .hs-section-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-  .hs-section-body { font-size: 13.5px; color: var(--ink-soft); line-height: 1.75; white-space: pre-line; }
+  .hs-section { margin: 1.9rem 0; scroll-margin-top: 72px; }
+  .hs-section-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .hs-section-body { font-size: 14px; color: var(--ink-soft); line-height: 1.85; max-width: 640px; letter-spacing: 0.001em; }
+  .hs-section-body p { margin: 0 0 12px; }
+  .hs-section-body p:last-child { margin-bottom: 0; }
 
-  .hs-num-divider { font-size: 12px; color: var(--amber); letter-spacing: 0.1em; border-bottom: 1px solid var(--hairline); padding-bottom: 6px; margin: 2rem 0 1rem; }
+  .hs-num-divider { font-size: 12px; color: var(--amber); letter-spacing: 0.1em; border-bottom: 1px solid var(--hairline); padding-bottom: 6px; margin: 2rem 0 1rem; scroll-margin-top: 72px; }
 
   .hs-list { margin: 6px 0 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.8; }
   .hs-checklist { list-style: none; margin: 6px 0 0; padding: 0; font-size: 13.5px; color: var(--ink); line-height: 1.9; }
   .hs-checklist li { padding-left: 24px; position: relative; }
   .hs-checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--sage); }
 
-  .hs-steps { counter-reset: hs-step; margin-top: 8px; }
-  .hs-step { display: flex; gap: 12px; margin-bottom: 14px; }
+  .hs-steps { counter-reset: hs-step; margin-top: 8px; scroll-margin-top: 72px; }
+  .hs-steps-toggle { font-size: 11.5px; color: var(--stamp); background: none; border: 1px solid var(--stamp); border-radius: 12px; padding: 4px 12px; cursor: pointer; margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; transition: background .15s ease; }
+  .hs-steps-toggle:hover { background: #F5E4E1; }
+  details.hs-step {
+    background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px;
+    margin-bottom: 8px; overflow: hidden;
+  }
+  details.hs-step summary {
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px; cursor: pointer; list-style: none;
+  }
+  details.hs-step summary::-webkit-details-marker { display: none; }
+  details.hs-step summary::after { content: '+'; margin-left: auto; font-family: 'JetBrains Mono', monospace; color: var(--ink-soft); font-size: 16px; flex-shrink: 0; }
+  details.hs-step[open] summary::after { content: '−'; }
+  details.hs-step summary .hs-step-title { font-size: 14px; font-weight: 700; margin: 0; }
   .hs-step-num {
-    counter-increment: hs-step; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
-    background: var(--ink); color: var(--paper); font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    counter-increment: hs-step; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--ink); color: var(--paper); font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
     font-weight: 700; display: flex; align-items: center; justify-content: center;
   }
   .hs-step-num::before { content: counter(hs-step); }
-  .hs-step-body .hs-step-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
-  .hs-step-body .hs-step-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.7; white-space: pre-line; }
+  .hs-step-desc { padding: 0 14px 14px 52px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.8; max-width: 600px; }
+  .hs-step-desc p { margin: 0 0 10px; }
+  .hs-step-desc p:last-child { margin-bottom: 0; }
 
   .hs-compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 8px; }
   .hs-compare-card { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; padding: 14px; }
@@ -84,11 +99,15 @@
   details.hs-faq summary::-webkit-details-marker { display: none; }
   details.hs-faq summary::after { content: '+'; font-family: 'JetBrains Mono', monospace; color: var(--ink-soft); font-size: 16px; flex-shrink: 0; }
   details.hs-faq[open] summary::after { content: '−'; }
-  details.hs-faq .hs-faq-body { padding: 0 14px 14px; font-size: 13px; color: var(--ink-soft); line-height: 1.75; white-space: pre-line; }
+  details.hs-faq .hs-faq-body { padding: 0 14px 16px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.8; max-width: 620px; }
+  details.hs-faq .hs-faq-body p { margin: 0 0 10px; }
+  details.hs-faq .hs-faq-body p:last-child { margin-bottom: 0; }
 
-  .hs-warning { background: #F6ECDA; border-left: 3px solid var(--amber); border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; font-size: 12.5px; color: var(--ink); line-height: 1.6; }
+  .hs-warning { background: #F6ECDA; border-left: 3px solid var(--amber); border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; font-size: 12.5px; color: var(--ink); line-height: 1.6; scroll-margin-top: 72px; }
   .hs-warning.hs-danger { background: #F5E4E1; border-left-color: var(--stamp); }
-  .hs-warning strong { display: block; margin-bottom: 3px; font-size: 13px; }
+  .hs-warning strong { display: block; margin-bottom: 5px; font-size: 13px; }
+  .hs-warning p { margin: 0 0 8px; }
+  .hs-warning p:last-child { margin-bottom: 0; }
 
   .hs-linkcard { display: block; background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; padding: 10px 14px; margin-top: 8px; text-decoration: none; color: var(--ink); transition: border-color .15s ease, transform .15s ease; }
   .hs-linkcard:hover { border-color: var(--stamp); transform: translateX(3px); }
@@ -103,12 +122,38 @@
   .hs-flow span.step { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 14px; padding: 4px 10px; }
   .hs-flow span.arrow { color: var(--ink-soft); }
 
+  .hs-map-wrap { border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; margin-top: 8px; }
+  .hs-map-canvas { width: 100%; height: 280px; background: var(--paper-raised); }
+  .hs-map-legend { display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 12px; background: var(--paper-raised); border-top: 1px solid var(--hairline); font-size: 11.5px; }
+  .hs-map-legend-item { display: flex; align-items: center; gap: 5px; color: var(--ink-soft); }
+  .hs-map-legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .hs-map-loading { display: flex; align-items: center; justify-content: center; height: 280px; color: var(--ink-soft); font-size: 12px; }
+
+  .hs-toc { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0 4px; padding: 12px; background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 10px; }
+  .hs-toc-label { width: 100%; font-size: 11px; color: var(--ink-soft); letter-spacing: 0.08em; margin-bottom: 2px; }
+  .hs-toc-chip { font-size: 12px; background: var(--paper); border: 1px solid var(--hairline); border-radius: 14px; padding: 5px 12px; cursor: pointer; color: var(--ink); transition: background .15s ease, border-color .15s ease; }
+  .hs-toc-chip:hover { border-color: var(--stamp); background: #F5E4E1; }
+  .hs-toc-chip.is-divider { border-style: dashed; color: var(--ink-soft); }
+
+  details.hs-acc { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 8px; margin-bottom: 8px; overflow: hidden; scroll-margin-top: 72px; }
+  details.hs-acc summary { padding: 12px 14px; font-size: 14px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  details.hs-acc summary::-webkit-details-marker { display: none; }
+  details.hs-acc summary::after { content: '+'; font-family: 'JetBrains Mono', monospace; color: var(--ink-soft); font-size: 16px; flex-shrink: 0; }
+  details.hs-acc[open] summary::after { content: '−'; }
+  .hs-acc-body { padding: 0 14px 14px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.8; max-width: 620px; }
+  .hs-acc-body p { margin: 0 0 10px; }
+  .hs-acc-body p:last-child { margin-bottom: 0; }
+  .hs-acc-body ul.hs-checklist { margin-top: 0; }
+  .hs-page-toggle { font-size: 11.5px; color: var(--stamp); background: none; border: 1px solid var(--stamp); border-radius: 12px; padding: 5px 14px; cursor: pointer; margin: 10px 0 4px; font-family: 'JetBrains Mono', monospace; transition: background .15s ease; }
+  .hs-page-toggle:hover { background: #F5E4E1; }
+
   @media (max-width: 480px) {
     .hs-detail-card { padding: 1.1rem; border-radius: 10px; }
   }
 </style>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.12.0/maplibre-gl.css">
 
 <div id="hs-navbar">
   <div class="hs-navbar-inner">
@@ -123,7 +168,65 @@
 <script>
 (function () {
   const root = document.getElementById('hs-view');
+  let pendingMaps = [];
+  let mapLibLoaded = false;
+  let tocEntries = [];
   function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  // 긴 텍스트를 문단(\n\n)과 줄바꿈(\n)으로 나눠서 <p>/<br>로 렌더링 — 벽처럼 보이는 텍스트를 시각적으로 끊어줌
+  function bodyHtml(text) {
+    return String(text ?? '').split('\n\n').map(para => {
+      const lines = para.split('\n');
+      if (lines.length > 1) {
+        return '<p><strong>' + esc(lines[0]) + '</strong><br>' + lines.slice(1).map(esc).join('<br>') + '</p>';
+      }
+      return '<p>' + esc(para) + '</p>';
+    }).join('');
+  }
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('로드 실패: ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function initPendingMaps() {
+    if (!pendingMaps.length) return;
+    if (!mapLibLoaded) {
+      try {
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.12.0/maplibre-gl.js');
+        mapLibLoaded = true;
+      } catch (e) {
+        pendingMaps.forEach(pm => {
+          const el = document.getElementById(pm.id);
+          if (el) el.innerHTML = '<div class="hs-map-loading">지도를 불러오지 못했어요</div>';
+        });
+        return;
+      }
+    }
+    pendingMaps.forEach(pm => {
+      const el = document.getElementById(pm.id);
+      if (!el) return;
+      const first = pm.markers[0];
+      const map = new maplibregl.Map({
+        container: pm.id,
+        style: 'https://tiles.openfreemap.org/styles/liberty',
+        center: [first.lng, first.lat],
+        zoom: 13,
+        interactive: true,
+        attributionControl: true
+      });
+      map.on('load', () => {
+        pm.markers.forEach(m => {
+          const popup = new maplibregl.Popup({ offset: 12 }).setText(m.name + ' — ' + m.desc);
+          new maplibregl.Marker({ color: m.color }).setLngLat([m.lng, m.lat]).setPopup(popup).addTo(map);
+        });
+      });
+    });
+  }
 
   const HOUSING = {
     start: {
@@ -235,7 +338,7 @@
     },
 
     movein: {
-      icon: '📦', title: '입주 · 퇴실 체크리스트', sub: '짐 옮기기 전 사진부터 보증금 반환 확인까지',
+      icon: '📦', title: '입주 · 퇴실 체크리스트', sub: '짐 옮기기 전 사진부터 보증금 반환 확인까지', collapsible: true,
       blocks: [
         { type: 'num', label: '입주할 때' },
         { type: 'checklist', title: 'STEP 1. 입주 전 다시 확인 — 계약정보', items: ['주소와 동·호수가 정확한가?', '계약 시작일이 맞는가?', '보증금·잔금 지급내역을 보관했는가?', '월세 지급일과 관리비 납부방법을 알고 있는가?'] },
@@ -257,13 +360,11 @@
     },
 
     life: {
-      icon: '🧺', title: '송도 자취 생활', sub: '쓰레기 버리기부터 통학, 병원, 장보기까지 — 처음 혼자 살 때 헷갈리는 것들',
+      icon: '🧺', title: '송도 자취 생활', sub: '쓰레기 버리기부터 통학, 병원, 장보기까지 — 처음 혼자 살 때 헷갈리는 것들', collapsible: true,
       blocks: [
         { type: 'text', title: '07-1. 일반쓰레기 버리기', body: '송도는 연수구의 생활폐기물 배출기준을 따릅니다. 종량제봉투를 사용해야 하고, 아파트·오피스텔 등 공동주택은 지정 배출장소에, 일반주택·상가는 지정 방식으로 문전 배출합니다. 자동집하시설이 설치된 지역은 종량제봉투를 담아 시설을 이용해요.\n\n일반적인 배출시간은 해당 동 배출요일 일몰 후 18:00~다음 날 04:00 이지만, 건물마다 다를 수 있어 입주하면 관리실/임대인에게 "이 건물 쓰레기는 어디에 버리나요?"라고 먼저 물어보는 게 가장 정확해요. 배출방법·시간 위반 시 과태료가 부과될 수 있습니다.', link: { title: '연수구 생활폐기물 배출기준 →', url: 'https://www.yeonsu.go.kr/main/part/clean/house.asp' } },
-        { type: 'qa', items: [
-          { q: '음식물쓰레기는 어떻게 버리나요?', a: '일반쓰레기와 분리해서 버려야 해요. 공동주택은 보통 RFID 종량기기, 일반주택·상가는 전용용기+납부필증, 자동집하시설 지역은 음식물 전용 종량제봉투를 사용해요. 건물마다 달라서 입주 후 관리실에서 먼저 확인하세요.' },
-          { q: '이것도 음식물쓰레기인가요?', a: '달걀껍데기, 소·돼지·닭 등의 뼈, 게·조개 등 단단한 껍데기, 호두·땅콩 등 단단한 껍데기, 복숭아·자두 등 단단한 씨, 티백 — 연수구는 이런 품목을 음식물쓰레기가 아닌 일반쓰레기로 안내하고 있어요.' }
-        ]},
+        { type: 'text', title: '07-2. 음식물쓰레기 버리기', body: '음식물쓰레기는 일반쓰레기와 분리해서 버려야 합니다. 송도동에서는 주거형태와 건물에 따라 처리방법이 달라질 수 있습니다.\n\n공동주택\n일반적으로 RFID 종량기기를 이용합니다.\n\n일반주택 · 상가 등\n전용용기와 납부필증 등을 사용하는 방식이 적용될 수 있습니다.\n\n자동집하시설이 있는 지역\n음식물 전용 종량제봉투를 사용하여 자동집하시설에 배출하는 방식도 있습니다.\n\n일반쓰레기로 분류되는 품목\n달걀껍데기, 소·돼지·닭 등의 뼈, 게·조개 등 단단한 껍데기, 호두·땅콩 등 단단한 껍데기, 복숭아·자두 등 단단한 씨, 티백은 연수구 기준 음식물쓰레기가 아닌 일반쓰레기로 분류됩니다.' },
+        { type: 'warning', title: '송도는 건물마다 배출시설이 다를 수 있습니다', body: '입주 후 쓰레기장 위치와 음식물쓰레기 배출방법을 관리실에서 먼저 확인하세요.' },
         { type: 'text', title: '07-3. 재활용품 버리기', body: '종이, 캔, 유리병, 플라스틱, 비닐, 투명 PET병 등을 종류별로 분리배출하세요. 플라스틱·페트병은 내용물을 비우고 이물질을 제거하는 게 기본이고, 투명 음료·생수 페트병은 라벨 제거 후 압착해서 배출하도록 연수구가 안내해요. 음식물이 심하게 묻었거나 여러 재질이 섞인 물건은 재활용품으로 분류되지 않을 수 있어요.', link: { title: '연수구 재활용품 배출기준 →', url: 'https://www.yeonsu.go.kr/main/part/clean/recycle.asp' } },
         { type: 'text', title: '07-4. 침대나 책상은 어떻게 버리나요?', body: '종량제봉투에 안 들어가는 침대·책상·의자·서랍장·매트리스 등은 대형폐기물로 처리해야 해요. 그냥 쓰레기장에 두면 안 되고, 지정판매소 스티커·온라인 배출신고·키오스크·전화접수 등으로 신고 후 비용을 결제하고 배출번호에 따라 배출하세요. 퇴실할 때 특히 주의하세요 — 그냥 두고 가지 말고 정상 폐기 절차를 확인하세요.', link: { title: '연수구 대형폐기물 신고 →', url: 'https://www.yeonsu.go.kr/main/part/clean/waste.asp' } },
         { type: 'text', title: '07-5. 빨래는 어떻게 하지?', body: '원룸·오피스텔에는 세탁기가 옵션으로 포함된 경우가 많아요. 이불·겨울 침구·큰 담요처럼 세탁기로 처리하기 어려운 세탁물은 주변 셀프빨래방의 대형 세탁기·건조기가 편리해요. 처음 세탁기를 쓰기 전에는 사용법, 세제 투입 위치, 건조 기능 여부, 배수 상태 정도는 알아두세요. 세탁기 문을 계속 닫아두면 습기·냄새가 생길 수 있으니 사용 후 환기하세요.' },
@@ -303,28 +404,39 @@
     });
   }
 
-  function renderBlock(b) {
+  function renderBlock(b, idx, collapsibleMode) {
+    const blkId = 'blk-' + idx;
     if (b.type === 'text') {
-      return '<div class="hs-section"><div class="hs-section-title">' + esc(b.title) + '</div><div class="hs-section-body">' + esc(b.body) + '</div>' +
-        (b.link ? '<a class="hs-linkcard" href="' + esc(b.link.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(b.link.title) + '</div></a>' : '') + '</div>';
+      tocEntries.push({ id: blkId, label: b.title });
+      const linkHtml = b.link ? '<a class="hs-linkcard" href="' + esc(b.link.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(b.link.title) + '</div></a>' : '';
+      if (collapsibleMode) {
+        return '<details class="hs-acc" id="' + blkId + '"><summary>' + esc(b.title) + '</summary><div class="hs-acc-body">' + bodyHtml(b.body) + linkHtml + '</div></details>';
+      }
+      return '<div class="hs-section" id="' + blkId + '"><div class="hs-section-title">' + esc(b.title) + '</div><div class="hs-section-body">' + bodyHtml(b.body) + '</div>' + linkHtml + '</div>';
     }
     if (b.type === 'warning') {
-      return '<div class="hs-warning' + (b.danger ? ' hs-danger' : '') + '"><strong>' + esc(b.title) + '</strong>' + esc(b.body) + '</div>' +
+      return '<div class="hs-warning' + (b.danger ? ' hs-danger' : '') + '" id="' + blkId + '"><strong>' + esc(b.title) + '</strong>' + bodyHtml(b.body) + '</div>' +
         (b.link ? '<a class="hs-linkcard" href="' + esc(b.link.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(b.link.title) + '</div></a>' : '');
     }
     if (b.type === 'checklist') {
-      return '<div class="hs-section"><div class="hs-section-title">' + esc(b.title) + '</div><ul class="hs-checklist">' +
-        b.items.map(it => '<li>' + esc(it) + '</li>').join('') + '</ul></div>';
+      tocEntries.push({ id: blkId, label: b.title });
+      const listHtml = '<ul class="hs-checklist">' + b.items.map(it => '<li>' + esc(it) + '</li>').join('') + '</ul>';
+      if (collapsibleMode) {
+        return '<details class="hs-acc" id="' + blkId + '"><summary>' + esc(b.title) + '</summary><div class="hs-acc-body">' + listHtml + '</div></details>';
+      }
+      return '<div class="hs-section" id="' + blkId + '"><div class="hs-section-title">' + esc(b.title) + '</div>' + listHtml + '</div>';
     }
     if (b.type === 'steps') {
-      return '<div class="hs-steps">' + b.items.map(s =>
-        '<div class="hs-step"><div class="hs-step-num"></div><div class="hs-step-body"><div class="hs-step-title">' + esc(s.title) + '</div>' +
-        '<div class="hs-step-desc">' + esc(s.desc) + '</div></div></div>'
-      ).join('') + '</div>';
+      const stepsId = blkId;
+      return '<button class="hs-steps-toggle mono" data-steps-target="' + stepsId + '">전체 펼치기 ▾</button>' +
+        '<div class="hs-steps" id="' + stepsId + '">' + b.items.map(s =>
+          '<details class="hs-step"><summary><span class="hs-step-num"></span><span class="hs-step-title">' + esc(s.title) + '</span></summary>' +
+          '<div class="hs-step-desc">' + bodyHtml(s.desc) + '</div></details>'
+        ).join('') + '</div>';
     }
     if (b.type === 'compare') {
-      let html = '<div class="hs-section">';
-      if (b.title) html += '<div class="hs-section-title">' + esc(b.title) + '</div>';
+      let html = '<div class="hs-section" id="' + blkId + '">';
+      if (b.title) { html += '<div class="hs-section-title">' + esc(b.title) + '</div>'; tocEntries.push({ id: blkId, label: b.title }); }
       html += '<div class="hs-compare">';
       b.items.forEach(it => {
         html += '<div class="hs-compare-card"><div class="cc-title">' + esc(it.title) + '</div>';
@@ -337,44 +449,96 @@
       return html;
     }
     if (b.type === 'table') {
-      let html = '<div class="hs-section"><div class="hs-section-title">' + esc(b.title) + '</div><table class="hs-table"><thead><tr>' +
+      tocEntries.push({ id: blkId, label: b.title });
+      let html = '<div class="hs-section" id="' + blkId + '"><div class="hs-section-title">' + esc(b.title) + '</div><table class="hs-table"><thead><tr>' +
         b.headers.map(h => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>' +
         b.rows.map(r => '<tr>' + r.map(c => '<td>' + esc(c) + '</td>').join('') + '</tr>').join('') + '</tbody></table>';
-      if (b.note) html += '<div class="hs-section-body" style="margin-top:8px;">' + esc(b.note) + '</div>';
+      if (b.note) html += '<div class="hs-section-body" style="margin-top:8px;">' + bodyHtml(b.note) + '</div>';
       if (b.link) html += '<a class="hs-linkcard" href="' + esc(b.link.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(b.link.title) + '</div></a>';
       html += '</div>';
       return html;
     }
     if (b.type === 'qa') {
-      return '<div class="hs-section">' + b.items.map(qa =>
-        '<details class="hs-faq"><summary>' + esc(qa.q) + '</summary><div class="hs-faq-body">' + esc(qa.a) + '</div></details>'
-      ).join('') + '</div>';
+      if (b.title) tocEntries.push({ id: blkId, label: b.title });
+      return '<div class="hs-section" id="' + blkId + '">' +
+        (b.title ? '<div class="hs-section-title">' + esc(b.title) + '</div>' : '') +
+        b.items.map(qa =>
+          '<details class="hs-faq"><summary>' + esc(qa.q) + '</summary><div class="hs-faq-body">' + bodyHtml(qa.a) + '</div></details>'
+        ).join('') + '</div>';
     }
     if (b.type === 'linkonly') {
-      return '<div class="hs-section">' + b.links.map(l =>
+      return '<div class="hs-section" id="' + blkId + '">' + b.links.map(l =>
         '<a class="hs-linkcard" href="' + esc(l.url) + '" target="_blank" rel="noopener"><div class="lc-title">' + esc(l.title) + '</div></a>'
       ).join('') + '</div>';
     }
     if (b.type === 'flow') {
-      return '<div class="hs-section"><div class="hs-section-title">' + esc(b.title) + '</div><div class="hs-flow">' +
+      tocEntries.push({ id: blkId, label: b.title });
+      return '<div class="hs-section" id="' + blkId + '"><div class="hs-section-title">' + esc(b.title) + '</div><div class="hs-flow">' +
         b.items.map((s, i) => '<span class="step">' + esc(s) + '</span>' + (i < b.items.length - 1 ? '<span class="arrow">→</span>' : '')).join('') + '</div></div>';
     }
     if (b.type === 'num') {
-      return '<div class="hs-num-divider mono">' + esc(b.label) + '</div>';
+      tocEntries.push({ id: blkId, label: '📌 ' + b.label, isDivider: true });
+      return '<div class="hs-num-divider mono" id="' + blkId + '">' + esc(b.label) + '</div>';
+    }
+    if (b.type === 'map') {
+      tocEntries.push({ id: blkId, label: b.title });
+      const mapId = 'hs-map-' + Math.random().toString(36).slice(2, 8);
+      const legend = b.markers.map(m => '<div class="hs-map-legend-item"><span class="hs-map-legend-dot" style="background:' + esc(m.color) + '"></span>' + esc(m.name) + '</div>').join('');
+      pendingMaps.push({ id: mapId, markers: b.markers });
+      return '<div class="hs-section" id="' + blkId + '"><div class="hs-section-title">' + esc(b.title) + '</div>' +
+        '<div class="hs-map-wrap"><div class="hs-map-canvas" id="' + mapId + '"><div class="hs-map-loading">지도 불러오는 중…</div></div>' +
+        '<div class="hs-map-legend">' + legend + '</div></div></div>';
     }
     return '';
   }
 
   function renderDetail(key) {
     const h = HOUSING[key];
+    pendingMaps = [];
+    tocEntries = [];
+    const blocksHtml = h.blocks.map((b, i) => renderBlock(b, i, h.collapsible)).join('');
     let html = '<div class="hs-page"><span class="hs-back" id="hs-back-btn">← 자취·원룸 목록으로</span>';
     html += '<div class="hs-detail-card"><div class="hs-detail-head"><div class="hs-mono">' + h.icon + ' HOUSING GUIDE</div>';
     html += '<h2>' + esc(h.title) + '</h2><div class="hs-sub">' + esc(h.sub) + '</div></div>';
-    html += h.blocks.map(renderBlock).join('');
+    if (h.collapsible) {
+      html += '<button class="hs-page-toggle mono" id="hs-page-toggle-btn">전체 펼치기 ▾</button>';
+    }
+    if (tocEntries.length > 2) {
+      html += '<div class="hs-toc"><div class="hs-toc-label mono">📑 바로가기</div>' +
+        tocEntries.map(t => '<span class="hs-toc-chip' + (t.isDivider ? ' is-divider' : '') + '" data-target="' + t.id + '">' + esc(t.label) + '</span>').join('') +
+        '</div>';
+    }
+    html += blocksHtml;
     html += '</div></div>';
     root.innerHTML = html;
     document.getElementById('hs-back-btn').addEventListener('click', () => { location.hash = ''; });
+    const pageToggleBtn = document.getElementById('hs-page-toggle-btn');
+    if (pageToggleBtn) {
+      pageToggleBtn.addEventListener('click', () => {
+        const allDetails = root.querySelectorAll('details');
+        const shouldOpen = pageToggleBtn.textContent.indexOf('펼치기') !== -1;
+        allDetails.forEach(d => { d.open = shouldOpen; });
+        pageToggleBtn.textContent = shouldOpen ? '전체 접기 ▴' : '전체 펼치기 ▾';
+      });
+    }
+    root.querySelectorAll('.hs-toc-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const target = document.getElementById(chip.getAttribute('data-target'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    root.querySelectorAll('.hs-steps-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const stepsEl = document.getElementById(btn.getAttribute('data-steps-target'));
+        if (!stepsEl) return;
+        const details = stepsEl.querySelectorAll('details.hs-step');
+        const shouldOpen = btn.textContent.indexOf('펼치기') !== -1;
+        details.forEach(d => { d.open = shouldOpen; });
+        btn.textContent = shouldOpen ? '전체 접기 ▴' : '전체 펼치기 ▾';
+      });
+    });
     window.scrollTo({ top: 0 });
+    initPendingMaps();
   }
 
   document.getElementById('hs-navbar-home').addEventListener('click', () => { location.hash = ''; route(); });
